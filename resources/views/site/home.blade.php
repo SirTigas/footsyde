@@ -15,7 +15,7 @@
 
 <div class="container">
     <div class="gap-2 d-flex justify-content-center">
-        <a href="#" class="btn btn-warning btn-lg">COMPRAR</a>
+        <a href="{{route('site.produto')}}" class="btn btn-warning btn-lg">COMPRAR</a>
     </div>
 </div>
 @endsection
