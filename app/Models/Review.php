@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CartItem extends Model
+class Review extends Model
 {
+    //
     protected $fillable = [
-    'user_id',
-    'product_id',
-    'quantity',
+        'rating',
+        'comment',
+        'user_id',
+        'product_id',
     ];
 
+    //relationships
     public function users(){
         return $this->belongsTo(User::class);
     }
