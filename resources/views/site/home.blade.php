@@ -1,4 +1,5 @@
 @extends('site.layouts.layout')
+@section('title', 'HOME')
 
 @section('conteudo')
 <div class="row" style="margin: 100px 0px 0px 0px">

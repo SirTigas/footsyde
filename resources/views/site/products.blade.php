@@ -1,4 +1,5 @@
 @extends('site.layouts.layout')
+@section('title', 'PRODUTOS')
 
 @section('conteudo')
 
@@ -18,7 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
                         <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
-                        <a href="#" class="btn btn-primary">COMPRAR</a>
+                        <a href="{{ route('products.show', $p->slug) }}" class="btn btn-primary">COMPRAR</a>
                     </div>
                 </div>
                 <br>

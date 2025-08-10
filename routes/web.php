@@ -7,3 +7,5 @@ use App\Http\Controllers\ProductController;
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 
 Route::resource('/produtos', ProductController::class);
+
+Route::get('/produtos/{$slug}', [ProductController::class, 'show'])->name('products.show');
