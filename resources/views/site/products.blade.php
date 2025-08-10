@@ -8,21 +8,25 @@
     </div>
 </div>
 
-<div class='row container'>
-    @for ($i = 0; $i <= 20; $i++)
-        <div class='col'>
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                    <a href="#" class="btn btn-primary">COMPRAR</a>
+<!--cards-->
+<div class="container">
+    <div class='row'>
+        @foreach ($products as $p )
+           <div class='col-3'>
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
+                        <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
+                        <a href="#" class="btn btn-primary">COMPRAR</a>
+                    </div>
                 </div>
+                <br>
             </div>
-            <br>
-        </div>
-    @endfor
-    
+        @endforeach
+
+        {{ $products->links() }}
+    </div>
 </div>
 
 

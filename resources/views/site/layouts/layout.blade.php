@@ -33,7 +33,7 @@
                         <li><a class="dropdown-item" href="#">Masculino</a></li>
                         <li><a class="dropdown-item" href="#">Feminino</a></li>
                         <li><a class="dropdown-item" href="#">Unissex</a></li>
-                        <li><a class="dropdown-item" href="{{ route('site.produto') }}">Todos</a></li>
+                        <li><a class="dropdown-item" href="{{ '/produtos' }}">Todos</a></li>
                     </ul>
                     </li>
                     <a class="nav-link" href="#">Sobre</a>

@@ -6,4 +6,4 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 
-Route::get('/produtos', [ProductController::class, 'index'])->name('site.produto');
+Route::resource('/produtos', ProductController::class);

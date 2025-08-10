@@ -18,11 +18,11 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->words(3, true),
+            'name' => $this->faker->words(1, true),
             'price' => $this->faker->randomFloat(2, 50, 500),
             'description' => $this->faker->paragraph(),
             'stock' => $this->faker->numberBetween(1, 100),
-            'image_path' => $this->faker->imageUrl(640, 480, 'products', true),
+            'image_path' => 'images/JD8-6364-058_zoom1.png',
             'slug' => $this->faker->slug(),
             'category_id' => Category::inRandomOrder()->first()->id,
         ];
