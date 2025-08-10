@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row" style="margin: 50px 0px 0px 0px">
         <div class='col-4'>
-            <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" style="width: 400px">
+            <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" style="width: 400px; border-radius: 20px">
         </div>
 
         <div class="col-8" style="margin: 50px 0px 0px 0px">
