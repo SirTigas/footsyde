@@ -12,7 +12,7 @@
             <h3>{{ strtoupper($product->name) }}</h3>
             <br>
             <p>{{ $product->description }}</p>
-            <h1>R$: {{ $product->price }}</h1>
+            <h1>R$ {{ $product->price }}</h1>
             <br>
             <p>
             <button class="btn btn-warning" style="margin: 0px 30px 0px 0px">COMPRAR</button>
