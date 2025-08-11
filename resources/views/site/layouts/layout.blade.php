@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav highlight">
                     <li>
-                        <a href="/cart-item"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
+                        <a href="/cart-list"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
                     </li>
                     <li class="nav-item highlight">
                     <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>

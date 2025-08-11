@@ -14,4 +14,4 @@ Route::get('/produtos/{$slug}', [ProductController::class, 'show'])->name('produ
 
 Route::get('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 
-Route::get('/cart-item', [CartItemController::class, 'index'])->name('site.cart');
+Route::get('/cart-list', [CartItemController::class, 'index'])->name('site.cart');
