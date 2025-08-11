@@ -33,6 +33,7 @@
             </ul>
         </div>
     </div>
+    <i class="bi bi-cart-fill"></i>
 </div>
 
 @endsection

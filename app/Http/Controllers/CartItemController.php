@@ -12,6 +12,7 @@ class CartItemController extends Controller
     public function index()
     {
         //
+        return view('site.cartitem');
     }
 
     /**
