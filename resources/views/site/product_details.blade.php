@@ -12,6 +12,7 @@
             <h3>{{ strtoupper($product->name) }}</h3>
             <br>
             <p>{{ $product->description }}</p>
+            <p>Vendido e entregue por: <b>{{ $product->fornecedor }}</b></p>
             <h1>R$ {{ number_format($product->price, 2, ',', '.') }}</h1>
             <br>
             <p>
