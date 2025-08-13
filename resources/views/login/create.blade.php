@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footsyde - LOGIN</title>
+    <title>Footsyde - CREATE</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 </head>
-
-@if ($mensagem = Session::get('erro'))
-    {{ $mensagem }}
-@endif
-
 @if ($errors->any())
     @foreach ($errors->all() as $error )
         {{ $error }} <br>
@@ -18,13 +13,18 @@
 @endif
 
 <body>
-    <form action="{{ route('login.auth') }}" method="POST">
+    <form action="{{ route('users.store') }}" method="POST">
         @csrf
+
+        Nome: <br> <input type="text" name="name"> <br>
+
+        Sobrenome: <br> <input type="text" name="last_name"> <br>
+
         Email: <br> <input name="email"> <br>
 
         Senha: <br> <input type="password" name="password"> <br><br>
 
-        <button type="submit"> ENTRAR </button> <button><a href="{{ route('register') }}">CRIAR</a></button>
+        <button type="submit"> CADASTRAR </button>
     
     </form>
 </body>

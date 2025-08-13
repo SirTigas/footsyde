@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.dashboard');
+        //
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('login.create');
     }
 
     /**
@@ -28,6 +30,13 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //
+        $user = $request->all();
+        $user['password'] = bcrypt($request->password);
+        $user = User::create($user);
+
+        Auth::login($user);
+
+        return redirect()->route('site.home');
     }
 
     /**
