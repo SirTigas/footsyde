@@ -25,27 +25,37 @@
                     <li>
                         <a href="/cart-list"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
                     </li>
+
                     <li class="nav-item highlight">
-                    <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
                     </li>
+
                     <li class="nav-item">
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Produtos
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Masculino</a></li>
-                        <li><a class="dropdown-item" href="#">Feminino</a></li>
-                        <li><a class="dropdown-item" href="#">Unissex</a></li>
-                        <li><a class="dropdown-item" href="{{ '/produtos' }}">Todos</a></li>
-                    </ul>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Produtos </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Masculino</a></li>
+                                <li><a class="dropdown-item" href="#">Feminino</a></li>
+                                <li><a class="dropdown-item" href="#">Unissex</a></li>
+                                <li><a class="dropdown-item" href="{{ '/produtos' }}">Todos</a></li>
+                            </ul>
+                        </li>
+                        <a class="nav-link" href="{{ route('site.sobre') }}">Sobre</a>
                     </li>
-                    <a class="nav-link" href="{{ route('site.sobre') }}">Sobre</a>
+
+                    @auth
+                        <li class="nav-item">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Olá, <b>{{ auth()->user()->name }}</b> </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">Sair</a></li>
+                            </ul>
+                    @else
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login.form') }}">Login</a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                    </li> 
-                    
+                    @endauth
                 </ul>
             </div>
         </div>
