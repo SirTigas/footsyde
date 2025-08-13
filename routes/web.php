@@ -19,5 +19,6 @@ Route::GET('/cart-list', [CartItemController::class, 'index'])->name('site.cart'
 
 Route::view('/login', 'login.form')->name('login.form');
 Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
+Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
 Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
