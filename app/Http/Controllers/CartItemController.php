@@ -15,6 +15,7 @@ class CartItemController extends Controller
         return view('site.cartitem');
     }
 
+
     /**
      * Show the form for creating a new resource.
      */

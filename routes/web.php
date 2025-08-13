@@ -6,12 +6,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SobreController;
 use App\Http\Controllers\CartItemController;
 
-Route::get('/', [HomeController::class, 'index'])->name('site.home');
+Route::GET('/', [HomeController::class, 'index'])->name('site.home');
 
 Route::resource('/produtos', ProductController::class);
 
-Route::get('/produtos/{$slug}', [ProductController::class, 'show'])->name('products.show');
+Route::GET('/produtos/{$slug}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/sobre', [SobreController::class, 'index'])->name('site.sobre');
+Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 
-Route::get('/cart-list', [CartItemController::class, 'index'])->name('site.cart');
+Route::GET('/cart-list', [CartItemController::class, 'index'])->name('site.cart');
