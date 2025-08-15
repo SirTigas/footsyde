@@ -23,7 +23,13 @@
 
                     <input type="hidden" name="quantity" value="1">
                     
-                    <button class="btn btn-warning" style="margin: 0px 20px 0px 0px">COMPRAR</button> <button type="submit" class="btn btn-primary">+CARRINHO</button>                
+                    <a href="#" class="btn btn-warning" style="margin: 0px 20px 0px 0px"><b>COMPRAR</b></a>
+                    @if ($isInCart)
+                        <a href="{{ route('site.cart') }}" class="btn btn-primary"><b>+CARRINHO</b></a>
+                    @else
+                        <button type="submit" class="btn btn-primary"><b>+CARRINHO</b></button>
+                    @endif
+                                    
                 </form>
             @else
                 <a href="{{ route('login') }}" class="btn btn-warning" style="margin: 0px 20px 0px 0px">COMPRAR</a> <a href="{{ route('login') }}" class="btn btn-primary">+CARRINHO</a>            

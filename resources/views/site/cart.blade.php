@@ -4,11 +4,12 @@
 
 <div class="container">
     <div style="margin: 30px 0px 0px 0px">
-    <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>
+        <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>
+        
         @foreach ($cartItems as $cart)
             @if (($cart->user_id) == Auth::id())
                 <div class="col d-flex justify-content-center">
-                    <div class="card mb-3" style="max-width: 1000px;">
+                    <div class="card mb-3" style="max-width: 900px;">
                         <div class="row g-0">
                             <!-- Imagem -->
                             <div class="col-md-3">
@@ -46,6 +47,10 @@
                 </div>  
             @endif
         @endforeach
+        <div class="col d-flex justify-content-center">
+            <h1>TOTAL: <b>{{ number_format($total, 2, ',', '.') }}</b></h1>
+        </div>
+       
     </div>
 </div>
 

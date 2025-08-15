@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -40,7 +42,12 @@ class ProductController extends Controller
     {
         //
         $product = Product::where('slug', $slug)->first();
-        return view('site.product_details', compact('product'));
+        $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+        if ($cart != NULL)
+            $isInCart = TRUE;
+        else
+            $isInCart = FALSE;
+        return view('site.product_details', compact('product', 'isInCart'));
     }
 
     /**
