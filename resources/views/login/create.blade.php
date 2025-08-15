@@ -24,7 +24,7 @@
 
         Senha: <br> <input type="password" name="password"> <br><br>
 
-        <button type="submit"> CADASTRAR </button>
+        <button type="submit"> CADASTRAR </button> <button><a href="{{ route('login') }}">LOGIN</a></button>
     
     </form>
 </body>

@@ -17,7 +17,18 @@
             <br>
             <p>
             <button class="btn btn-warning" style="margin: 0px 30px 0px 0px">COMPRAR</button>
-            <button class="btn btn-primary">+CARRINHO</button>
+            <form action="{{ route('cartitem.store') }}" method="POST">
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                <input type="hidden" name="quantity" value="{{ $product->stock }}">
+                
+                @auth
+                    <button type="submit" class="btn btn-primary">+CARRINHO</button>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-primary">+CARRINHO</a>
+                @endauth
+            </form>
+            
             </p>
         </div>
     </div>

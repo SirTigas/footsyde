@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
-class CartItemController extends Controller
+
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        return view('site.cartitem');
+        return view('site.cart');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -27,11 +28,13 @@ class CartItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartItemRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $cart = $request->all();
+        $cart['user_id'] = Auth::id();
+        $cart = CartItem::create($cart);
 
-        CartItem::create($data);
+        return redirect('/cart-list');
     }
 
     /**
