@@ -20,7 +20,9 @@ Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 
 //cart-list
 Route::resource('cartitem', CartController::class);
-Route::GET('/cart-list', [CartController::class, 'index'])->name('site.cart');
+Route::middleware('auth')->group(function () {
+    Route::GET('/cart-list', [CartController::class, 'index'])->name('site.cart');
+});
 
 //login/register/logout
 Route::resource('users', UserController::class);

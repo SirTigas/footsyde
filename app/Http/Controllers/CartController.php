@@ -14,7 +14,22 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('site.cart');
+        //getting data from the products table
+        $cartItems = CartItem::with([
+            'product:id,name,price,image_path,slug,description,fornecedor'
+        ])
+        ->where('user_id', Auth::id())
+        ->orderByDesc('id')
+        ->paginate(10)
+        ->withQueryString();
+
+
+        //return the total price of cart-list
+        $total = $cartItems->getCollection()->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+
+        return view('site.cart', compact('cartItems', 'total'));
     }
 
     /**

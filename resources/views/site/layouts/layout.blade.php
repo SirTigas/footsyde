@@ -7,6 +7,8 @@
 
     <!--css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
 </head>
@@ -25,7 +27,7 @@
                     
                     @auth
                         <li>
-                            <a href="/cart-list"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
+                            <a href="{{ route('site.cart') }}"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
                         </li>
                     @endauth
 
