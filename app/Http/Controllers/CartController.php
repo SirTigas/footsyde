@@ -34,7 +34,7 @@ class CartController extends Controller
         $cart['user_id'] = Auth::id();
         $cart = CartItem::create($cart);
 
-        return redirect('/cart-list');
+        return redirect()->back();
     }
 
     /**

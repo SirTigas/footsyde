@@ -16,18 +16,20 @@
             <h1>R$ {{ number_format($product->price, 2, ',', '.') }}</h1>
             <br>
             <p>
-            <button class="btn btn-warning" style="margin: 0px 30px 0px 0px">COMPRAR</button>
-            <form action="{{ route('cartitem.store') }}" method="POST">
-                <input type="hidden" name="product_id" value="{{ $product->id }}">
+            @auth
+                <form action="{{ route('cartitem.store') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <input type="hidden" name="quantity" value="{{ $product->stock }}">
+                    <input type="hidden" name="quantity" value="1">
+                    
+                    <button class="btn btn-warning" style="margin: 0px 20px 0px 0px">COMPRAR</button> <button type="submit" class="btn btn-primary">+CARRINHO</button>                
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-warning" style="margin: 0px 20px 0px 0px">COMPRAR</a> <a href="{{ route('login') }}" class="btn btn-primary">+CARRINHO</a>            
+                            
+            @endauth
                 
-                @auth
-                    <button type="submit" class="btn btn-primary">+CARRINHO</button>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-primary">+CARRINHO</a>
-                @endauth
-            </form>
             
             </p>
         </div>
