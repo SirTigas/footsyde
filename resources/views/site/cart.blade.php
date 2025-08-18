@@ -12,7 +12,7 @@
             <!--LIMPANDO TODO O CARRINHO-->            
             <form action="{{ route('cart.clear') }}" method="POST" class="d-flex justify-content-center" style="margin: 0px 0px 10px 0px">
                 @csrf
-                <button type="submit" class="btn btn-danger"><b>REMOVER TODOS</b></button>
+                <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i> <b>REMOVER TODOS</b></button>
             </form>
             
         @else
