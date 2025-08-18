@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="gap-2 d-flex justify-content-center">
-        <a href="{{ '/produtos' }}" class="btn btn-warning btn-lg">COMPRAR</a>
+        <a href="{{ '/produtos' }}" class="btn btn-warning btn-lg"><b>COMPRAR</b></a>
     </div>
 </div>
 @endsection

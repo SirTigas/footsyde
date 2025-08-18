@@ -24,16 +24,33 @@
                     <label for="quant">QNTD: </label>
                     <input type="number" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;" id="quant"><br>
                     
-                    <a href="#" class="btn btn-warning" style="margin: 0px 20px 0px 0px"><b>COMPRAR</b></a>
+                    <a href="#" class="btn btn-success" style="margin: 0px 20px 0px 0px"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
                     @if ($isInCart)
-                        <a href="{{ route('site.cart') }}" class="btn btn-primary"><b>+CARRINHO</b></a>
+                        <a href="{{ route('site.cart') }}" class="btn btn-primary" style="margin: 0px 20px 0px 0px"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></a>
                     @else
-                        <button type="submit" class="btn btn-primary"><b>+CARRINHO</b></button>
+                        <button type="submit" class="btn btn-primary" style="margin: 0px 20px 0px 0px"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></button>
                     @endif
                                     
                 </form>
+
+                <form action="{{ route('favitem.store') }}" method="POST">
+                    @csrf
+
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                    @if ($isInList)
+                        <a href="{{ route('site.wishlist') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>
+                    @else
+                        <button type="submit" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></button>
+                    @endif
+                    
+                </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-warning" style="margin: 0px 20px 0px 0px"><b>COMPRAR</b></a> <a href="{{ route('login') }}" class="btn btn-primary"><b>+CARRINHO</b></a>            
+                <a href="{{ route('login') }}" class="btn btn-success" style="margin: 0px 20px 0px 0px"><i class="bi bi-currency-dollar"></i><b>COMPRAR</b></a>
+                
+                <a href="{{ route('login') }}" class="btn btn-primary" style="margin: 0px 20px 0px 0px"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></a>
+
+                <a href="{{ route('login') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>            
                             
             @endauth
                 

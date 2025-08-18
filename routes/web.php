@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 
 Route::GET('/', [HomeController::class, 'index'])->name('site.home');
 
@@ -19,11 +20,18 @@ Route::GET('/produtos/{$slug}', [ProductController::class, 'show'])->name('produ
 Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 
 //cart-list
-Route::resource('cartitem', CartController::class);
 Route::middleware('auth')->group(function () {
-    Route::GET('/cart-list', [CartController::class, 'index'])->name('site.cart');
+    Route::resource('cartitem', CartController::class);
+    Route::GET('/carrinho', [CartController::class, 'index'])->name('site.cart');
     Route::POST('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::POST('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+});
+
+//wishlist
+Route::middleware('auth')->group(function () {
+    Route::resource('favitem', WishlistController::class);
+    Route::GET('/favoritos', [WishlistController::class, 'index'])->name('site.wishlist');
+
 });
 
 //login/register/logout

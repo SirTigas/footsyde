@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Wishlist;
-use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class WishlistController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $products = Product::paginate(12);
-
-        return view('site.products', compact('products'));    
+    { 
+        $wishlistItems = Wishlist::with([
+            'product:id,name,price,image_path,slug,description,fornecedor'
+        ])
+        ->where('user_id', Auth::id())
+        ->orderByDesc('id')
+        ->paginate(10);
+        
+        return view('site.wishlist', compact('wishlistItems'));
     }
 
     /**
@@ -33,32 +36,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $wishlist = $request->all();
+        $wishlist['user_id'] = Auth::id();
+        $wishlist = Wishlist::create($wishlist);
+
+        return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(string $id)
     {
         //
-        $product = Product::where('slug', $slug)->first();
-
-        $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
-        $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
-
-        if ($cart != NULL)
-            $isInCart = TRUE;
-        else
-            $isInCart = FALSE;
-
-        if ($wishlist != NULL)
-            $isInList = TRUE;
-        else
-            $isInList = FALSE;
-
-        return view('site.product_details', compact('product', 'isInCart', 'isInList'));
-
     }
 
     /**
