@@ -79,8 +79,19 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $id)
     {
         //
+        CartItem::destroy($id->id);
+        return redirect()->back();
+    }
+
+    public function clear()
+    {
+        //
+        $cart = CartItem::where('user_id', Auth::id())->get();
+        CartItem::destroy($cart);
+        return redirect()->back();
+
     }
 }

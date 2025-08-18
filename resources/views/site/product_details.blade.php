@@ -8,7 +8,7 @@
             <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" style="width: 400px; border-radius: 20px">
         </div>
 
-        <div class="col-8" style="margin: 50px 0px 0px 0px">
+        <div class="col-8" style="margin: 0px 0px 0px 0px">
             <h3>{{ strtoupper($product->name) }}</h3>
             <br>
             <p>{{ $product->description }}</p>
@@ -21,7 +21,8 @@
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                    <input type="hidden" name="quantity" value="1">
+                    <label for="quant">QNTD: </label>
+                    <input type="number" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;" id="quant"><br>
                     
                     <a href="#" class="btn btn-warning" style="margin: 0px 20px 0px 0px"><b>COMPRAR</b></a>
                     @if ($isInCart)
@@ -32,7 +33,7 @@
                                     
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-warning" style="margin: 0px 20px 0px 0px">COMPRAR</a> <a href="{{ route('login') }}" class="btn btn-primary">+CARRINHO</a>            
+                <a href="{{ route('login') }}" class="btn btn-warning" style="margin: 0px 20px 0px 0px"><b>COMPRAR</b></a> <a href="{{ route('login') }}" class="btn btn-primary"><b>+CARRINHO</b></a>            
                             
             @endauth
                 

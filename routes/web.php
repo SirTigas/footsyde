@@ -22,6 +22,8 @@ Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 Route::resource('cartitem', CartController::class);
 Route::middleware('auth')->group(function () {
     Route::GET('/cart-list', [CartController::class, 'index'])->name('site.cart');
+    Route::POST('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::POST('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 //login/register/logout

@@ -4,8 +4,21 @@
 
 <div class="container">
     <div style="margin: 30px 0px 0px 0px">
-        <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>
         
+        
+        @if ($total > 0)                       
+            <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>
+            
+            <!--LIMPANDO TODO O CARRINHO-->            
+            <form action="{{ route('cart.clear') }}" method="POST" class="d-flex justify-content-center" style="margin: 0px 0px 10px 0px">
+                @csrf
+                <button type="submit" class="btn btn-danger"><b>REMOVER TODOS</b></button>
+            </form>
+            
+        @else
+            <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>            
+        @endif
+
         @foreach ($cartItems as $cart)
             @if (($cart->user_id) == Auth::id())
                 <div class="col d-flex justify-content-center">
@@ -28,11 +41,17 @@
                                                 {{ strtoupper($cart->product->name) }}
                                                 </a>
                                             </h5>
-                                            <button type="button" class="btn-close" aria-label="Close"></button>
+
+                                            <form action="{{ route('cart.destroy') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" value="{{ $cart->id }}" name="id">
+                                                <button type="submit" class="btn-close" aria-label="Close"></button>
+                                            </form>
+                                            
                                             
                                         </div><br>
                                         
-                                        <p class="card-text">{{ $cart->product->description }}</p>
+                                        <p class="card-text">{{ Str::limit($cart->product->description, 150) }}</p>
                                         <p class="card-text"><small class="text-muted">{{ $cart->product->fornecedor }}</small></p>
                                     </div>
 
@@ -47,9 +66,14 @@
                 </div>  
             @endif
         @endforeach
-        <div class="col d-flex justify-content-center">
-            <h1>TOTAL: <b>{{ number_format($total, 2, ',', '.') }}</b></h1>
-        </div>
+
+        @if ($total > 0)        
+            <div class="col d-flex justify-content-center">
+                <h1>TOTAL: <b>{{ number_format($total, 2, ',', '.') }}</b></h1>
+            </div>
+        @else
+            <p  style="text-align: center;"><b>VAZIO!</b></p>
+        @endif
        
     </div>
 </div>

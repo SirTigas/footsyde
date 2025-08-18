@@ -2,5 +2,5 @@
 
 
 @section('conteudo')
-<h1>Olá {{ auth()->user()->name }}</h1>
+<h1>Olá, <b>{{ auth()->user()->name }}</b></h1>
 @endsection
