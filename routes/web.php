@@ -23,6 +23,7 @@ Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 Route::middleware('auth')->group(function () {
     Route::resource('cartitem', CartController::class);
     Route::GET('/carrinho', [CartController::class, 'index'])->name('site.cart');
+    Route::POST('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::POST('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::POST('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });

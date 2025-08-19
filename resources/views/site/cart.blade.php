@@ -57,7 +57,18 @@
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <b>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</b>
-                                        <input type="number" name="quantity" value="{{ $cart->quantity }}" class="form-control form-control-sm" style="width: 30px;">
+                                        
+                                            <form action="{{ route('cart.update') }}" method="POST">
+                                                @csrf
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 10px 0px 0px; border-radius: 05px"></button>
+                                                    <input type="hidden" name="id" value="{{ $cart->id }}">
+                                                    <input type="number" name="quantity" value="{{ $cart->quantity }}" class="form-control form-control-sm" style="width: 30px;">
+                                                </div>
+                                            </form>
+                                            
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +80,7 @@
 
         @if ($total > 0)        
             <div class="col d-flex justify-content-center">
-                <h1>TOTAL: <b>{{ number_format($total, 2, ',', '.') }}</b></h1>
+                <h1>TOTAL: <b>R$ {{ number_format($total, 2, ',', '.') }}</b></h1>
             </div>
         @else
             <p  style="text-align: center;"><b>VAZIO!</b></p>

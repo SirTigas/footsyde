@@ -71,9 +71,14 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
+        CartItem::where('id', $request->id)->update([
+            'quantity' => $request->quantity,
+        ]);
+
+        return redirect()->back();
     }
 
     /**
