@@ -7,7 +7,7 @@
         
         
         @if ($total > 0)                       
-            <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>
+            <h1 style="text-align: center;"><b>SEU CARRINHO</b></h1>
             
             <!--LIMPANDO TODO O CARRINHO-->            
             <form action="{{ route('cart.clear') }}" method="POST" class="d-flex justify-content-center" style="margin: 0px 0px 10px 0px">
@@ -16,7 +16,7 @@
             </form>
             
         @else
-            <h3 style="text-align: center;"><b>SEU CARRINHO</b></h3>            
+            <h1 style="text-align: center;"><b>SEU CARRINHO</b></h1>            
         @endif
 
         @foreach ($cartItems as $cart)
@@ -83,7 +83,7 @@
                 <h1>TOTAL: <b>R$ {{ number_format($total, 2, ',', '.') }}</b></h1>
             </div>
         @else
-            <p  style="text-align: center;"><b>VAZIO!</b></p>
+            <h5  style="text-align: center;">VAZIO!</h5>
         @endif
        
     </div>

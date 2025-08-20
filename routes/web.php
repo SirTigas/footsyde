@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('favitem', WishlistController::class);
     Route::GET('/favoritos', [WishlistController::class, 'index'])->name('site.wishlist');
+    Route::POST('/wish/destroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
 
 });
 

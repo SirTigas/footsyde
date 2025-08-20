@@ -19,8 +19,15 @@ class WishlistController extends Controller
         ->where('user_id', Auth::id())
         ->orderByDesc('id')
         ->paginate(10);
+
+        //$user = Wishlist::where('user_id', Auth::id())->get();
+
+        if (empty(Wishlist::where('user_id', Auth::id())->get()->toArray()))
+            $user = FALSE;
+        else
+            $user = TRUE;
         
-        return view('site.wishlist', compact('wishlistItems'));
+        return view('site.wishlist', compact('wishlistItems', 'user'));
     }
 
     /**
@@ -70,8 +77,18 @@ class WishlistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         //
+        Wishlist::destroy($request->id);
+        return redirect()->back();
+    }
+
+    public function clear()
+    {
+        //
+        $list = Wishlist::where('user_id', Auth::id())->get();
+        Wishlist::destroy($list);
+        return redirect()->back();
     }
 }
