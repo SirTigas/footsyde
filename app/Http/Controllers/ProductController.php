@@ -20,6 +20,33 @@ class ProductController extends Controller
         return view('site.products', compact('products'));    
     }
 
+    public function man()
+    {
+        //
+        $products = Product::where('category_id', '1')
+        ->paginate(12);
+
+        return view('site.products', compact('products'));
+    }
+
+    public function woman()
+    {
+        //
+        $products = Product::where('category_id', '2')
+        ->paginate(12);
+
+        return view('site.products', compact('products'));
+    }
+
+        public function unissex()
+    {
+        //
+        $products = Product::where('category_id', '3')
+        ->paginate(12);
+
+        return view('site.products', compact('products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -44,20 +71,23 @@ class ProductController extends Controller
         //
         $product = Product::where('slug', $slug)->first();
 
-        $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
-        $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+        if (Auth::check()){
+            $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+            $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
 
-        if ($cart != NULL)
-            $isInCart = TRUE;
+            if ($cart != NULL)
+                $isInCart = TRUE;
+            else
+                $isInCart = FALSE;
+
+            if ($wishlist != NULL)
+                $isInList = TRUE;
+            else
+                $isInList = FALSE;
+
+            return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
         else
-            $isInCart = FALSE;
-
-        if ($wishlist != NULL)
-            $isInList = TRUE;
-        else
-            $isInList = FALSE;
-
-        return view('site.product_details', compact('product', 'isInCart', 'isInList'));
+            return view('site.product_details', compact('product'));
 
     }
 

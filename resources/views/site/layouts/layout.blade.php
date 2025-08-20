@@ -44,9 +44,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Produtos </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Masculino</a></li>
-                                <li><a class="dropdown-item" href="#">Feminino</a></li>
-                                <li><a class="dropdown-item" href="#">Unissex</a></li>
+                                <li><a class="dropdown-item" href="{{ route('products.man') }}">Masculino</a></li>
+                                <li><a class="dropdown-item" href="{{ route('products.woman') }}">Feminino</a></li>
+                                <li><a class="dropdown-item" href="{{ route('products.unissex') }}">Unissex</a></li>
                                 <li><a class="dropdown-item" href="{{ '/produtos' }}">Todos</a></li>
                             </ul>
                         </li>
