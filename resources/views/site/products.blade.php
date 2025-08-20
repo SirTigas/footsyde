@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
                         <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
-                        <a href="{{ route('products.show', $p->slug) }}" class="btn btn-primary">COMPRAR</a>
+                        <a href="{{ route('products.show', $p->slug) }}" class="btn btn-success"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
                     </div>
                 </div>
                 <br>

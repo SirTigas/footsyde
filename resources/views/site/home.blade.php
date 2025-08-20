@@ -15,8 +15,10 @@
 </div>
 
 <div class="container">
-    <div class="gap-2 d-flex justify-content-center">
-        <a href="{{ '/produtos' }}" class="btn btn-warning btn-lg"><b>COMPRAR</b></a>
+    <div class="gap-2 d-flex justify-content-center mx-auto">
+        <div class="d-grid gap-2 col-6">
+            <a href="{{ '/produtos' }}" class="btn btn-warning btn-lg"><b>COMPRAR</b></a>
+        </div>
     </div>
 </div>
 @endsection
