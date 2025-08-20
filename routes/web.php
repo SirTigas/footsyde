@@ -14,7 +14,6 @@ Route::GET('/', [HomeController::class, 'index'])->name('site.home');
 
 //product
 Route::resource('produtos', ProductController::class);
-//Route::get('/produtos', [ProductController::class, 'index'])->name('site.produtos');
 Route::GET('/produtos/categorias/homem', [ProductController::class, 'man'])->name('products.man');
 Route::GET('/produtos/categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
 Route::GET('/produtos/categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');

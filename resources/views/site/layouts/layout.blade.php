@@ -47,7 +47,7 @@
                                 <li><a class="dropdown-item" href="{{ route('products.man') }}">Masculino</a></li>
                                 <li><a class="dropdown-item" href="{{ route('products.woman') }}">Feminino</a></li>
                                 <li><a class="dropdown-item" href="{{ route('products.unissex') }}">Unissex</a></li>
-                                <li><a class="dropdown-item" href="{{ '/produtos' }}">Todos</a></li>
+                                <li><a class="dropdown-item" href="{{ '/produtos' }}"><b>Todos</b></a></li>
                             </ul>
                         </li>
                         <a class="nav-link" href="{{ route('site.sobre') }}">Sobre</a>
