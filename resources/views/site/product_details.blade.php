@@ -66,11 +66,13 @@
 
                 </div>
             @else
-                <a href="{{ route('login') }}" class="btn btn-success btn-lg" style="margin: 0px 20px 0px 0px"><i class="bi bi-currency-dollar"></i><b>COMPRAR</b></a>
+                <div class="d-grid gap-2 col-6">
+                    <a href="{{ route('login') }}" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i><b>COMPRAR</b></a>
                 
-                <a href="{{ route('login') }}" class="btn btn-primary btn-lg" style="margin: 0px 20px 0px 0px"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></a>
+                    <a href="{{ route('login') }}" class="btn btn-primary"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></a>
 
-                <a href="{{ route('login') }}" class="btn btn-danger btn-lg"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>            
+                    <a href="{{ route('login') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>
+                </div>            
                             
             @endauth
                 
