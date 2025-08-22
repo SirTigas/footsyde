@@ -47,6 +47,14 @@ class ProductController extends Controller
         return view('site.products', compact('products'));
     }
 
+    public function search(Request $request)
+    {
+        //
+        $products = Product::where('name', 'like', "{$request->name}%")
+        ->paginate(12);
+        return view('site.products', compact('products'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

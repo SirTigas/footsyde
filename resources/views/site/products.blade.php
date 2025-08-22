@@ -3,30 +3,39 @@
 
 @section('conteudo')
 
-<div class="row" style="margin: 50px 0px 50px 0px">
-    <div class='col'>
-        <h1 class="text-center" style="font-weight: bolder">TODOS OS NOSSO PRODUTOS!</h1>
-    </div>
-</div>
+
 
 <!--cards-->
 <div class="container">
     <div class='row'>
-        @foreach ($products as $p )
-           <div class='col-3'>
-                <div class="card" style="width: 18rem;">
-                    <a href="{{ route('products.show', $p->slug) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
-                        <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
-                        <a href="{{ route('products.show', $p->slug) }}" class="btn btn-success"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
-                    </div>
+        @if (count($products) == 0)
+            <div class="row" style="margin: 50px 0px 50px 0px">
+                <div class='col'>
+                    <h1 class="text-center" style="font-weight: bolder">ops! NÃO ACHAMOS O PRODUTO =(</h1>
                 </div>
-                <br>
-            </div>
-        @endforeach
+            </div> 
+        @else
+            <div class="row" style="margin: 50px 0px 50px 0px">
+                <div class='col'>
+                    <h1 class="text-center" style="font-weight: bolder">TODOS OS NOSSO PRODUTOS!</h1>
+                </div>
+            </div>     
+            @foreach ($products as $p )
+            <div class='col-3'>
+                    <div class="card" style="width: 18rem;">
+                        <a href="{{ route('products.show', $p->slug) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
+                            <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
+                            <a href="{{ route('products.show', $p->slug) }}" class="btn btn-success"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            @endforeach
 
-        {{ $products->links() }}
+            {{ $products->links() }}
+        @endif
     </div>
 </div>
 
