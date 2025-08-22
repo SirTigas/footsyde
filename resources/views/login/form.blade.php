@@ -25,6 +25,8 @@
         Senha: <br> <input type="password" name="password"> <br><br>
 
         <button type="submit"> ENTRAR </button> <button><a href="{{ route('register') }}">CRIAR</a></button>
+
+        <br>Lembrar-me: <input type="checkbox" name="remember">
     
     </form>
 </body>

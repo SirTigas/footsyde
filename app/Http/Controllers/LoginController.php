@@ -20,9 +20,10 @@ class LoginController extends Controller
             'password.required' => 'Senha é obrigatório',
         ],);
     
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($credentials, $request->remember)){
             $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'));
+            //return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('site.home'));
         } else {
             return redirect()->back()->with('erro', 'Email ou senha inválida.');
         }
