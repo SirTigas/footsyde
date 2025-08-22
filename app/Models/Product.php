@@ -19,6 +19,7 @@ class Product extends Model
         'slug',
         'fornecedor',
         'category_id',
+        'code',
     ];
 
     //relationships
