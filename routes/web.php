@@ -17,7 +17,7 @@ Route::resource('produtos', ProductController::class);
 Route::GET('/produtos/categorias/homem', [ProductController::class, 'man'])->name('products.man');
 Route::GET('/produtos/categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
 Route::GET('/produtos/categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');
-Route::GET('/busca/produtos', [ProductController::class, 'search'])->name('products.search');
+Route::GET('/produto/busca', [ProductController::class, 'search'])->name('products.search');
 Route::GET('/produtos/{$slug}', [ProductController::class, 'show'])->name('products.show');
 
 //about

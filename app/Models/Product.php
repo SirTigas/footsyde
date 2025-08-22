@@ -22,7 +22,7 @@ class Product extends Model
     ];
 
     //relationships
-    public function categorie(){
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 }

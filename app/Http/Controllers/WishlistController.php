@@ -20,8 +20,6 @@ class WishlistController extends Controller
         ->orderByDesc('id')
         ->paginate(10);
 
-        //$user = Wishlist::where('user_id', Auth::id())->get();
-
         if (empty(Wishlist::where('user_id', Auth::id())->get()->toArray()))
             $user = FALSE;
         else

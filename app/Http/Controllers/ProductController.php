@@ -77,7 +77,7 @@ class ProductController extends Controller
     public function show($slug)
     {
         //
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::where('slug', $slug)->with(['category'])->first();
 
         if (Auth::check()){
             $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
