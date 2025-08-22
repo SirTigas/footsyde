@@ -1,4 +1,5 @@
 @extends('site.layouts.layout')
+@section('title', 'Carrinho')
 
 @section('conteudo')
 

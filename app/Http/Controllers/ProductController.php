@@ -50,7 +50,8 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         //
-        $products = Product::where('name', 'like', "{$request->name}%")
+        $products = Product::where('name', 'like', "%{$request->name}%")
+        ->orderBy('name')
         ->paginate(12);
         return view('site.products', compact('products'));
     }

@@ -1,4 +1,5 @@
 @extends('site.layouts.layout')
+@section('title', 'Sobre nós!')
 
 @section('conteudo')
 

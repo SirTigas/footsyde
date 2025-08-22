@@ -1,5 +1,5 @@
 @extends('site.layouts.layout')
-@section('title', 'PRODUTOS')
+@section('title', 'Produtos')
 
 @section('conteudo')
 
