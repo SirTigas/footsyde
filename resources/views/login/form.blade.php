@@ -27,6 +27,7 @@
         <button type="submit"> ENTRAR </button> <button><a href="{{ route('register') }}">CRIAR</a></button>
 
         <br>Lembrar-me: <input type="checkbox" name="remember">
+        {{ isset($erro) && $erro != '' ? $erro : '' }}
     
     </form>
 </body>

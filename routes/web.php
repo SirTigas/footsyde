@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Middleware\AuthAdminMiddleware;
 
 Route::GET('/', [HomeController::class, 'index'])->name('site.home');
 
@@ -49,4 +50,7 @@ Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
 Route::GET('/register', [UserController::class, 'create'])->name('register');
 
 //dashboard
-Route::get('/admin/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('admin.dashboard');
+Route::middleware(['auth', \App\Http\Middleware\AuthAdminMiddleware::class])->group(function (){
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+});
+
