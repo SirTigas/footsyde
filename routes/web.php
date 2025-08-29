@@ -51,6 +51,8 @@ Route::GET('/register', [UserController::class, 'create'])->name('register');
 
 //dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
+    Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
 });
 

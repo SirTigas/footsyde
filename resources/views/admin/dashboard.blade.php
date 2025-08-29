@@ -83,64 +83,74 @@
         </header>
 
         <div class="container-fluid" style="margin:30px 0px 0px 0px">
+            @if ($mensagem = Session::get('sucess'))
+                {{ $mensagem }}
+            @endif
+
             @foreach ($products as $p )
-                <div class="col d-flex justify-content-center">
-                    <div class="card mb-3" style="max-width: 900px;">
-                        <div class="row g-0">
-                            <!-- Imagem -->
-                            <div class="col-md-3">
-                                <a href="#">
-                                    <img src="{{ asset($p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
-                                </a>
-                            </div>
-
-                            <!-- Conteúdo -->
-                            <div class="col-md-9">
-                                <div class="card-body d-flex flex-column justify-content-between h-100">
-                                    <div>
-                                        <div class="d-flex justify-content-between align-items-center mt-2">
-                                            <h5 class="card-title">
-                                                <a href="#" class="text-decoration-none text-dark">
-                                                {{ strtoupper($p->name) }}
-                                                </a>
-                                            </h5>
-
-                                            <form action="{{ route('cart.destroy') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" value="#" name="id">
-                                                <button type="submit" class="btn-close" aria-label="Close"></button>
-                                            </form>
-                                            
-                                            
-                                        </div><br>
-                                        
-                                        <p class="card-text">{{ Str::limit($p->description, 150) }}</p>
-                                        <p class="card-text"><small class="text-muted">{{ $p->fornecedor }}</small></p>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        
-                                        
-                                        <form action="{{ route('cart.update') }}" method="POST">
-                                            @csrf
-                                            <div class="d-flex justify-content-end">
-                                                R$ <input type="decimal" name="price" value="{{ number_format($p->price, 2, ',', '.') }}">
-
-                                                Estoque: <input type="number" name="quantity" value="{{ $p->stock }}" class="form-control form-control-sm" style="width: 100px;">
-
-                                                <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 0px 0px 10px; border-radius: 05px"></button>
-                                                
-                                                <input type="hidden" name="id" value="#">
-                                                
-                                                
-                                            </div>
-                                        </form>     
-                                    </div>
+                <form action="{{ route('admin.update') }}" method="POST">
+                    @csrf
+                    <div class="col d-flex justify-content-center">
+                        <div class="card mb-3" style="max-width: 1100px;">
+                            <div class="row g-0">
+                                
+                                <!-- Imagem -->
+                                <div class="col-md-3">
+                                    <a href="{{ route('products.show', $p->slug) }}">
+                                        <img src="{{ asset($p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
+                                    </a>
                                 </div>
+
+                                <!-- Conteúdo -->
+                                <div class="col-md-9">
+                                    <div class="card-body d-flex flex-column justify-content-between h-100">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                                <h5 class="card-title">
+                                                    
+                                                    Nome: <input type="text" name="name" value="{{ strtoupper($p->name) }}">  
+                                                    
+                                                </h5>
+
+                                                <form action="{{ route('admin.destroy') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" value="{{ $p->id }}" name="id">
+                                                    <input type="hidden" value="{{ $p->name }}" name="name">
+                                                    <button type="submit" class="btn-close" aria-label="Close"></button>
+                                                </form>
+                                                                                                
+                                            </div><br>
+                                                                                        
+                                            <p>Descrição: <textarea name="description" value="">{{ $p->description }}</textarea></p>
+                                            Fornecedor: <input type="option" name="fornecedor" value="{{ $p->fornecedor }}">
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center mt-2"> 
+                                                <div class="d-flex justify-content-end">
+                                                    R$ <input type="decimal" name="price" value="{{ $p->price }}">
+
+                                                    Estoque: <input type="number" name="stock" value="{{ $p->stock }}" class="form-control form-control-sm" style="width: 100px;">
+                                                    
+                                                    Categoria:  <select name="category_id">
+                                                                    <option value="{{ $p->category_id }}">{{ $p->category_id }}</option>
+                                                                    <option value="1">1 - Homem</option>
+                                                                    <option value="2">2 - Mulher</option>
+                                                                    <option value="3">3 - Unissex</option>
+                                                                </select>
+
+                                                    <input type="hidden" name="id" value="{{ $p->id }}">
+
+                                                    <button type="submit" class="btn btn-success" style="margin: 0px 0px 0px 10px"><b>ATUALIZAR</b></button>
+                                                    
+                                                                                                            
+                                                </div>                              
+                                        </div>
+                                    </div>
+                                </div>    
                             </div>
                         </div>
                     </div>
-                </div>
+                </form> 
             @endforeach
             {{ $products->links() }}
         </div>

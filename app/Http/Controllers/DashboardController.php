@@ -12,7 +12,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(12);
+        $products = Product::orderBy('name')
+        ->paginate(12);
 
         return view('admin.dashboard', compact('products'));
     }
@@ -52,16 +53,29 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
+        Product::where('id', $request->id)
+        ->update([
+              'name' => $request->name,  
+              'price' => $request->price,  
+              'description' => $request->description,
+              'stock' => $request->stock,   
+              'fornecedor' => $request->fornecedor,          
+              'category_id' => $request->category_id,          
+        ]);
+
+        return redirect()->back()->with('sucess', 'As modificações foram aplicadas!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         //
+        Product::destroy($request->id);
+        return redirect()->back()->with('sucess', "{$request->name} removido com sucesso!");
     }
 }
