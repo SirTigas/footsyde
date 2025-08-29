@@ -13,7 +13,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
 </head>
-<body class='container-fluid'>
+<body>
 
     <!--navbar-->
     <header>

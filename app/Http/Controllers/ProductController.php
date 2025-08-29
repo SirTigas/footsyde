@@ -20,6 +20,7 @@ class ProductController extends Controller
         return view('site.products', compact('products'));    
     }
 
+    //filter products man
     public function man()
     {
         //
@@ -29,6 +30,7 @@ class ProductController extends Controller
         return view('site.products', compact('products'));
     }
 
+    //filter products woman
     public function woman()
     {
         //
@@ -38,6 +40,7 @@ class ProductController extends Controller
         return view('site.products', compact('products'));
     }
 
+    //filter products unissex
         public function unissex()
     {
         //
@@ -47,6 +50,7 @@ class ProductController extends Controller
         return view('site.products', compact('products'));
     }
 
+    //search products
     public function search(Request $request)
     {
         //

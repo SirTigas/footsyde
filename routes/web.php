@@ -49,7 +49,7 @@ Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
 Route::GET('/register', [UserController::class, 'create'])->name('register');
 
-//dashboard
+//dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
