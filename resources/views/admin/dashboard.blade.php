@@ -119,14 +119,20 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <b>R$ {{ number_format($p->price, 2, ',', '.') }}</b>
+                                        
                                         
                                         <form action="{{ route('cart.update') }}" method="POST">
                                             @csrf
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 10px 0px 0px; border-radius: 05px"></button>
+                                                R$ <input type="decimal" name="price" value="{{ number_format($p->price, 2, ',', '.') }}">
+
+                                                Estoque: <input type="number" name="quantity" value="{{ $p->stock }}" class="form-control form-control-sm" style="width: 100px;">
+
+                                                <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 0px 0px 10px; border-radius: 05px"></button>
+                                                
                                                 <input type="hidden" name="id" value="#">
-                                                <input type="number" name="quantity" value="{{ $p->stock }}" class="form-control form-control-sm" style="width: 100px;">
+                                                
+                                                
                                             </div>
                                         </form>     
                                     </div>
