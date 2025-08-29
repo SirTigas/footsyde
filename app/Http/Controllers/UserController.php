@@ -32,6 +32,12 @@ class UserController extends Controller
         //
         $user = $request->all();
         $user['password'] = bcrypt($request->password);
+
+        $userEmail = User::where('email', $request->email)->first();
+
+        if ($userEmail)
+            return redirect()->back()->with('erro', 'O email digitado já está cadastrado!');
+
         $user = User::create($user);
 
         Auth::login($user);

@@ -6,6 +6,11 @@
     <title>Footsyde - CREATE</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 </head>
+
+@if ($mensagem = Session::get('erro'))
+    {{ $mensagem }}
+@endif
+
 @if ($errors->any())
     @foreach ($errors->all() as $error )
         {{ $error }} <br>
@@ -25,6 +30,7 @@
         Senha: <br> <input type="password" name="password"> <br><br>
 
         <button type="submit"> CADASTRAR </button> <button><a href="{{ route('login') }}">LOGIN</a></button>
+
     
     </form>
 </body>
