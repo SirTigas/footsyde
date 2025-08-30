@@ -17,6 +17,17 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact('products'));
     }
+
+    public function search(Request $request)
+    {
+        //
+        $products = Product::where('name', 'like', "%{$request->name}%")
+        ->Orwhere('code', 'like', "%{$request->name}%")
+        ->orderBy('name')
+        ->paginate(5);
+
+        return view('admin.dashboard', compact('products'));
+    }
     
     /**
      * Show the form for creating a new resource.
@@ -76,6 +87,7 @@ class DashboardController extends Controller
     {
         //
         Product::destroy($request->id);
-        return redirect()->back()->with('sucess', "{$request->name} removido com sucesso!");
+        $product = strtoupper($request->name);
+        return redirect()->back()->with('sucess', "{$product} removido com sucesso!");
     }
 }
