@@ -80,6 +80,13 @@ class DashboardController extends Controller
         return redirect()->back()->with('success', 'As modificações foram aplicadas!');
     }
 
+    public function clear()
+    {
+        $products = Product::all();
+        Product::destroy($products);
+        return redirect()->back()->with('succes', 'Todos os produtos do E-commerce foram apagados!');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

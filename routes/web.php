@@ -53,8 +53,13 @@ Route::GET('/register', [UserController::class, 'create'])->name('register');
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::GET('/admin/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
+
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
     Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
+    Route::POST('/admin/dashboard/clear', [DashboardController::class, 'clear'])->name('admin.clear');
+
     Route::view('/admin/dashboard/destroy', 'admin.dashboard_destroy')->name('dashboard.destroy');
+    Route::view('/admin/dashboard/clear', 'admin.dashboard_clear')->name('dashboard.clear');
+    Route::view('/admin/dashboard/add', 'admin.dashboard_add')->name('dashboard.add');
 });
 

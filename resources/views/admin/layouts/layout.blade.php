@@ -37,7 +37,7 @@
 
                                     <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Excluir produtos</a></li>
 
-                                    <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Adicionar produtos</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.add') }}">Adicionar produtos</a></li>
                                 </ul>
                             </li>
                         </li>
