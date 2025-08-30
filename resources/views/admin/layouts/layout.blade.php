@@ -28,6 +28,20 @@
                         <li class="nav-item highlight">
                             <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Dashboard</b> </a>
+                                <ul class="dropdown-menu">
+
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Editar produtos</a></li>
+
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Excluir produtos</a></li>
+
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Adicionar produtos</a></li>
+                                </ul>
+                            </li>
+                        </li>
+
                         @auth
                             <li class="nav-item">
                                 <li class="nav-item dropdown">

@@ -77,7 +77,7 @@ class DashboardController extends Controller
               'category_id' => $request->category_id,          
         ]);
 
-        return redirect()->back()->with('sucess', 'As modificações foram aplicadas!');
+        return redirect()->back()->with('success', 'As modificações foram aplicadas!');
     }
 
     /**
@@ -86,8 +86,14 @@ class DashboardController extends Controller
     public function destroy(Request $request)
     {
         //
-        Product::destroy($request->id);
-        $product = strtoupper($request->name);
-        return redirect()->back()->with('sucess', "{$product} removido com sucesso!");
+        $product = Product::where('code', $request->code)->first();
+        $id = Product::where('code', $request->code)->first();
+        if($id)
+        {
+            Product::destroy($id->id);
+            return redirect()->back()->with('success', "Produto: {$product->name} - ({$request->code}) removido com sucesso!");
+        }else
+            return redirect()->back()->with('erro', "Código {$request->code} não encontrado no banco de dados!");
+        
     }
 }

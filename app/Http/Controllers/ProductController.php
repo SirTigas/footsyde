@@ -80,28 +80,31 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show($code)
     {
         //
-        $product = Product::where('slug', $slug)->with(['category'])->first();
+        $product = Product::where('code', $code)->with(['category'])->first();
+        if ($product)
+        {
+            if (Auth::check()){
+                $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+                $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
 
-        if (Auth::check()){
-            $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
-            $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+                if ($cart != NULL)
+                    $isInCart = TRUE;
+                else
+                    $isInCart = FALSE;
 
-            if ($cart != NULL)
-                $isInCart = TRUE;
+                if ($wishlist != NULL)
+                    $isInList = TRUE;
+                else
+                    $isInList = FALSE;
+
+                return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
             else
-                $isInCart = FALSE;
-
-            if ($wishlist != NULL)
-                $isInList = TRUE;
-            else
-                $isInList = FALSE;
-
-            return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
-        else
-            return view('site.product_details', compact('product'));
+                return view('site.product_details', compact('product'));
+        }else
+            return redirect()->route('produtos.index');
 
     }
 

@@ -19,7 +19,7 @@ Route::GET('/produtos/categorias/homem', [ProductController::class, 'man'])->nam
 Route::GET('/produtos/categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
 Route::GET('/produtos/categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');
 Route::GET('/produto/busca', [ProductController::class, 'search'])->name('products.search');
-Route::GET('/produtos/{$slug}', [ProductController::class, 'show'])->name('products.show');
+Route::GET('/produtos/{$code}', [ProductController::class, 'show'])->name('products.show');
 
 //about
 Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
@@ -54,7 +54,7 @@ Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::GET('/admin/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
-    Route::POST('/admin/dashboard/destroy/product', [DashboardController::class, 'destroy'])->name('admin.destroy');
-    Route::view('/admin/dashboard/destroy', 'admin.dashboard.destroy')->name('dashboard.destroy');
+    Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
+    Route::view('/admin/dashboard/destroy', 'admin.dashboard_destroy')->name('dashboard.destroy');
 });
 

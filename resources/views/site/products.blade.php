@@ -23,11 +23,11 @@
             @foreach ($products as $p )
             <div class='col-3'>
                     <div class="card" style="width: 18rem;">
-                        <a href="{{ route('products.show', $p->slug) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
+                        <a href="{{ route('products.show', $p->code) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
                         <div class="card-body">
                             <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
                             <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
-                            <a href="{{ route('products.show', $p->slug) }}" class="btn btn-success"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
+                            <a href="{{ route('products.show', $p->code) }}" class="btn btn-success"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
                         </div>
                     </div>
                     <br>
