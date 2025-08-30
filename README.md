@@ -18,7 +18,7 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 - Página "Sobre"
 - Sistema de autenticação (login)
 - Carrinho de compras
-- Yampi checkout
+- Checkout própio
 - Organização do código entre front-end e back-end
 
 ## 🚧 Status
