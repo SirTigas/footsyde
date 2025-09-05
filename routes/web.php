@@ -57,6 +57,7 @@ Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
     Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
     Route::POST('/admin/dashboard/clear', [DashboardController::class, 'clear'])->name('admin.clear');
+    Route::POST('/admin/dashboard/store', [DashboardController::class, 'store'])->name('admin.store');
 
     Route::view('/admin/dashboard/destroy', 'admin.dashboard_destroy')->name('dashboard.destroy');
     Route::view('/admin/dashboard/clear', 'admin.dashboard_clear')->name('dashboard.clear');

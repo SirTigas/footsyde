@@ -43,6 +43,18 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'stock' => $request->stock,
+            'category_id' => $request->category_id,
+            'image_path' => $request->thumbnail,
+            'fornecedor' => $request->fornecedor,
+            'code' => rand(1000, 9999),
+        ]);
+
+        return redirect()->back()->with('success', "O produto {$product->name} - código ({$product->code}) - foi adicionado com sucesso!");
     }
 
     /**

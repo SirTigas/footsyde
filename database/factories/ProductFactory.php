@@ -25,7 +25,6 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 100),
             'fornecedor' => fake()->company(),
             'image_path' => 'images/JD8-6364-058_zoom1.png',
-            'slug' => $this->faker->slug(),
             'category_id' => Category::inRandomOrder()->first()->id,
             'code' => $this->faker->numberBetween(1000, 99999),
 
