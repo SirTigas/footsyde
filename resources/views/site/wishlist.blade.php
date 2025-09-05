@@ -21,7 +21,7 @@
         @foreach ($wishlistItems as $list)
             <div class="col-3" style="margin: 20px 0px 10px 0px">
                 <div class="card" style="width: 18rem;">
-                    <a href="{{ route('products.show', $list->product->slug) }}"><img src="{{ $list->product->image_path }}" class="card-img-top" alt="{{ $list->product->name }}"></a>
+                    <a href="{{ route('products.show', $list->product->code) }}"><img src="{{ $list->product->image_path }}" class="card-img-top" alt="{{ $list->product->name }}"></a>
                     <div class="card-body">
                         <h5 class="card-title"><b>{{ strtoupper($list->product->name) }}</b></h5>
                         <p class="card-text">{{ Str::limit($list->product->description, 50)}}</p>

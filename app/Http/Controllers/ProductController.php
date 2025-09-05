@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Wishlist;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
@@ -83,7 +84,10 @@ class ProductController extends Controller
     public function show($code)
     {
         //
-        $product = Product::where('code', $code)->with(['category'])->first();
+        $product = Product::where('code', $code)
+        ->with(['category', 'images'])
+        ->first();
+
         if ($product)
         {
             if (Auth::check()){

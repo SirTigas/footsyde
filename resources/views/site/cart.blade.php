@@ -27,7 +27,7 @@
                         <div class="row g-0">
                             <!-- Imagem -->
                             <div class="col-md-3">
-                                <a href="{{ route('products.show', $cart->product->slug) }}">
+                                <a href="{{ route('products.show', $cart->product->code) }}">
                                     <img src="{{ $cart->product->image_path }}" class="img-fluid rounded-start" alt="{{ strtoupper($cart->product->name) }}">
                                 </a>
                             </div>
@@ -38,7 +38,7 @@
                                     <div>
                                         <div class="d-flex justify-content-between align-items-center mt-2">
                                             <h5 class="card-title">
-                                                <a href="{{ route('products.show', $cart->product->slug) }}" class="text-decoration-none text-dark">
+                                                <a href="{{ route('products.show', $cart->product->code) }}" class="text-decoration-none text-dark">
                                                 {{ strtoupper($cart->product->name) }}
                                                 </a>
                                             </h5>

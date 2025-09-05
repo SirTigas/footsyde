@@ -5,7 +5,28 @@
 <div class="container">
     <div class="row" style="margin: 50px 0px 0px 0px">
         <div class='col-4'>
-            <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}" style="width: 400px; border-radius: 20px">
+            <div id="carouselExample" class="carousel slide">
+            
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ asset($product->image_path) }}" class="d-block w-100" alt="..." style="border-radius: 30px">
+                    </div>
+                    @foreach ( $product->images as $path )
+                        <div class="carousel-item" >
+                            <img src="{{ asset('storage'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
+                        </div>
+                    @endforeach
+                </div>
+            
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Avançar</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Voltar</span>
+                </button>
+            </div>
         </div>
 
         <div class="col-8">

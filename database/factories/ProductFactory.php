@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use \App\Models\Category;
+use App\Models\Product;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -30,4 +31,25 @@ class ProductFactory extends Factory
 
         ];
     }
+
+    public function configure()
+{
+    return $this->afterCreating(function (Product $product) {
+        $images = [
+            '/images/1.png',
+            '/images/2.png',
+            '/images/3.png',
+            '/images/4.png',
+
+        ];
+
+        foreach ($images as $path) {
+            \App\Models\ProductImage::create([
+                'product_id' => $product->id,
+                'path' => $path,
+            ]);
+        }
+    });
+}
+
 }
