@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+
 
 class DashboardController extends Controller
 {
@@ -49,12 +51,24 @@ class DashboardController extends Controller
             'description' => $request->description,
             'stock' => $request->stock,
             'category_id' => $request->category_id,
-            'image_path' => $request->thumbnail,
             'fornecedor' => $request->fornecedor,
             'code' => rand(1000, 9999),
         ]);
 
-        return redirect()->back()->with('success', "O produto {$product->name} - código ({$product->code}) - foi adicionado com sucesso!");
+        $productName = $product->name;
+        $code = $product->code;
+        $dir = "images/products/{$code}/";
+        $image = $request->file('thumbnail');
+        $fileName = "{$code}-Thumbanil.".$image->getClientOriginalExtension();
+
+        //thumbnail create dir
+        Storage::disk('public')->putFileAs($dir, $image, $fileName);
+        $product = Product::where('id', $product->id)
+        ->update([
+            'image_path' => "{$dir}{$fileName}",
+        ]);
+
+        return redirect()->back()->with('success', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
     }
 
     /**
