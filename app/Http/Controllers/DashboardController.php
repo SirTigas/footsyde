@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -28,8 +29,9 @@ class DashboardController extends Controller
         ->Orwhere('code', 'like', "%{$request->name}%")
         ->orderBy('name')
         ->paginate(5);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard', compact('products'));
+        return view('admin.dashboard', compact('products', 'defaultThumbnail'));
     }
     
     /**
@@ -57,17 +59,31 @@ class DashboardController extends Controller
         ]);
 
         $productName = $product->name;
+        $idProduct = $product->id;
         $code = $product->code;
         $dir = "images/products/{$code}/";
-        $image = $request->file('thumbnail');
-        $fileName = "{$code}-Thumbanil.".$image->getClientOriginalExtension();
+        $thumbanail = $request->file('thumbnail');
+        $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
+        $images = $request->file('images');
+        $count = 1;
 
         //thumbnail create dir
-        Storage::disk('public')->putFileAs($dir, $image, $fileName);
-        $product = Product::where('id', $product->id)
+        Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
+        $newProduct = Product::where('id', $product->id)
         ->update([
-            'image_path' => "{$dir}{$fileName}",
+            'image_path' => "{$dir}{$thumbName}",
         ]);
+
+        //carrousel create dir
+        foreach ($images as $img){
+            $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs($dir, $img, $imgName);
+            $imgs = ProductImage::create([                
+                'product_id' => $product->id,
+                'path' => "{$dir}{$imgName}",
+            ]);
+            $count++;
+        };
 
         return redirect()->back()->with('success', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
     }

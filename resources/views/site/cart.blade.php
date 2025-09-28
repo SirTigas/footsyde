@@ -27,9 +27,19 @@
                         <div class="row g-0">
                             <!-- Imagem -->
                             <div class="col-md-3">
+                                @php
+                                    $pathImage = $cart->product->image_path;
+                                    if (Storage::disk('public')->exists($pathImage)){
+                                        $imageSrc = asset('storage/' . $pathImage);
+                                    } else {
+                                        $imageSrc = $pathImage;
+                                    }
+
+                                @endphp
+
                                 <a href="{{ route('products.show', $cart->product->code) }}">
-                                    <img src="{{ $cart->product->image_path }}" class="img-fluid rounded-start" alt="{{ strtoupper($cart->product->name) }}">
-                                </a>
+                                    <img src="{{ $imageSrc }}" class="img-fluid rounded-start" alt="{{ strtoupper($cart->product->name) }}">
+                                </a>   
                             </div>
 
                             <!-- Conteúdo -->

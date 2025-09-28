@@ -28,6 +28,9 @@
         Thumbnail:
         <input type="file" name="thumbnail" accept="image/*"><br><br>
 
+        Imagens:
+        <input type="file" name="images[]" multiple accept="image/*"><br><br>
+
         
 
         <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i> <b>CRIAR PRODUTO</b></button>
