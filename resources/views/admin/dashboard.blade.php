@@ -24,7 +24,12 @@
                                     <!-- Imagem -->
                                     <div class="col-md-3">
                                         <a href="{{ route('products.show', $p->code) }}">
-                                            <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
+                                            @if ($p->image_path != $defaultThumbnail)
+                                                <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
+                                            @else
+                                                <img src="{{ asset($p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
+                                            @endif
+                                            
                                         </a>
                                     </div>
 

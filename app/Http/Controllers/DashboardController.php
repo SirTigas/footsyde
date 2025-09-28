@@ -16,8 +16,9 @@ class DashboardController extends Controller
     {
         $products = Product::orderBy('name')
         ->paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard', compact('products'));
+        return view('admin.dashboard', compact('products', 'defaultThumbnail'));
     }
 
     public function search(Request $request)

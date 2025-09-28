@@ -23,7 +23,12 @@
             @foreach ($products as $p )
             <div class='col-3'>
                     <div class="card" style="width: 18rem;">
-                        <a href="{{ route('products.show', $p->code) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
+                        @if ($p->image_path === $defaultThumbnail)
+                            <a href="{{ route('products.show', $p->code) }}"><img src="{{ asset($p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
+                        @else
+                            <a href="{{ route('products.show', $p->code) }}"><img src="{{ asset('storage/' . $p->image_path) }}" class="card-img-top" alt="{{ $p->name }}"></a>
+                        @endif
+                        
                         <div class="card-body">
                             <h5 class="card-title">{{ strtoupper($p->name) }}</h5>
                             <p class="card-text">{{ Str::limit($p->description, 50) }}</p>

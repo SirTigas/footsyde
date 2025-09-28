@@ -17,8 +17,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products'));    
+        return view('site.products', compact('products', 'defaultThumbnail'));    
     }
 
     //filter products man
@@ -27,8 +28,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '1')
         ->paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products'));
+        return view('site.products', compact('products', 'defaultThumbnail'));
     }
 
     //filter products woman
@@ -37,8 +39,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '2')
         ->paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products'));
+        return view('site.products', compact('products', 'defaultThumbnail'));
     }
 
     //filter products unissex
@@ -47,8 +50,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '3')
         ->paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products'));
+        return view('site.products', compact('products', 'defaultThumbnail'));
     }
 
     //search products
@@ -58,7 +62,9 @@ class ProductController extends Controller
         $products = Product::where('name', 'like', "%{$request->name}%")
         ->orderBy('name')
         ->paginate(12);
-        return view('site.products', compact('products'));
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+
+        return view('site.products', compact('products', 'defaultThumbnail'));
     }
 
     /**
@@ -87,6 +93,7 @@ class ProductController extends Controller
         $product = Product::where('code', $code)
         ->with(['category', 'images'])
         ->first();
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
         if ($product)
         {
@@ -104,9 +111,9 @@ class ProductController extends Controller
                 else
                     $isInList = FALSE;
 
-                return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
+                return view('site.product_details', compact('product', 'isInCart', 'isInList', 'defaultThumbnail'));}
             else
-                return view('site.product_details', compact('product'));
+                return view('site.product_details', compact('product', 'defaultThumbnail'));
         }else
             return redirect()->route('produtos.index');
 
