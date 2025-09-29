@@ -48,35 +48,64 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //validate input datas
-        if($request->name != NULL){
-            //create new product
-            $product = Product::create([
-                'name' => $request->name,
-                'price' => $request->price,
-                'description' => $request->description,
-                'stock' => $request->stock,
-                'category_id' => $request->category_id,
-                'fornecedor' => $request->fornecedor,
-                'code' => rand(1000, 9999),
-            ]);
+        $credentials = $request->validate([
+            'name' => ['required'], 
+            'price' => ['required', 'numeric', 'min:1'],  
+            'stock' => ['required', 'numeric', 'min:1'],  
+            'category_id' => ['required'],  
+            'fornecedor' => ['required'],  
+            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360'],
+        ], [
+            'name.required' => 'O nome do produto é obrigatório!',
 
-            $productName = $product->name;
-            $idProduct = $product->id;
-            $code = $product->code;
-            $dir = "images/products/{$code}/";
-            $thumbanail = $request->file('thumbnail');
-            $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
-            $images = $request->file('images');
-            $count = 1;
+            'price.required' => 'Preço é obrigatório e deve ser no minimo R$1.00!',
+            'price.numeric' => 'Preço deve ser numérico!',
+            'price.min' => 'Preço mínimo é de 1 real!',
 
-            //thumbnail create dir
-            Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
-            $newProduct = Product::where('id', $product->id)
-            ->update([
-                'image_path' => "{$dir}{$thumbName}",
-            ]);
+            'stock.required' => 'Estoque é obrigatório e deve ser no mínimo 1!',
+            'stock.numeric' => 'Estoque deve ser numérico!',
+            'stock.min' => 'Estoque deve ser no mínimo 1!',
 
-            //carousel create dir
+            'category_id.required' => 'A categoria do produto é obrigatório!',
+
+            'fornecedor.required' => 'O nome do Fornecedor do produto é obrigatório!',
+
+            'thumbnail.required' => 'A imagem da capa do produto é obrigatório!',
+            'thumbnail.image' => 'A imagem da capa inválida!',
+            'thumbnail.max' => 'A imagem da capa não pode ultrapassar 2mb!',
+            'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 360x360 px!',
+            
+        ],);
+
+        //create new product
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'stock' => $request->stock,
+            'category_id' => $request->category_id,
+            'fornecedor' => $request->fornecedor,
+            'code' => rand(1000, 9999),
+        ]);
+
+        $productName = $product->name;
+        $idProduct = $product->id;
+        $code = $product->code;
+        $dir = "images/products/{$code}/";
+        $thumbanail = $request->file('thumbnail');
+        $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
+        $images = $request->file('images');
+        $count = 1;
+
+        //thumbnail create dir
+        Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
+        $newProduct = Product::where('id', $product->id)
+        ->update([
+            'image_path' => "{$dir}{$thumbName}",
+        ]);
+
+        //carousel create dir
+        if ($images != NULL){
             foreach ($images as $img){
                 $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs($dir, $img, $imgName);
@@ -86,11 +115,8 @@ class DashboardController extends Controller
                 ]);
                 $count++;
             };
-
-            return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
-        } else {
-            return redirect()->back()->with('msm', "Erro ao cadastrar novo produto!");
         }
+        return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
     }
 
     /**

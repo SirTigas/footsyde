@@ -18,7 +18,7 @@
                 <form action="{{ route('admin.update') }}" method="POST"> 
                         @csrf
                         <div class="col d-flex justify-content-center">
-                            <div class="card mb-3" style="max-width: 1100px;">
+                            <div class="card mb-3" style="max-width: 1000px;">
                                 <div class="row g-0">
                                     
                                     <!-- Imagem -->
@@ -38,16 +38,12 @@
                                         <div class="card-body d-flex flex-column justify-content-between h-100">
                                             <div>
                                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                                    <h5 class="card-title">
-                                                        
-                                                        <p>Nome: <input type="text" name="name" value="{{ strtoupper($p->name) }}"> <small>Código: {{ $p->code }}</small> </p>
-                                                        
+                                                    <h5 class="card-title"> 
+                                                        <p>Nome: <input type="text" name="name" value="{{ strtoupper($p->name) }}"> <small>Código: {{ $p->code }}</small> </p>  
                                                     </h5>
-
-                                                    
-                                                                                                    
-                                                </div><br>
-                                                                                            
+                                                                                                  
+                                                </div>
+                                                              
                                                 <p>Descrição: <textarea name="description" value="">{{ $p->description }}</textarea></p>
                                                 Fornecedor: <input type="option" name="fornecedor" value="{{ $p->fornecedor }}">
                                             </div>
