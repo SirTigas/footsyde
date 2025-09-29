@@ -15,7 +15,7 @@ class OrderItem extends Model
         'product_id',
     ];
 
-    //relationships
+    //defining relationship
     public function order(){
         return $this->belongsTo(Order::class);
     }

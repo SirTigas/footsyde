@@ -18,6 +18,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        //genarator fake products
         return [
             'name' => $this->faker->words(1, true),
             'price' => $this->faker->randomFloat(2, 50, 500),
@@ -33,6 +34,7 @@ class ProductFactory extends Factory
 
     public function configure()
 {
+    //defining carousel images
     return $this->afterCreating(function (Product $product) {
         $images = [
             '/images/1.png',

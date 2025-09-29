@@ -15,7 +15,9 @@ class ProductImage extends Model
         'path',
     ];
 
-    //relationships
+    //defining relationship
+
+    //products table
     public function product(){
         return $this->belongsTo(Product::class);
     }

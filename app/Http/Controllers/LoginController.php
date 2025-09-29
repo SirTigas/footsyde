@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    //
-
+    //Validating credentials for login
     public function auth(Request $request){
 
         $credentials = $request->validate([
@@ -28,6 +27,7 @@ class LoginController extends Controller
         }
     }
 
+    //logout
     public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();

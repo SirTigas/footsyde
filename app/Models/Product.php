@@ -22,11 +22,14 @@ class Product extends Model
         'code',
     ];
 
-    //relationships
+    //defining relationship
+
+    //categories table
     public function category(){
         return $this->belongsTo(Category::class);
     }
 
+    //images of the carousel product_images table
     public function images(){
         return $this->hasMany(ProductImage::class);
     }

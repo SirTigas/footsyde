@@ -13,6 +13,7 @@ class WishlistController extends Controller
      */
     public function index()
     { 
+        //import whishlists table with products table
         $wishlistItems = Wishlist::with([
             'product:id,name,price,image_path,code,description,fornecedor'
         ])
@@ -20,6 +21,7 @@ class WishlistController extends Controller
         ->orderByDesc('id')
         ->paginate(10);
 
+        //checking if the user has an item on the wishlist
         if (empty(Wishlist::where('user_id', Auth::id())->get()->toArray()))
             $user = FALSE;
         else
@@ -41,6 +43,7 @@ class WishlistController extends Controller
      */
     public function store(Request $request)
     {
+        //add new item to wishlist
         $wishlist = $request->all();
         $wishlist['user_id'] = Auth::id();
         $wishlist = Wishlist::create($wishlist);
@@ -77,14 +80,14 @@ class WishlistController extends Controller
      */
     public function destroy(Request $request)
     {
-        //
+        //delete specified item on the wishlist
         Wishlist::destroy($request->id);
         return redirect()->back();
     }
 
     public function clear()
     {
-        //
+        //delete all items on the wishlist
         $list = Wishlist::where('user_id', Auth::id())->get();
         Wishlist::destroy($list);
         return redirect()->back();

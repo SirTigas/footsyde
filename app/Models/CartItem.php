@@ -12,6 +12,7 @@ class CartItem extends Model
     'quantity',
     ];
 
+    //defining relationship
     public function user(){
         return $this->belongsTo(User::class);
     }

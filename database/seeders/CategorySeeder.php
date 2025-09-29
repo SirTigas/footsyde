@@ -11,6 +11,8 @@ class CategorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
+    //defining default categories
     public function run(): void
     {
         Category::create([

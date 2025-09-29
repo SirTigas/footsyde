@@ -29,10 +29,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //create new user in DB
         $user = $request->all();
         $user['password'] = bcrypt($request->password);
 
+        //checking if a user exists in the database
         $userEmail = User::where('email', $request->email)->first();
 
         if ($userEmail)

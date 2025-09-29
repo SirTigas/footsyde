@@ -7,7 +7,8 @@
     </div>
 </div>
 
-@if ($mensagem = Session::get('success'))
+{{--Sucess menssagem--}}
+@if ($mensagem = Session::get('msm'))
     <p class="d-flex justify-content-center">{{ $mensagem }}</p>
 @endif
 

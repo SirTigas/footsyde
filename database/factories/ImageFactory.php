@@ -21,6 +21,7 @@ class ImageFactory extends Factory
     
     public function definition(): array
     {
+        //default images when generating fake products
         $images = [
             'storage/app/public/images/1.png',
             'storage/app/public/images/2.png',

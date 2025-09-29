@@ -47,45 +47,50 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $product = Product::create([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'stock' => $request->stock,
-            'category_id' => $request->category_id,
-            'fornecedor' => $request->fornecedor,
-            'code' => rand(1000, 9999),
-        ]);
-
-        $productName = $product->name;
-        $idProduct = $product->id;
-        $code = $product->code;
-        $dir = "images/products/{$code}/";
-        $thumbanail = $request->file('thumbnail');
-        $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
-        $images = $request->file('images');
-        $count = 1;
-
-        //thumbnail create dir
-        Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
-        $newProduct = Product::where('id', $product->id)
-        ->update([
-            'image_path' => "{$dir}{$thumbName}",
-        ]);
-
-        //carrousel create dir
-        foreach ($images as $img){
-            $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
-            Storage::disk('public')->putFileAs($dir, $img, $imgName);
-            $imgs = ProductImage::create([                
-                'product_id' => $product->id,
-                'path' => "{$dir}{$imgName}",
+        //validate input datas
+        if($request->name != NULL){
+            //create new product
+            $product = Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+                'stock' => $request->stock,
+                'category_id' => $request->category_id,
+                'fornecedor' => $request->fornecedor,
+                'code' => rand(1000, 9999),
             ]);
-            $count++;
-        };
 
-        return redirect()->back()->with('success', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
+            $productName = $product->name;
+            $idProduct = $product->id;
+            $code = $product->code;
+            $dir = "images/products/{$code}/";
+            $thumbanail = $request->file('thumbnail');
+            $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
+            $images = $request->file('images');
+            $count = 1;
+
+            //thumbnail create dir
+            Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
+            $newProduct = Product::where('id', $product->id)
+            ->update([
+                'image_path' => "{$dir}{$thumbName}",
+            ]);
+
+            //carousel create dir
+            foreach ($images as $img){
+                $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs($dir, $img, $imgName);
+                $imgs = ProductImage::create([                
+                    'product_id' => $product->id,
+                    'path' => "{$dir}{$imgName}",
+                ]);
+                $count++;
+            };
+
+            return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi adicionado com sucesso!");
+        } else {
+            return redirect()->back()->with('msm', "Erro ao cadastrar novo produto!");
+        }
     }
 
     /**
@@ -109,7 +114,7 @@ class DashboardController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        //update product info
         Product::where('id', $request->id)
         ->update([
               'name' => $request->name,  
@@ -125,6 +130,7 @@ class DashboardController extends Controller
 
     public function clear()
     {
+        //Delete all products of the DB
         $products = Product::all();
         Product::destroy($products);
         return redirect()->back()->with('succes', 'Todos os produtos do E-commerce foram apagados!');

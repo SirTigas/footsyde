@@ -14,11 +14,14 @@ class Review extends Model
         'product_id',
     ];
 
-    //relationships
+    //defining relationship
+
+    //users table
     public function user(){
         return $this->belongsTo(User::class);
     }
 
+    //products table
     public function product(){
         return $this->belongsTo(Product::class);
     }
