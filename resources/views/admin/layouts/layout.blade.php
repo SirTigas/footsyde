@@ -35,6 +35,8 @@
 
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Editar produtos</a></li>
 
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.photos') }}">Galeria de fotos</a></li>
+
                                     <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Excluir produtos</a></li>
 
                                     <li><a class="dropdown-item" href="{{ route('dashboard.add') }}">Adicionar produtos</a></li>

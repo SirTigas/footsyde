@@ -3,8 +3,15 @@
 
 @section('conteudo')
 <div class="container-fluid" style="margin:30px 0px 0px 0px">
-    @if ($mensagem = Session::get('success'))
+    {{--Sucess menssagem--}}
+    @if ($mensagem = Session::get('msm'))
         <p class="d-flex justify-content-center">{{ $mensagem }}</p>
+    @endif
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error )
+            {{ $error }} <br>
+        @endforeach
     @endif
 
     @if(count($products) == 0)
@@ -15,7 +22,7 @@
         </div> 
     @else
             @foreach ($products as $p )
-                <form action="{{ route('admin.update') }}" method="POST"> 
+                <form action="{{ route('admin.photo') }}" method="POST" enctype="multipart/form-data"> 
                         @csrf
                         <div class="col d-flex justify-content-center">
                             <div class="card mb-3" style="max-width: 1000px;">
@@ -37,36 +44,34 @@
                                         <div class="card-body d-flex flex-column justify-content-between h-100">
                                             <div>
                                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                                    <h5 class="card-title"> 
-                                                        <p>Nome: <input type="text" name="name" value="{{ strtoupper($p->name) }}"> <small>Código: {{ $p->code }}</small> </p>  
-                                                    </h5>
-                                                                                                  
+                                                    <p>Nome: <b>{{ strtoupper($p->name) }}</b></p>
+                                                    <p>Código: <b>{{ $p->code }}</b></p>                                                    
                                                 </div>
                                                               
-                                                <p>Descrição: <textarea name="description" value="">{{ $p->description }}</textarea></p>
-                                                Fornecedor: <input type="option" name="fornecedor" value="{{ $p->fornecedor }}">
+                                                <p>Descrição: <b>{{ $p->description }}</b></p>
+
+                                                <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
+
+                                                <p>Categoria:  <b>{{ $p->category_id }}</b></p>
                                             </div>
 
                                             <div class="d-flex justify-content-between align-items-center mt-2"> 
                                                 <div class="d-flex justify-content-end">
-                                                    R$ <input type="decimal" name="price" value="{{ $p->price }}">
+                                                    <p>Capa: <input type="file" name="thumbnail" accept="image/*"></p>
 
-                                                    Estoque: <input type="number" name="stock" value="{{ $p->stock }}" class="form-control form-control-sm" style="width: 100px;">
-                                                    
-                                                    Categoria:  <select name="category_id">
-                                                                    <option value="{{ $p->category_id }}">{{ $p->category_id }}</option>
-                                                                    <option value="1">1 - Homem</option>
-                                                                    <option value="2">2 - Mulher</option>
-                                                                    <option value="3">3 - Unissex</option>
-                                                                </select>
+                                                    <p>Carrossel: <input type="file" name="images[]" multiple accept="image/*"></p>
+
+                                                    <input type="hidden" name="name" value="{{ $p->name }}">
+                                                    <input type="hidden" name="code" value="{{ $p->code }}">
                                                     <input type="hidden" name="id" value="{{ $p->id }}">
 
                                                     <button type="submit" class="btn btn-success" style="margin:0px 0px 0px 10px"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>
-
-                                                                                                                    
+                                                                  
                                                 </div>                              
-                                            </div>
+                                            </div>                               
                                         </div>
+
+                                        
                                     </div>    
                                 </div>
                             </div>

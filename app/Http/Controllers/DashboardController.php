@@ -22,6 +22,16 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('products', 'defaultThumbnail'));
     }
 
+    public function photo_index()
+    {
+        $products = Product::orderBy('name')
+        ->with(['images'])
+        ->paginate(12);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+
+        return view('admin.dashboard_photos', compact('products', 'defaultThumbnail'));
+    }
+
     public function search(Request $request)
     {
         //
@@ -32,6 +42,7 @@ class DashboardController extends Controller
         $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
         return view('admin.dashboard', compact('products', 'defaultThumbnail'));
+        //return back()->with(compact('products', 'defaultThumbnail'));
     }
     
     /**
@@ -54,7 +65,9 @@ class DashboardController extends Controller
             'stock' => ['required', 'numeric', 'min:1'],  
             'category_id' => ['required'],  
             'fornecedor' => ['required'],  
-            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360'],
+            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
+            'images' => ['array', 'max:5'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=360,height=360']
         ], [
             'name.required' => 'O nome do produto é obrigatório!',
 
@@ -71,10 +84,17 @@ class DashboardController extends Controller
             'fornecedor.required' => 'O nome do Fornecedor do produto é obrigatório!',
 
             'thumbnail.required' => 'A imagem da capa do produto é obrigatório!',
-            'thumbnail.image' => 'A imagem da capa inválida!',
+            'thumbnail.image' => 'A imagem da capa é inválida!',
             'thumbnail.max' => 'A imagem da capa não pode ultrapassar 2mb!',
             'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 360x360 px!',
-            
+            'thumbnail.mimes' => 'A imagem da capa deve ser (jpeg, png, jpg)',
+
+            'images.max' => 'O carrossel suporta no máximo 5 imagens + capa!',
+
+            'images.*.image' => 'A imagem do carrossel é inválida!',
+            'images.*.max' => 'A imagem do carrossel não pode ultrapassar 2mb!',
+            'images.*.dimensions' => 'A imagem do carrossel deve ter exatamente 360x360 px!',
+            'images.*.mimes' => 'A imagem do carrossel deve ser (jpeg, png, jpg)',    
         ],);
 
         //create new product
@@ -130,9 +150,63 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        //validate input datas
+        $credentials = $request->validate([
+            'name' => ['required'],     
+            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
+            'images' => ['array', 'max:5'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=360,height=360']
+        ], [
+            'name.required' => 'O nome do produto é obrigatório!',
+
+            'thumbnail.required' => 'Nenhuma imagem carregada!',
+            'thumbnail.image' => 'A imagem da capa inválida!',
+            'thumbnail.max' => 'A imagem da capa não pode ultrapassar 2mb!',
+            'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 360x360 px!',
+            'thumbnail.mimes' => 'A imagem da capa deve ser (jpeg, png, jpg)',
+
+            'images.max' => 'O carrossel suporta no máximo 5 imagens + capa!',
+
+            'images.image' => 'A imagem do carrossel inválida!',
+            'images.max' => 'A imagem do carrossel não pode ultrapassar 2mb!',
+            'images.dimensions' => 'A imagem do carrossel deve ter exatamente 360x360 px!',
+            'images.mimes' => 'A imagem do carrossel deve ser (jpeg, png, jpg)',
+            
+        ],);
+
+        $productName = $request->name;
+        $code = $request->code;
+        $id = $request->id;
+        $dir = "images/products/{$code}/";
+        $thumbanail = $request->file('thumbnail');
+        $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
+        $images = $request->file('images');
+        $count = 1;
+
+        //thumbnail edit image
+        Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
+        $thumbEdit = Product::where('id', $id)
+        ->updateOrCreate([
+            'image_path' => "{$dir}{$thumbName}",
+        ]);
+
+        //carousel edit images
+        if ($images != NULL){
+            foreach ($images as $img){
+                $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs($dir, $img, $imgName);
+                $imgsEdit = ProductImage::where('product_id', $id)->where('path', 'like', "images/products/{$code}/{$code}-image({$count})%")
+                ->updateOrCreate([                
+                    'product_id' => $id,
+                    'path' => "{$dir}{$imgName}",
+                ]);
+                $count++;
+            };
+        }
+
+        return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi alterado com sucesso!");
     }
 
     /**
