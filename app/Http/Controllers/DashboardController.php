@@ -188,17 +188,20 @@ class DashboardController extends Controller
         //thumbnail edit image
         Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
         $thumbEdit = Product::where('id', $id)
-        ->updateOrCreate([
+        ->update([
             'image_path' => "{$dir}{$thumbName}",
         ]);
 
         //carousel edit images
         if ($images != NULL){
+            //delete old carousel
+            ProductImage::where('product_id', $id)->delete();
+
             foreach ($images as $img){
+                //create new carousel
                 $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
                 Storage::disk('public')->putFileAs($dir, $img, $imgName);
-                $imgsEdit = ProductImage::where('product_id', $id)->where('path', 'like', "images/products/{$code}/{$code}-image({$count})%")
-                ->updateOrCreate([                
+                $newCarousel = ProductImage::Create([                
                     'product_id' => $id,
                     'path' => "{$dir}{$imgName}",
                 ]);
