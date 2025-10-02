@@ -14,7 +14,7 @@
                         </div>
                         @foreach ( $product->images as $path )
                             <div class="carousel-item" >
-                                <img src="{{ asset('storage'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
+                                <img src="{{ asset('storage/'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
                             </div>
                         @endforeach
                     </div>

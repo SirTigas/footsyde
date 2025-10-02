@@ -1,4 +1,4 @@
-@extends('admin.layouts.layout')
+@extends('admin.layouts.layout_photos')
 
 
 @section('conteudo')
@@ -17,10 +17,12 @@
     @if(count($products) == 0)
         <div class="row" style="margin: 50px 0px 50px 0px">
             <div class='col'>
-                <h1 class="text-center" style="font-weight: bolder">Produto não encontrado na base de dados!</h1>
+                <h1 class="text-center" style="font-weight: bolder">Produtos não encontrados na base de dados!</h1>
             </div>
         </div> 
     @else
+            <h1 style="text-align: center;"><b>GALERIA DE FOTOS</b></h1>
+
             @foreach ($products as $p )
                 <form action="{{ route('admin.photo') }}" method="POST" enctype="multipart/form-data"> 
                         @csrf
@@ -37,7 +39,7 @@
                                                 <img src="{{ asset($p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
                                             @endif                                           
                                         </a>
-                                    </div>
+                                    </div>                                   
 
                                     <!-- Conteúdo -->
                                     <div class="col-md-9">
@@ -47,8 +49,6 @@
                                                     <p>Nome: <b>{{ strtoupper($p->name) }}</b></p>
                                                     <p>Código: <b>{{ $p->code }}</b></p>                                                    
                                                 </div>
-                                                              
-                                                <p>Descrição: <b>{{ $p->description }}</b></p>
 
                                                 <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
 

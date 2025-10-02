@@ -32,7 +32,7 @@ class DashboardController extends Controller
         return view('admin.dashboard_photos', compact('products', 'defaultThumbnail'));
     }
 
-    public function search(Request $request)
+    public function search_edit(Request $request)
     {
         //
         $products = Product::where('name', 'like', "%{$request->name}%")
@@ -42,6 +42,19 @@ class DashboardController extends Controller
         $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
         return view('admin.dashboard', compact('products', 'defaultThumbnail'));
+        //return back()->with(compact('products', 'defaultThumbnail'));
+    }
+
+    public function search_photos(Request $request)
+    {
+        //
+        $products = Product::where('name', 'like', "%{$request->name}%")
+        ->Orwhere('code', 'like', "%{$request->name}%")
+        ->orderBy('name')
+        ->paginate(5);
+        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+
+        return view('admin.dashboard_photos', compact('products', 'defaultThumbnail'));
         //return back()->with(compact('products', 'defaultThumbnail'));
     }
     
@@ -155,13 +168,12 @@ class DashboardController extends Controller
         //validate input datas
         $credentials = $request->validate([
             'name' => ['required'],     
-            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
+            'thumbnail' => ['image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
             'images' => ['array', 'max:5'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=360,height=360']
         ], [
             'name.required' => 'O nome do produto é obrigatório!',
 
-            'thumbnail.required' => 'Nenhuma imagem carregada!',
             'thumbnail.image' => 'A imagem da capa inválida!',
             'thumbnail.max' => 'A imagem da capa não pode ultrapassar 2mb!',
             'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 360x360 px!',
@@ -176,40 +188,48 @@ class DashboardController extends Controller
             
         ],);
 
-        $productName = $request->name;
-        $code = $request->code;
-        $id = $request->id;
-        $dir = "images/products/{$code}/";
         $thumbanail = $request->file('thumbnail');
-        $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
         $images = $request->file('images');
-        $count = 1;
 
-        //thumbnail edit image
-        Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
-        $thumbEdit = Product::where('id', $id)
-        ->update([
-            'image_path' => "{$dir}{$thumbName}",
-        ]);
+        if (($thumbanail || $images)){
 
-        //carousel edit images
-        if ($images != NULL){
-            //delete old carousel
-            ProductImage::where('product_id', $id)->delete();
+            $productName = $request->name;
+            $code = $request->code;
+            $id = $request->id;
+            $dir = "images/products/{$code}/";
+            $count = 1;
 
-            foreach ($images as $img){
-                //create new carousel
-                $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs($dir, $img, $imgName);
-                $newCarousel = ProductImage::Create([                
-                    'product_id' => $id,
-                    'path' => "{$dir}{$imgName}",
+            //thumbnail edit image
+            if ($thumbanail != NULL){
+                $thumbName = "{$code}-Thumbanil.".$thumbanail->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs($dir, $thumbanail, $thumbName);
+                $thumbEdit = Product::where('id', $id)
+                ->update([
+                    'image_path' => "{$dir}{$thumbName}",
                 ]);
-                $count++;
-            };
+            }
+
+            //carousel edit images
+            if ($images != NULL){
+                //delete old carousel
+                ProductImage::where('product_id', $id)->delete();
+
+                foreach ($images as $img){
+                    //create new carousel
+                    $imgName = "{$code}-image($count).".$img->getClientOriginalExtension();
+                    Storage::disk('public')->putFileAs($dir, $img, $imgName);
+                    $newCarousel = ProductImage::Create([                
+                        'product_id' => $id,
+                        'path' => "{$dir}{$imgName}",
+                    ]);
+                    $count++;
+                };
+            }
+            return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi alterado com sucesso!");
+        } else {
+            return redirect()->back()->with('msm', "Nenhuma modificação realizada!");
         }
 
-        return redirect()->back()->with('msm', "O produto {$productName} - código ({$code}) - foi alterado com sucesso!");
     }
 
     /**

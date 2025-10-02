@@ -53,7 +53,8 @@ Route::GET('/register', [UserController::class, 'create'])->name('register');
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::GET('/admin/dashboard/photos', [DashboardController::class, 'photo_index'])->name('dashboard.photos');
-    Route::GET('/admin/dashboard/search', [DashboardController::class, 'search'])->name('dashboard.search');
+    Route::GET('/admin/dashboard/search', [DashboardController::class, 'search_edit'])->name('dashboard.search');
+    Route::GET('/admin/dashboard/search/photos', [DashboardController::class, 'search_photos'])->name('dashboard.search_photos');
 
     Route::POST('/admin/dashboard/photos', [DashboardController::class, 'edit'])->name('admin.photo');
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
