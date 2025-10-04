@@ -72,7 +72,7 @@
                     <form action="#">
                         @csrf
                         <div class="d-grid gap-2 col-6">
-                            <a href="#" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
+                            <a href="{{ route('site.checkout') }}" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
                         </div>
                     </form>
                     

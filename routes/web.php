@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AuthAdminMiddleware;
 
 Route::GET('/', [HomeController::class, 'index'])->name('site.home');
@@ -48,6 +49,14 @@ Route::view('/login', 'login.form')->name('login');
 Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
 Route::GET('/register', [UserController::class, 'create'])->name('register');
+
+//Checkout
+Route::middleware('auth')->group(function () {
+    Route::GET('/checkout', [OrderController::class, 'index'])->name('site.checkout');
+    //Route::POST('/wish/destroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    //Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
+
+});
 
 //dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
