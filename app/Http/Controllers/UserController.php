@@ -29,6 +29,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'required|min:1|max:10',
+            'last_name' => 'required|min:1|max:10',
+            'email' => 'required|email',
+            'password' => 'required|min:4|max:8'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório!',
+
+            'name.min' => 'O nome deve ter no mínimo 3 caracteres',
+            'name.max' => 'O nome deve ter no máximo 10 caracteres',
+
+            'last_name.max' => 'O Sobrenome deve ter no máximo 10 caracteres',
+            'last_name.min' => 'O Sobrenome deve ter no mínimo 1 caracteres',
+
+            'email.email' => 'Formato de email inválido',
+
+            'password.min' => 'A senha deve ter no mínimo 4 caracteres',
+            'password.max' => 'A senha deve ter no máximo 8 caracteres',
+        ];
+
+        $request->validate($rules, $feedback);
+
         //create new user in DB
         $user = $request->all();
         $user['password'] = bcrypt($request->password);
@@ -38,7 +62,6 @@ class UserController extends Controller
 
         if ($userEmail)
             return redirect()->back()->with('erro', 'O email digitado já está cadastrado!');
-
         $user = User::create($user);
 
         Auth::login($user);

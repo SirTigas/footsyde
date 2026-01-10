@@ -16,11 +16,13 @@ Route::GET('/', [HomeController::class, 'index'])->name('site.home');
 
 //product
 Route::resource('produtos', ProductController::class);
-Route::GET('/produtos/categorias/homem', [ProductController::class, 'man'])->name('products.man');
-Route::GET('/produtos/categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
-Route::GET('/produtos/categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');
-Route::GET('/produto/busca', [ProductController::class, 'search'])->name('products.search');
-Route::GET('/produtos/{$code}', [ProductController::class, 'show'])->name('products.show');
+Route::prefix('produtos/')->group(function () {
+    Route::GET('categorias/homem', [ProductController::class, 'man'])->name('products.man');
+    Route::GET('categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
+    Route::GET('categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');
+    Route::GET('busca', [ProductController::class, 'search'])->name('products.search');
+    Route::GET('{$code}', [ProductController::class, 'show'])->name('products.show');
+});
 
 //about
 Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
