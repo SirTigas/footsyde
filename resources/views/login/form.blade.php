@@ -13,6 +13,12 @@
             <div class="card-body">
                 <form action="{{ route('login.auth') }}" method="POST">
                     @csrf
+                    @if ($mensagem = Session::get('erro'))
+                        <span>
+                            <strong style="color:red">{{ $mensagem }}</strong>
+                        </span>
+                    @endif
+                                         
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
