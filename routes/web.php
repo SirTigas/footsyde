@@ -12,16 +12,19 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AuthAdminMiddleware;
 
-Route::GET('/', [HomeController::class, 'index'])->name('site.home');
+Route::GET('/home', [HomeController::class, 'index'])->name('site.home');
+Route::GET('', function(){
+    return redirect()->route('site.home');
+});
 
 //product
-Route::resource('produtos', ProductController::class);
 Route::prefix('produtos/')->group(function () {
+    Route::GET('', [ProductController::class, 'index'])->name('products.index');
     Route::GET('categorias/homem', [ProductController::class, 'man'])->name('products.man');
     Route::GET('categorias/mulher', [ProductController::class, 'woman'])->name('products.woman');
     Route::GET('categorias/unissex', [ProductController::class, 'unissex'])->name('products.unissex');
     Route::GET('busca', [ProductController::class, 'search'])->name('products.search');
-    Route::GET('{$code}', [ProductController::class, 'show'])->name('products.show');
+    Route::GET('{code}', [ProductController::class, 'show'])->name('products.show');
 });
 
 //about
@@ -29,20 +32,14 @@ Route::GET('/sobre', [SobreController::class, 'index'])->name('site.sobre');
 
 //cart-list
 Route::middleware('auth')->group(function () {
-    Route::resource('cartitem', CartController::class);
-    Route::GET('/carrinho', [CartController::class, 'index'])->name('site.cart');
-    Route::POST('/cart/update', [CartController::class, 'update'])->name('cart.update');
-    Route::POST('/cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::resource('carrinho', CartController::class);
     Route::POST('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 //wishlist
 Route::middleware('auth')->group(function () {
-    Route::resource('favitem', WishlistController::class);
-    Route::GET('/favoritos', [WishlistController::class, 'index'])->name('site.wishlist');
-    Route::POST('/wish/destroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    Route::resource('favoritos', WishlistController::class);
     Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
-
 });
 
 //login/register/logout
@@ -55,9 +52,6 @@ Route::GET('/register', [UserController::class, 'create'])->name('register');
 //Checkout
 Route::middleware('auth')->group(function () {
     Route::GET('/checkout', [OrderController::class, 'index'])->name('site.checkout');
-    //Route::POST('/wish/destroy', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
-    //Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
-
 });
 
 //dashboard ONLY ADMS

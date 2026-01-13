@@ -71,10 +71,10 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
         //
-        CartItem::where('id', $request->id)->update([
+        CartItem::where('id', $id)->update([
             'quantity' => $request->quantity,
         ]);
 
@@ -84,10 +84,10 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $id)
+    public function destroy(String $id)
     {
         //
-        CartItem::destroy($id->id);
+        CartItem::destroy($id);
         return redirect()->back();
     }
 

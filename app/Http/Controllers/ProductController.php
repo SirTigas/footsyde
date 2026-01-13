@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //show all list of product
     public function index()
     {
         $products = Product::paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products', 'defaultThumbnail'));    
+        return view('site.products', compact('products'));    
     }
 
     //filter products man
@@ -62,45 +59,25 @@ class ProductController extends Controller
         $products = Product::where('name', 'like', "%{$request->name}%")
         ->orderBy('name')
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products', 'defaultThumbnail'));
+        return view('site.products', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-        
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    //show the details of products
     public function show($code)
     {
-        //
+        //recuperando dados da tabela "products" e outras relacionadas
         $product = Product::where('code', $code)
         ->with(['category', 'images'])
         ->first();
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
-
+        
+        //verificando se o produto existe na base de dados
         if ($product)
         {
+            //verificando se o usuário está logado. Aqui é feita também a verificação se o produto já se encontra na lista de favoritos ou no carrinho de compra do usuário
             if (Auth::check()){
                 $cart = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
                 $wishlist = Wishlist::where('user_id', Auth::id())->where('product_id', $product->id)->first();
-
                 if ($cart != NULL)
                     $isInCart = TRUE;
                 else
@@ -111,35 +88,12 @@ class ProductController extends Controller
                 else
                     $isInList = FALSE;
 
-                return view('site.product_details', compact('product', 'isInCart', 'isInList', 'defaultThumbnail'));}
+                return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
             else
-                return view('site.product_details', compact('product', 'defaultThumbnail'));
+                return view('site.product_details', compact('product'));
         }else
-            return redirect()->route('produtos.index');
+            return redirect()->route('products.index');
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

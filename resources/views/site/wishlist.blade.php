@@ -38,9 +38,9 @@
                         <p class="card-text">{{ Str::limit($list->product->description, 50)}}</p>
 
 
-                        <form action="{{ route('wishlist.destroy') }}" method="POST">
+                        <form action="{{ route('favoritos.destroy', $list->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="id" value="{{ $list->id }}">
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger"><i class="bi bi-heartbreak-fill"></i> <b>REMOVER</b></button>
                         </form>
                     </div>

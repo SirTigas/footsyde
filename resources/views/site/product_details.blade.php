@@ -4,59 +4,33 @@
 @section('conteudo')
 <div class="container">
     <div class="row" style="margin: 50px 0px 0px 0px">
-        @if($product->image_path === $defaultThumbnail)
-            <div class='col-4'>
-                <div id="carouselExample" class="carousel slide">
-                
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{{ asset($product->image_path) }}" class="d-block w-100" alt="..." style="border-radius: 30px">
-                        </div>
-                        @foreach ( $product->images as $path )
-                            <div class="carousel-item" >
-                                <img src="{{ asset('storage/'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
-                            </div>
-                        @endforeach
-                    </div>
-                
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Avançar</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Voltar</span>
-                    </button>
-                </div>
-            </div>
-        
-        @else
-            <div class='col-4'>
-                <div id="carouselExample" class="carousel slide">
-                
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="{{ asset('storage/' . $product->image_path) }}" class="d-block w-100" alt="..." style="border-radius: 30px">
-                        </div>
-                        @foreach ( $product->images as $path )
-                            <div class="carousel-item" >
-                                <img src="{{ asset('storage/'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
-                            </div>
-                        @endforeach
-                    </div>
-                
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Avançar</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Voltar</span>
-                    </button>
-                </div>
-            </div>
-        @endif
 
+        {{-- carrossel onde é exibido todas as fotos dos produtos --}}
+        <div class='col-4'>
+            <div id="carouselExample" class="carousel slide">
+            
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ asset('storage/'. $product->image_path) }}" class="d-block w-100" alt="..." style="border-radius: 30px">
+                    </div>
+                    @foreach ( $product->images as $path )
+                        <div class="carousel-item" >
+                            <img src="{{ asset('storage/'. $path->path) }}" class="d-block w-100" alt="$pa" style="border-radius: 30px">
+                        </div>
+                    @endforeach
+                </div>
+            
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Avançar</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Voltar</span>
+                </button>
+            </div>
+        </div>
+        
         <div class="col-8">
             <h3>{{ strtoupper($product->name) }}</h3>
             <br>
@@ -65,10 +39,11 @@
             <p>Vendido e entregue por: <b>{{ $product->fornecedor }}</b></p>
             <h1>R$ {{ number_format($product->price, 2, ',', '.') }}</h1>
             <p>
+            {{-- Aqui ocorre a verificação se o usuário está logado para prosseguir com a compra, adicionar ao carrinho ou lista de favoritos, caso contrário é redirecionado para tela de login --}}
             @auth
                 <div class="row">
 
-                    {{--acomprar--}}
+                    {{--comprar--}}
                     <form action="#">
                         @csrf
                         <div class="d-grid gap-2 col-6">
@@ -78,7 +53,7 @@
                     
                     
                     {{--salvando no carrinho--}}
-                    <form action="{{ route('cartitem.store') }}" method="POST" style="margin: 10px 0px 10px 0px">
+                    <form action="{{ route('carrinho.store') }}" method="POST" style="margin: 10px 0px 10px 0px">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
@@ -86,7 +61,7 @@
                     
                         @if ($isInCart)
                             <div class="d-grid gap-2 col-6">
-                                <a href="{{ route('site.cart') }}" class="btn btn-primary">
+                                <a href="{{ route('carrinho.index') }}" class="btn btn-primary">
                                     <i class="bi bi-cart-fill"></i> <b>CARRINHO</b>
                                 </a>
                             </div>
@@ -99,12 +74,12 @@
                     </form>
 
                     {{--salvando nos favoritos--}}
-                    <form action="{{ route('favitem.store') }}" method="POST">
+                    <form action="{{ route('favoritos.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         @if ($isInList)
                             <div class="d-grid gap-2 col-6">
-                                <a href="{{ route('site.wishlist') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>
+                                <a href="{{ route('favoritos.index') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>
                             </div>
                         @else
                             <div class="d-grid gap-2 col-6">
@@ -125,8 +100,7 @@
                 </div>            
                             
             @endauth
-                
-            
+                            
             </p>
         </div>
     </div>

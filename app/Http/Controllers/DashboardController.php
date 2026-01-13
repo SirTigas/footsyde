@@ -17,9 +17,8 @@ class DashboardController extends Controller
     {
         $products = Product::orderBy('name')
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard', compact('products', 'defaultThumbnail'));
+        return view('admin.dashboard', compact('products'));
     }
 
     public function photo_index()
@@ -27,9 +26,8 @@ class DashboardController extends Controller
         $products = Product::orderBy('name')
         ->with(['images'])
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard_photos', compact('products', 'defaultThumbnail'));
+        return view('admin.dashboard_photos', compact('products'));
     }
 
     public function search_edit(Request $request)
@@ -39,10 +37,9 @@ class DashboardController extends Controller
         ->Orwhere('code', 'like', "%{$request->name}%")
         ->orderBy('name')
         ->paginate(5);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard', compact('products', 'defaultThumbnail'));
-        //return back()->with(compact('products', 'defaultThumbnail'));
+        return view('admin.dashboard', compact('products'));
+        //return back()->with(compact('products'));
     }
 
     public function search_photos(Request $request)
@@ -52,10 +49,9 @@ class DashboardController extends Controller
         ->Orwhere('code', 'like', "%{$request->name}%")
         ->orderBy('name')
         ->paginate(5);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('admin.dashboard_photos', compact('products', 'defaultThumbnail'));
-        //return back()->with(compact('products', 'defaultThumbnail'));
+        return view('admin.dashboard_photos', compact('products'));
+        //return back()->with(compact('products'));
     }
     
     /**

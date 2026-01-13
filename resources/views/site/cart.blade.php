@@ -53,13 +53,11 @@
                                                 </a>
                                             </h5>
 
-                                            <form action="{{ route('cart.destroy') }}" method="POST">
+                                            <form action="{{ route('carrinho.destroy', $cart->id) }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" value="{{ $cart->id }}" name="id">
+                                                @method('DELETE')
                                                 <button type="submit" class="btn-close" aria-label="Close"></button>
-                                            </form>
-                                            
-                                            
+                                            </form>                                                                                        
                                         </div><br>
                                         
                                         <p class="card-text">{{ Str::limit($cart->product->description, 150) }}</p>
@@ -67,19 +65,15 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <b>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</b>
-                                        
-                                            <form action="{{ route('cart.update') }}" method="POST">
-                                                @csrf
-                                                <div class="d-flex justify-content-end">
-                                                    <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 10px 0px 0px; border-radius: 05px"></button>
-                                                    <input type="hidden" name="id" value="{{ $cart->id }}">
-                                                    <input type="number" name="quantity" value="{{ $cart->quantity }}" class="form-control form-control-sm" style="width: 30px;">
-                                                </div>
-                                            </form>
-                                            
-                                        
-                                        
+                                        <b>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</b>                                    
+                                        <form action="{{ route('carrinho.update', $cart->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 10px 0px 0px; border-radius: 05px"></button>
+                                                <input type="number" name="quantity" value="{{ $cart->quantity }}" class="form-control form-control-sm" style="width: 30px;">
+                                            </div>
+                                        </form>                                             
                                     </div>
                                 </div>
                             </div>

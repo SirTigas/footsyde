@@ -28,11 +28,11 @@
                     
                     @auth
                         <li class="nav-item">
-                            <a href="{{ route('site.wishlist') }}"><img src="{{ asset('images/icons/heart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 20px 0px 0px"></i></a>
+                            <a href="{{ route('favoritos.index') }}"><img src="{{ asset('images/icons/heart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 20px 0px 0px"></i></a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('site.cart') }}"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
+                            <a href="{{ route('carrinho.index') }}"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
                         </li>                      
                     @endauth
 

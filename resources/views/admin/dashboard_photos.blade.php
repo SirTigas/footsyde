@@ -27,17 +27,13 @@
                 <form action="{{ route('admin.photo') }}" method="POST" enctype="multipart/form-data"> 
                         @csrf
                         <div class="col d-flex justify-content-center">
-                            <div class="card mb-3" style="max-width: 1000px;">
+                            <div class="card mb-3" style="max-width: 1100px;">
                                 <div class="row g-0">
                                     
                                     <!-- Imagem -->
                                     <div class="col-md-3">
                                         <a href="{{ route('products.show', $p->code) }}">
-                                            @if ($p->image_path != $defaultThumbnail)
-                                                <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
-                                            @else
-                                                <img src="{{ asset($p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">
-                                            @endif                                           
+                                            <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">                       
                                         </a>
                                     </div>                                   
 
