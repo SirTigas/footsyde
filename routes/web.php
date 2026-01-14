@@ -91,3 +91,6 @@ Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::view('/admin/dashboard/add', 'admin.dashboard_add')->name('dashboard.add');
 });
 
+Route::fallback(function () {
+    return redirect()->route('site.home');
+});
