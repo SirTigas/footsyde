@@ -1,8 +1,3 @@
-@extends('login.layouts.layout')
-@section('title', 'Fazer Login')
-
-@section('conteudo')
-
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -47,7 +42,16 @@
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
+
+            @if (Route::has('password.request'))
+                <a href="{{ route('register') }}">
+                    <x-secondary-button class="ms-3">
+                        {{ __('Register') }}
+                    </x-secondary-button>
+                </a>
+            @endif
+
+            
         </div>
     </form>
 </x-guest-layout>
-@endsection

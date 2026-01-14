@@ -33,12 +33,16 @@
 
                         <li class="nav-item">
                             <a href="{{ route('carrinho.index') }}"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
+                        </li>
+
+                        <li class="nav-item highlight">
+                            <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('site.home') }}">Home</a>
                         </li>                      
                     @endauth
-
-                    <li class="nav-item highlight">
-                        <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
-                    </li>
 
                     <li class="nav-item">
                         <li class="nav-item dropdown">
@@ -57,11 +61,12 @@
                         <li class="nav-item">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Olá, <b>{{ auth()->user()->name }}</b> </a>
-                            <ul class="dropdown-menu">
-                            
-                                @if(Auth::user()->role == 'admin')
+                            <ul class="dropdown-menu">                            
+                                @if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                                 @endif
+
+                                <li><a href="{{ route('profile.edit') }}" class="dropdown-item">Editar Perfil</a></li>
 
                                 {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
                                 <form action="{{ route('logout') }}" method="POST">
@@ -72,9 +77,9 @@
                                 </form>     
                             </ul>
                     @else
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    </li>
+                        <li class="nav-item highlight">
+                            <a class="nav-link active" href="{{ route('login') }}">Login</a>
+                        </li>
                     @endauth
                 </ul>
                 <form class="d-flex" role="search" action="{{ route('products.search') }}" methodo="GET">

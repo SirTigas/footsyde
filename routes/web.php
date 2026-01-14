@@ -17,9 +17,9 @@ use App\Http\Middleware\AuthAdminMiddleware;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,7 +29,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-//breeze acima
+//breeze acima --------------------------------------------------------------------------------------------------->
+
 Route::GET('/home', [HomeController::class, 'index'])->name('site.home');
 Route::GET('', function(){
     return redirect()->route('site.home');

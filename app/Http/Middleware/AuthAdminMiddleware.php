@@ -17,8 +17,13 @@ class AuthAdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         //checking if the user has special acess to the route
-        if (Auth::check() && Auth::user()->role != 'admin')
-            return redirect()->route('login')->with('erro', 'Essa rota necessita de acesso especial!');
-        return $next($request);
+        
+        // if (Auth::check() && Auth::user()->role != 'admin')
+        //     return redirect()->route('login')->with('erro', 'Essa rota necessita de acesso especial!');
+        // return $next($request);
+
+        if (Auth::check() && (Auth::user()->role === 'admin') && (Auth::user()->email_verified_at != NULL))
+            return $next($request);
+        return redirect()->route('login')->with('erro', 'Essa rota necessita de acesso especial!');
     }
 }
