@@ -49,9 +49,13 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Olá, <b>{{ auth()->user()->name }}</b> </a>
                                     <ul class="dropdown-menu">
-
-                                        <li><a class="dropdown-item" href="{{ route('login.logout') }}">Sair</a></li>
-
+                                        {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn dropdown-item">
+                                                <strong>Sair</strong>
+                                            </button>
+                                        </form>
                                     </ul>
                                 </li>
                             </li>

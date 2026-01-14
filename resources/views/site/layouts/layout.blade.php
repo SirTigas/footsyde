@@ -63,7 +63,13 @@
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                                 @endif
 
-                                <li><a class="dropdown-item" href="{{ route('login.logout') }}">Sair</a></li>
+                                {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn dropdown-item">
+                                        <strong>Sair</strong>
+                                    </button>
+                                </form>     
                             </ul>
                     @else
                         <li class="nav-item">

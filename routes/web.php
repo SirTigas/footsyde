@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -12,6 +13,23 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AuthAdminMiddleware;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+//breeze acima
 Route::GET('/home', [HomeController::class, 'index'])->name('site.home');
 Route::GET('', function(){
     return redirect()->route('site.home');
@@ -42,12 +60,12 @@ Route::middleware('auth')->group(function () {
     Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
 });
 
-//login/register/logout
-Route::resource('users', UserController::class);
-Route::view('/login', 'login.form')->name('login');
-Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
-Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
-Route::GET('/register', [UserController::class, 'create'])->name('register');
+// //login/register/logout
+// Route::resource('users', UserController::class);
+// Route::view('/login', 'login.form')->name('login');
+// Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
+// Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
+// Route::GET('/register', [UserController::class, 'create'])->name('register');
 
 //Checkout
 Route::middleware('auth')->group(function () {
