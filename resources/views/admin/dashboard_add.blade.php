@@ -30,7 +30,7 @@
                                                 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome do Produto</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -40,7 +40,7 @@
 
                             <div class="mb-3">
                                 <label for="desc" class="form-label">Descrição</label>
-                                <textarea name="description" id="desc" class="form-control @error('description') is-invalid @enderror" id="desc" name="description" value="{{ old('description') }}"></textarea>
+                                <textarea name="description" id="desc" class="form-control @error('description') is-invalid @enderror" id="desc" name="description" value="{{ old('description') }}" required></textarea>
                                 @error('description')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -50,7 +50,7 @@
 
                             <div class="mb-3">
                                 <label for="gener" class="form-label">Gênero</label>
-                                <select name="category_id" id="gener" class="form-select @error('description') is-invalid @enderror" aria-label="Default select example">
+                                <select name="category_id" id="gener" class="form-select @error('description') is-invalid @enderror" aria-label="Default select example" required>
                                     <option selected>Slecionar Gênero</option>
                                     <option value="1">1 - Homem</option>
                                     <option value="2">2 - Mulher</option>
@@ -66,7 +66,7 @@
 
                             <div class="mb-3">
                                 <label for="price" class="form-label">Preço</label>
-                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}" required>
                                 @error('price')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -76,7 +76,7 @@
 
                             <div class="mb-3">
                                 <label for="fornecedor" class="form-label">Fornecedor</label>
-                                <input type="text" class="form-control @error('fornecedor') is-invalid @enderror" id="fornecedor" name="fornecedor" value="{{ old('fornecedor') }}">
+                                <input type="text" class="form-control @error('fornecedor') is-invalid @enderror" id="fornecedor" name="fornecedor" value="{{ old('fornecedor') }}" required>
                                 @error('fornecedor')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -86,7 +86,7 @@
 
                             <div class="mb-3">
                                 <label for="stock_38" class="form-label">Tamanho 38 - Estoque</label>
-                                <input type="number" class="form-control @error('stock_38') is-invalid @enderror" id="email" name="stock_38" value="{{ old('stock_38') }}">
+                                <input type="number" class="form-control @error('stock_38') is-invalid @enderror" id="email" name="stock_38" value="{{ old('stock_38') }}" required>
                                 @error('stock_38')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -96,7 +96,7 @@
 
                             <div class="mb-3">
                                 <label for="stock_39" class="form-label">Tamanho 39 - Estoque</label>
-                                <input type="number" class="form-control @error('stock_39') is-invalid @enderror" id="stock_39" name="stock_39" value="{{ old('stock_39') }}">
+                                <input type="number" class="form-control @error('stock_39') is-invalid @enderror" id="stock_39" name="stock_39" value="{{ old('stock_39') }}" required>
                                 @error('stock_39')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -106,7 +106,7 @@
 
                             <div class="mb-3">
                                 <label for="stock_40" class="form-label">Tamanho 40 - Estoque</label>
-                                <input type="number" class="form-control @error('stock_40') is-invalid @enderror" id="stock_39" name="stock_40" value="{{ old('stock_40') }}">
+                                <input type="number" class="form-control @error('stock_40') is-invalid @enderror" id="stock_39" name="stock_40" value="{{ old('stock_40') }}" required>
                                 @error('stock_40')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
@@ -116,7 +116,7 @@
 
                             <div class="mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail - (jpeg, png, jpg)</label>
-                                <input type="file" name="thumbnail" accept="image/*" id="thumb" class="form-control @error('thumbnail') is-invalid @enderror">
+                                <input type="file" name="thumbnail" accept="image/*" id="thumb" class="form-control @error('thumbnail') is-invalid @enderror" required>
                                 @error('thumbnail')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
