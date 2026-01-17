@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Wishlist;
 use App\Models\CartItem;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -25,9 +26,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '1')
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+        // $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products', 'defaultThumbnail'));
+        return view('site.products', compact('products'));
     }
 
     //filter products woman
@@ -36,9 +37,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '2')
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+        // $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products', 'defaultThumbnail'));
+        return view('site.products', compact('products'));
     }
 
     //filter products unissex
@@ -47,9 +48,9 @@ class ProductController extends Controller
         //
         $products = Product::where('category_id', '3')
         ->paginate(12);
-        $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
+        // $defaultThumbnail = "images/JD8-6364-058_zoom1.png";
 
-        return view('site.products', compact('products', 'defaultThumbnail'));
+        return view('site.products', compact('products'));
     }
 
     //search products
@@ -68,7 +69,7 @@ class ProductController extends Controller
     {
         //recuperando dados da tabela "products" e outras relacionadas
         $product = Product::where('code', $code)
-        ->with(['category', 'images'])
+        ->with(['category', 'images', 'sizes'])
         ->first();
         
         //verificando se o produto existe na base de dados

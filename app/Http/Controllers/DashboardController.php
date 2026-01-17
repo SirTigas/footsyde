@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,6 +22,16 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('products'));
     }
 
+    public function stock_index()
+    {
+        $products = Product::orderBy('name')
+        ->with('sizes')
+        ->paginate(12);
+
+        return view('admin.dashboard_stock_edit', compact('products'));
+    }
+
+    //show the view to edit photos
     public function photo_index()
     {
         $products = Product::orderBy('name')
@@ -30,6 +41,7 @@ class DashboardController extends Controller
         return view('admin.dashboard_photos', compact('products'));
     }
 
+    
     public function search_edit(Request $request)
     {
         //
@@ -70,13 +82,16 @@ class DashboardController extends Controller
         //validate input datas
         $credentials = $request->validate([
             'name' => ['required'], 
-            'price' => ['required', 'numeric', 'min:1'],  
-            'stock' => ['required', 'numeric', 'min:1'],  
+            'price' => ['required', 'numeric', 'min:1'],
+            'description' => ['required', 'min:1', 'max:256'],  
+            'stock_38' => ['required', 'numeric', 'min:1'],
+            'stock_39' => ['required', 'numeric', 'min:1'],
+            'stock_40' => ['required', 'numeric', 'min:1'],  
             'category_id' => ['required'],  
             'fornecedor' => ['required'],  
-            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
+            'thumbnail' => ['required', 'image', 'max:2048', 'dimensions:width=1088,height=1088', 'mimes:jpeg,png,jpg'],
             'images' => ['array', 'max:5'],
-            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=360,height=360']
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=1088,height=1088']
         ], [
             'name.required' => 'O nome do produto é obrigatório!',
 
@@ -84,9 +99,20 @@ class DashboardController extends Controller
             'price.numeric' => 'Preço deve ser numérico!',
             'price.min' => 'Preço mínimo é de 1 real!',
 
-            'stock.required' => 'Estoque é obrigatório e deve ser no mínimo 1!',
-            'stock.numeric' => 'Estoque deve ser numérico!',
-            'stock.min' => 'Estoque deve ser no mínimo 1!',
+            'description.required' => 'A descrição do produto é obrigatória!',
+            'description.max' => 'A descrição do produto deve ter no máximo 256 caracteres!',
+            
+            'stock_38.required' => 'Estoque é obrigatório e deve ser no mínimo 1!',
+            'stock_38.numeric' => 'Estoque deve ser numérico!',
+            'stock_38.min' => 'Estoque deve ser no mínimo 1!',
+
+            'stock_39.required' => 'Estoque é obrigatório e deve ser no mínimo 1!',
+            'stock_39.numeric' => 'Estoque deve ser numérico!',
+            'stock_39.min' => 'Estoque deve ser no mínimo 1!',
+
+            'stock_40.required' => 'Estoque é obrigatório e deve ser no mínimo 1!',
+            'stock_40.numeric' => 'Estoque deve ser numérico!',
+            'stock_40.min' => 'Estoque deve ser no mínimo 1!',
 
             'category_id.required' => 'A categoria do produto é obrigatório!',
 
@@ -111,11 +137,23 @@ class DashboardController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
-            'stock' => $request->stock,
             'category_id' => $request->category_id,
             'fornecedor' => $request->fornecedor,
             'code' => rand(1000, 9999),
         ]);
+
+        //create stock
+        $sizes = [$request->stock_38, $request->stock_39, $request->stock_40,];
+        $startSize = 38;
+        foreach ($sizes as $size) {
+
+            ProductVariant::create([
+                'product_id' => $product->id,
+                'size' => $startSize,
+                'stock' => $size,
+            ]);
+            $startSize++;
+        }
 
         $productName = $product->name;
         $idProduct = $product->id;
@@ -231,17 +269,39 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update_photo(Request $request)
     {
+        dd($request->stock);
         //update product info
         Product::where('id', $request->id)
         ->update([
               'name' => $request->name,  
               'price' => $request->price,  
               'description' => $request->description,
-              'stock' => $request->stock,   
+            //   'stock' => $request->stock,   
               'fornecedor' => $request->fornecedor,          
               'category_id' => $request->category_id,          
+        ]);
+
+        return redirect()->back()->with('success', 'As modificações foram aplicadas!');
+    }
+
+        public function update_stock(Request $request)
+    {   
+        $rules = [
+            'stock' => 'required|integer',
+            'id' => 'required|exists:product_variants',
+        ];
+
+        $feedback = [
+            'required' => 'Erro ao atualizar o Estoque, atualize a página e tente novamente'
+        ];
+
+        $request->validate($rules, $feedback);
+
+        ProductVariant::where('id', $request->id)
+        ->update([
+              'stock' => $request->stock,             
         ]);
 
         return redirect()->back()->with('success', 'As modificações foram aplicadas!');

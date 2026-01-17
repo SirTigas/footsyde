@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->words(1, true),
             'price' => $this->faker->randomFloat(2, 50, 500),
             'description' => $this->faker->paragraph(),
-            'stock' => $this->faker->numberBetween(1, 100),
+            // 'stock' => $this->faker->numberBetween(1, 100),
             'fornecedor' => fake()->company(),
             'image_path' => 'images/products/default/JD8-6364-058_zoom1.png',
             'category_id' => Category::inRandomOrder()->first()->id,

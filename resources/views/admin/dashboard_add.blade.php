@@ -1,47 +1,144 @@
-@extends('admin.layouts.layout')
+@if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
+    @extends('admin.layouts.layout')
 
-@section('conteudo')
-<div class="row" style="margin: 50px 0px 50px 0px">
-    <div class='col'>
-        <h1 class="text-center" style="font-weight: bolder">FORMULÁRIO DE CRIAÇÃO.</h1>
+    @section('conteudo')
+    <div class="row" style="margin: 50px 0px 10px 0px">
+        <div class='col'>
+            <h1 class="text-center" style="font-weight: bolder">FORMULÁRIO DE CRIAÇÃO.</h1>
+        </div>
     </div>
-</div>
 
-{{--Sucess menssagem--}}
-@if ($mensagem = Session::get('msm'))
-    <p class="d-flex justify-content-center">{{ $mensagem }}</p>
+    {{--Sucess menssagem--}}
+    @if ($mensagem = Session::get('msm'))
+        <p class="d-flex justify-content-center" style="color:yellow;">{{ $mensagem }}</p>
+    @endif
+        <body>
+            <br>
+            <div class="container-fluid col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Preencha corretamente ao formulário
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @if ($mensagem = Session::get('erro'))
+                                <span>
+                                    <strong style="color:red">{{ $mensagem }}</strong>
+                                </span>
+                            @endif
+                                                
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome do Produto</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                                @error('name')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="desc" class="form-label">Descrição</label>
+                                <textarea name="description" id="desc" class="form-control @error('description') is-invalid @enderror" id="desc" name="description" value="{{ old('description') }}"></textarea>
+                                @error('description')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="gener" class="form-label">Gênero</label>
+                                <select name="category_id" id="gener" class="form-select @error('description') is-invalid @enderror" aria-label="Default select example">
+                                    <option selected>Slecionar Gênero</option>
+                                    <option value="1">1 - Homem</option>
+                                    <option value="2">2 - Mulher</option>
+                                    <option value="3">3 - Unissex</option>
+                                </select>
+
+                                @error('description')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Preço</label>
+                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
+                                @error('price')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fornecedor" class="form-label">Fornecedor</label>
+                                <input type="text" class="form-control @error('fornecedor') is-invalid @enderror" id="fornecedor" name="fornecedor" value="{{ old('fornecedor') }}">
+                                @error('fornecedor')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="stock_38" class="form-label">Tamanho 38 - Estoque</label>
+                                <input type="number" class="form-control @error('stock_38') is-invalid @enderror" id="email" name="stock_38" value="{{ old('stock_38') }}">
+                                @error('stock_38')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="stock_39" class="form-label">Tamanho 39 - Estoque</label>
+                                <input type="number" class="form-control @error('stock_39') is-invalid @enderror" id="stock_39" name="stock_39" value="{{ old('stock_39') }}">
+                                @error('stock_39')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="stock_40" class="form-label">Tamanho 40 - Estoque</label>
+                                <input type="number" class="form-control @error('stock_40') is-invalid @enderror" id="stock_39" name="stock_40" value="{{ old('stock_40') }}">
+                                @error('stock_40')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="thumbnail" class="form-label">Thumbnail - (jpeg, png, jpg)</label>
+                                <input type="file" name="thumbnail" accept="image/*" id="thumb" class="form-control @error('thumbnail') is-invalid @enderror">
+                                @error('thumbnail')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="images" class="form-label">Imagens do Carrosel - (jpeg, png, jpg)</label>
+                                <input type="file" multiple accept="image/*" class="form-control @error('images') is-invalid @enderror" id="images" name="images[]">
+                                @error('images[]')
+                                    <span>
+                                        <strong style='color:red;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">CADASTRAR</button></a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </body>
+    @endsection
 @endif
-
-@if ($errors->any())
-    @foreach ($errors->all() as $error )
-        {{ $error }} <br>
-    @endforeach
-@endif
-
-<div class="container">
-    <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="name" placeholder="Nome do produto" value="{{ old('name') }}"><br><br>
-        <input type="text" name="description" placeholder="Breve descrição" value="{{ old('description') }}"><br><br>
-        <input type="number" name="price" step="0.01" min="1" placeholder="Valor do produto" value="{{ old('price') }}"><br><br>
-        <input type="number" name="stock" min="1" placeholder="Estoque" value="{{ old('stock') }}"><br><br>
-        <input type="text" name="fornecedor" placeholder="Nome do Fornecedor" value="{{ old('fornecedor') }}"><br><br>
-        Gênero: <select name="category_id">
-            <option value="1">1 - Homem</option>
-            <option value="2">2 - Mulher</option>
-            <option value="3">3 - Unissex</option>
-        </select><br><br>
-
-        Thumbnail:
-        <input type="file" name="thumbnail" accept="image/*"><br><br>
-
-        Imagens:
-        <input type="file" name="images[]" multiple accept="image/*"><br><br>
-
-        
-
-        <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i> <b>CRIAR PRODUTO</b></button>
-    </form>
-</div>
-
-@endsection

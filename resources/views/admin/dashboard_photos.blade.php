@@ -1,80 +1,78 @@
-@extends('admin.layouts.layout_photos')
+@if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
+    @extends('admin.layouts.layout_photos')
 
+    @section('conteudo')
+    <div class="container-fluid" style="margin:30px 0px 0px 0px">
+        {{--Sucess menssagem--}}
+        @if ($mensagem = Session::get('msm'))
+            <p class="d-flex justify-content-center">{{ $mensagem }}</p>
+        @endif
 
-@section('conteudo')
-<div class="container-fluid" style="margin:30px 0px 0px 0px">
-    {{--Sucess menssagem--}}
-    @if ($mensagem = Session::get('msm'))
-        <p class="d-flex justify-content-center">{{ $mensagem }}</p>
-    @endif
+        @if ($errors->any())
+            @foreach ($errors->all() as $error )
+                {{ $error }} <br>
+            @endforeach
+        @endif
 
-    @if ($errors->any())
-        @foreach ($errors->all() as $error )
-            {{ $error }} <br>
-        @endforeach
-    @endif
+        @if(count($products) == 0)
+            <div class="row" style="margin: 50px 0px 50px 0px">
+                <div class='col'>
+                    <h1 class="text-center" style="font-weight: bolder">Produtos não encontrados na base de dados!</h1>
+                </div>
+            </div> 
+        @else
+                <h1 style="text-align: center;"><b>GALERIA DE FOTOS</b></h1>
 
-    @if(count($products) == 0)
-        <div class="row" style="margin: 50px 0px 50px 0px">
-            <div class='col'>
-                <h1 class="text-center" style="font-weight: bolder">Produtos não encontrados na base de dados!</h1>
-            </div>
-        </div> 
-    @else
-            <h1 style="text-align: center;"><b>GALERIA DE FOTOS</b></h1>
+                @foreach ($products as $p )
+                    <form action="{{ route('admin.photo') }}" method="POST" enctype="multipart/form-data"> 
+                            @csrf
+                            <div class="col d-flex justify-content-center">
+                                <div class="card mb-3" style="max-width: 1100px;">
+                                    <div class="row g-0">
+                                        
+                                        <!-- Imagem -->
+                                        <div class="col-md-3">
+                                            <a href="{{ route('products.show', $p->code) }}">
+                                                <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">                       
+                                            </a>
+                                        </div>                                   
 
-            @foreach ($products as $p )
-                <form action="{{ route('admin.photo') }}" method="POST" enctype="multipart/form-data"> 
-                        @csrf
-                        <div class="col d-flex justify-content-center">
-                            <div class="card mb-3" style="max-width: 1100px;">
-                                <div class="row g-0">
-                                    
-                                    <!-- Imagem -->
-                                    <div class="col-md-3">
-                                        <a href="{{ route('products.show', $p->code) }}">
-                                            <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($p->name) }}">                       
-                                        </a>
-                                    </div>                                   
+                                        <!-- Conteúdo -->
+                                        <div class="col-md-9">
+                                            <div class="card-body d-flex flex-column justify-content-between h-100">
+                                                <div>
+                                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                                        <p>Nome: <b>{{ strtoupper($p->name) }}</b></p>
+                                                        <p>Código: <b>{{ $p->code }}</b></p>                                                    
+                                                    </div>
 
-                                    <!-- Conteúdo -->
-                                    <div class="col-md-9">
-                                        <div class="card-body d-flex flex-column justify-content-between h-100">
-                                            <div>
-                                                <div class="d-flex justify-content-between align-items-center mt-2">
-                                                    <p>Nome: <b>{{ strtoupper($p->name) }}</b></p>
-                                                    <p>Código: <b>{{ $p->code }}</b></p>                                                    
+                                                    <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
+
+                                                    <p>Categoria:  <b>{{ $p->category_id }}</b></p>
                                                 </div>
 
-                                                <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
+                                                <div class="d-flex justify-content-between align-items-center mt-2"> 
+                                                    <div class="d-flex justify-content-end">
+                                                        <p>Capa: <input type="file" name="thumbnail" accept="image/*"></p>
 
-                                                <p>Categoria:  <b>{{ $p->category_id }}</b></p>
-                                            </div>
+                                                        <p>Carrossel: <input type="file" name="images[]" multiple accept="image/*"></p>
 
-                                            <div class="d-flex justify-content-between align-items-center mt-2"> 
-                                                <div class="d-flex justify-content-end">
-                                                    <p>Capa: <input type="file" name="thumbnail" accept="image/*"></p>
+                                                        <input type="hidden" name="name" value="{{ $p->name }}">
+                                                        <input type="hidden" name="code" value="{{ $p->code }}">
+                                                        <input type="hidden" name="id" value="{{ $p->id }}">
 
-                                                    <p>Carrossel: <input type="file" name="images[]" multiple accept="image/*"></p>
-
-                                                    <input type="hidden" name="name" value="{{ $p->name }}">
-                                                    <input type="hidden" name="code" value="{{ $p->code }}">
-                                                    <input type="hidden" name="id" value="{{ $p->id }}">
-
-                                                    <button type="submit" class="btn btn-success" style="margin:0px 0px 0px 10px"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>
-                                                                  
-                                                </div>                              
-                                            </div>                               
-                                        </div>
-
-                                        
-                                    </div>    
+                                                        <button type="submit" class="btn btn-success" style="margin:0px 0px 0px 10px"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>                                                                   
+                                                    </div>                              
+                                                </div>                               
+                                            </div>                                           
+                                        </div>    
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                </form>
-            @endforeach
-        {{ $products->links() }}
-    </div>
-    @endif
-@endsection
+                    </form>
+                @endforeach
+            {{ $products->links() }}
+        </div>
+        @endif
+    @endsection
+@endif

@@ -36,6 +36,14 @@
             <br>
             <p>{{ $product->description }}</p>
             <p>Gênero: <b>{{ $product->category->name }}</b></p>
+            <form action="#" method="#">
+                <select name="size_id">
+                    <option value="#">Selecione o tamanho</option>
+                    @foreach ($product->sizes as $product_variant)
+                        <option value="{{ $product_variant->size }}">({{ $product_variant->size }}) - {{ $product_variant->stock }} disponíveis</option>
+                    @endforeach
+                </select>
+            </form>
             <p>Vendido e entregue por: <b>{{ $product->fornecedor }}</b></p>
             <h1>R$ {{ number_format($product->price, 2, ',', '.') }}</h1>
             <p>

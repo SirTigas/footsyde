@@ -76,11 +76,13 @@ Route::middleware('auth')->group(function () {
 //dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/admin/dashboard/stock', [DashboardController::class, 'stock_index'])->name('dashboard.stock');
     Route::GET('/admin/dashboard/photos', [DashboardController::class, 'photo_index'])->name('dashboard.photos');
     Route::GET('/admin/dashboard/search', [DashboardController::class, 'search_edit'])->name('dashboard.search');
     Route::GET('/admin/dashboard/search/photos', [DashboardController::class, 'search_photos'])->name('dashboard.search_photos');
 
-    Route::POST('/admin/dashboard/photos', [DashboardController::class, 'edit'])->name('admin.photo');
+    Route::POST('/admin/dashboard/stock', [DashboardController::class, 'update_stock'])->name('admin.stock');
+    Route::POST('/admin/dashboard/photos', [DashboardController::class, 'update_photo'])->name('admin.photo');
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
     Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
     Route::POST('/admin/dashboard/clear', [DashboardController::class, 'clear'])->name('admin.clear');
