@@ -50,14 +50,14 @@
 
                             <div class="mb-3">
                                 <label for="gener" class="form-label">Gênero</label>
-                                <select name="category_id" id="gener" class="form-select @error('description') is-invalid @enderror" aria-label="Default select example" required>
+                                <select name="category_id" id="gener" class="form-select @error('category_id') is-invalid @enderror" aria-label="Default select example" required>
                                     <option selected>Slecionar Gênero</option>
                                     <option value="1">1 - Homem</option>
                                     <option value="2">2 - Mulher</option>
                                     <option value="3">3 - Unissex</option>
                                 </select>
 
-                                @error('description')
+                                @error('category_id')
                                     <span>
                                         <strong style='color:red;'>{{ $message }}</strong>
                                     </span>

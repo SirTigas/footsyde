@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
+use Closure;
 
 
 class DashboardController extends Controller
@@ -22,6 +23,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('products'));
     }
 
+    //show all stock product
     public function stock_index()
     {
         $products = Product::orderBy('name')
@@ -51,6 +53,18 @@ class DashboardController extends Controller
         ->paginate(5);
 
         return view('admin.dashboard', compact('products'));
+        //return back()->with(compact('products'));
+    }
+
+    public function search_stock(Request $request)
+    {
+        //
+        $products = Product::where('name', 'like', "%{$request->name}%")
+        ->Orwhere('code', 'like', "%{$request->name}%")
+        ->orderBy('name')
+        ->paginate(5);
+
+        return view('admin.dashboard_stock_edit', compact('products'));
         //return back()->with(compact('products'));
     }
 
@@ -197,27 +211,28 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request)
+    public function update_photo(Request $request)
     {
         //validate input datas
+        // dd($request->file());
         $credentials = $request->validate([
             'name' => ['required'],     
-            'thumbnail' => ['image', 'max:2048', 'dimensions:width=360,height=360', 'mimes:jpeg,png,jpg'],
+            'thumbnail' => ['image', 'max:2048', 'dimensions:width=1088,height=1088', 'mimes:jpeg,png,jpg'],
             'images' => ['array', 'max:5'],
-            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=360,height=360']
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:2048', 'dimensions:width=1088,height=1088']
         ], [
             'name.required' => 'O nome do produto é obrigatório!',
 
             'thumbnail.image' => 'A imagem da capa inválida!',
             'thumbnail.max' => 'A imagem da capa não pode ultrapassar 2mb!',
-            'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 360x360 px!',
+            'thumbnail.dimensions' => 'A imagem da capa deve ter exatamente 1088x1088 px!',
             'thumbnail.mimes' => 'A imagem da capa deve ser (jpeg, png, jpg)',
 
             'images.max' => 'O carrossel suporta no máximo 5 imagens + capa!',
 
             'images.image' => 'A imagem do carrossel inválida!',
             'images.max' => 'A imagem do carrossel não pode ultrapassar 2mb!',
-            'images.dimensions' => 'A imagem do carrossel deve ter exatamente 360x360 px!',
+            'images.dimensions' => 'A imagem do carrossel deve ter exatamente 1088x1088 px!',
             'images.mimes' => 'A imagem do carrossel deve ser (jpeg, png, jpg)',
             
         ],);
@@ -269,9 +284,9 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update_photo(Request $request)
+    public function update(Request $request)
     {
-        dd($request->stock);
+        // dd($request->stock);
         //update product info
         Product::where('id', $request->id)
         ->update([
@@ -286,7 +301,7 @@ class DashboardController extends Controller
         return redirect()->back()->with('success', 'As modificações foram aplicadas!');
     }
 
-        public function update_stock(Request $request)
+    public function update_stock(Request $request)
     {   
         $rules = [
             'stock' => 'required|integer',

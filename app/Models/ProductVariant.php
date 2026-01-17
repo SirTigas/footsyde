@@ -22,4 +22,8 @@ class ProductVariant extends Model
     public function size() {
         return $this->belongsTo(Product::class);
     }
+
+    public function cart() {
+        return $this->belongsTo(CartItem::class);
+    }
 }

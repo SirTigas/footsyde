@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CartItem;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -16,20 +17,22 @@ class CartController extends Controller
     {
         //getting data from the products table
         $cartItems = CartItem::with([
-            'product:id,name,price,image_path,code,description,fornecedor'
+            // 'product:id,name,price,image_path,code,description,fornecedor'
+            'product', 'size'
         ])
         ->where('user_id', Auth::id())
         ->orderByDesc('id')
         ->paginate(10)
         ->withQueryString();
 
+        $shoeSizes = ProductVariant::all();
 
         //return the total price of cart-list
         $total = $cartItems->getCollection()->sum(function ($item) {
             return $item->quantity * $item->product->price;
         });
 
-        return view('site.cart', compact('cartItems', 'total'));
+        return view('site.cart', compact('cartItems', 'total', 'shoeSizes'));
     }
 
     /**
@@ -74,8 +77,10 @@ class CartController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        // dd($request->size_id);
         CartItem::where('id', $id)->update([
             'quantity' => $request->quantity,
+            'size_id' => $request->size_id,
         ]);
 
         return redirect()->back();

@@ -23,7 +23,7 @@
         @foreach ($cartItems as $cart)
             @if (($cart->user_id) == Auth::id())
                 <div class="col d-flex justify-content-center">
-                    <div class="card mb-3" style="max-width: 900px;">
+                    <div class="card mb-3" style="max-width: 1200px;">
                         <div class="row g-0">
                             <!-- Imagem -->
                             <div class="col-md-3">
@@ -61,17 +61,34 @@
                                         </div><br>
                                         
                                         <p class="card-text">{{ Str::limit($cart->product->description, 150) }}</p>
-                                        <p class="card-text"><small class="text-muted">{{ $cart->product->fornecedor }}</small></p>
+                                        <p class="card-text">Fornecedor: <small class="text-muted">{{ $cart->product->fornecedor }}</small></p>
                                     </div>
-
+  
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <b>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</b>                                    
                                         <form action="{{ route('carrinho.update', $cart->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" class="bi bi-arrow-clockwise" style="margin:0px 10px 0px 0px; border-radius: 05px"></button>
-                                                <input type="number" name="quantity" value="{{ $cart->quantity }}" class="form-control form-control-sm" style="width: 30px;">
+                                                <div class="mb-3">
+                                                    <select name="size_id" class="form-select">
+                                                        <option value="{{ $cart->size->id }}">Tamanho {{ $cart->size->size }}</option>
+                                                        @foreach ($shoeSizes as $size )
+                                                            @if ($cart->size->product_id === $size->product_id && $size->size != $cart->size->size)
+                                                                <option value="{{ $size->id }}">{{ $size->size }}</option>  
+                                                            @endif
+                                                        @endforeach
+                                                    </select><br>
+
+                                                    <div class="input-group col-auto">
+                                                        <span class="input-group-text" id="inputGroup-sizing-default">Quantidade</span>
+                                                        <div class="col-auto">
+                                                            <input type="number" class="form-control" value="{{ $cart->quantity }}" name="quantity">
+                                                            <input name="id" type="hidden" value="">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i></i></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </form>                                             
                                     </div>

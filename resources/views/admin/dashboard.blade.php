@@ -5,7 +5,7 @@
     @section('conteudo')
     <div class="container-fluid" style="margin:30px 0px 0px 0px">
         @if ($mensagem = Session::get('success'))
-            <p class="d-flex justify-content-center">{{ $mensagem }}</p>
+            <p class="d-flex justify-content-center" style="color:green">{{ $mensagem }}</p>
         @endif
 
         @if(count($products) == 0)
@@ -16,7 +16,7 @@
             </div> 
         @else
                 @foreach ($products as $p )
-                    <form action="{{ route('admin.update') }}" method="POST" id="update_shoes"> 
+                    <form action="{{ route('admin.update') }}" method="POST"> 
                             @csrf
                             <div class="col d-flex justify-content-center">
                                 <div class="card mb-3" style="max-width: 1150px;">
@@ -35,36 +35,78 @@
                                                 <div>
 
                                                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                                        <h5 class="card-title"> 
-                                                            <p>Nome: <input type="text" name="name" value="{{ strtoupper($p->name) }}"> <small>Código: {{ $p->code }}</small> </p>  
-                                                        </h5>
-                                                        <button type="submit" class="btn btn-success" style="margin:0px 0px 0px 10px"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>                                           
-                                                    </div>
+                                                        <div class="mb-3">
+                                                            <label for="name" class="form-label">Nome do Produto</label>
+                                                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ strtoupper($p->name) }}"> 
+                                                            @error('name')
+                                                                <span>
+                                                                    <strong style='color:red;'>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
 
-                                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                                        <p>Descrição: <textarea name="description" value="">{{ $p->description }}</textarea></p>               
-                                                    </div>
+                                                        <div class="mb-3">
+                                                            <label for="description" class="form-label">Descrição</label>
+                                                            <textarea name="description" id="desc" class="form-control @error('description') is-invalid @enderror" id="desc" name="description" value="">{{ $p->description }}</textarea>
+                                                            @error('description')
+                                                                <span>
+                                                                    <strong style='color:red;'>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
 
-                                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                                        <p><label for="fornecedor">fornecedor:</label>
-                                                        <input type="option" name="fornecedor" value="{{ $p->fornecedor }}" id="fornecedor"></p>                                     
-                                                    </div>
+                                                        <div class="mb-3">
+                                                            <label for="fornecedor" class="form-label">Fornecedor</label>
+                                                            <input type="text" class="form-control @error('fornecedor') is-invalid @enderror" id="fornecedor" name="fornecedor" value="{{ $p->fornecedor }}">
+                                                            @error('fornecedor')
+                                                                <span>
+                                                                    <strong style='color:red;'>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
 
-                                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                                        <p>
-                                                            <label for="price">R$</label>
-                                                            <input type="decimal" name="price" value="{{ $p->price }}" id="price">
-                                                            
-                                                            <label for="category">Categoria:</label>
-                                                            <select name="category_id" id="category">
-                                                                <option value="{{ $p->category_id }}">{{ $p->category_id }}</option>
+                                                        <div class="mb-3">
+                                                            <label for="gener" class="form-label">Gênero</label>
+                                                            <select name="category_id" id="gener" class="form-select @error('category_id') is-invalid @enderror" aria-label="Default select example" required>
+                                                                <option selected>{{ $p->category_id }}</option>
                                                                 <option value="1">1 - Homem</option>
                                                                 <option value="2">2 - Mulher</option>
                                                                 <option value="3">3 - Unissex</option>
                                                             </select>
                                                             <input type="hidden" name="id" value="{{ $p->id }}">
-                                                        </p>                                                        
-                                                    </div>       
+
+                                                            @error('category_id')
+                                                                <span>
+                                                                <strong style='color:red;'>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-between align-items-center mt-6">
+                                                        <div class="mb-3">
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text">R$</span>
+                                                                <span class="input-group-text">{{ $p->price }}</span>
+                                                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" name="price" value="">
+                                                            </div>
+                                                            @error('price')
+                                                                <span>
+                                                                    <strong style='color:red;'>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>                                                                                                        
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                                        <div class="mb-3">
+                                                            <small>Código: {{ $p->code }}</small>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <button type="submit" class="btn btn-success"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>
+                                                        </div>                                                                                                        
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>    

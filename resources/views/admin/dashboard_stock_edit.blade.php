@@ -1,5 +1,5 @@
 @if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
-    @extends('admin.layouts.layout_photos')
+    @extends('admin.layouts.layout_stock')
 
 
     @section('conteudo')
@@ -51,10 +51,16 @@
                                                     @foreach ($p->sizes as $product_variant)
                                                         <form action="{{ route('admin.stock') }}" method="POST">
                                                             @csrf
-                                                            <label for="{{ $product_variant->size }}">Tamanho {{ $product_variant->size }}</label>
-                                                            <input name="stock" type="number" value="{{ $product_variant->stock }}" id="{{ $product_variant->size }}">
-                                                            <input name="id" type="hidden" value="{{ $product_variant->id }}">
-                                                            <button type="submit" class="btn btn-success"><i class="bi bi-arrow-clockwise"></i></button>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <div class="input-group col-auto">
+                                                                    <span class="input-group-text" id="inputGroup-sizing-default">Estoque - Tamanho {{ $product_variant->size }}</span>
+                                                                    <div class="col-auto">
+                                                                        <input type="number" class="form-control" value="{{ $product_variant->stock }}" name="stock">
+                                                                        <input name="id" type="hidden" value="{{ $product_variant->id }}">
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i></i></button>
+                                                                </div> 
+                                                            </div>
                                                         </form><br>
                                                     @endforeach 
                                                 </div>                                            

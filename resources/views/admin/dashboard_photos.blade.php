@@ -5,13 +5,7 @@
     <div class="container-fluid" style="margin:30px 0px 0px 0px">
         {{--Sucess menssagem--}}
         @if ($mensagem = Session::get('msm'))
-            <p class="d-flex justify-content-center">{{ $mensagem }}</p>
-        @endif
-
-        @if ($errors->any())
-            @foreach ($errors->all() as $error )
-                {{ $error }} <br>
-            @endforeach
+            <p class="d-flex justify-content-center" style="color:yellow">{{ $mensagem }}</p>
         @endif
 
         @if(count($products) == 0)
@@ -41,29 +35,44 @@
                                         <div class="col-md-9">
                                             <div class="card-body d-flex flex-column justify-content-between h-100">
                                                 <div>
-                                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <p>Nome: <b>{{ strtoupper($p->name) }}</b></p>
-                                                        <p>Código: <b>{{ $p->code }}</b></p>                                                    
-                                                    </div>
-
-                                                    <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
-
-                                                    <p>Categoria:  <b>{{ $p->category_id }}</b></p>
+                                                        <p>Fornecedor: <b>{{ $p->fornecedor }}</b></p>
+                                                        <p>Código: <b>{{ $p->code }}</b></p>
+                                                        <button type="submit" class="btn btn-success"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>
+                                                                                                           
+                                                    </div><br>
                                                 </div>
 
-                                                <div class="d-flex justify-content-between align-items-center mt-2"> 
-                                                    <div class="d-flex justify-content-end">
-                                                        <p>Capa: <input type="file" name="thumbnail" accept="image/*"></p>
+                                                
+                                                <div class="col-6">
+                                                    <div class="mb-3">
+                                                        <label for="thumbnail" class="form-label">Thumbnail - (jpeg, png, jpg)</label>
+                                                        <input type="file" name="thumbnail" accept="image/*" id="thumb" class="form-control @error('thumbnail') is-invalid @enderror">
+                                                        @error('thumbnail')
+                                                            <span>
+                                                                <strong style='color:red;'>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
 
-                                                        <p>Carrossel: <input type="file" name="images[]" multiple accept="image/*"></p>
+                                                    <div class="mb-3">
+                                                        <label for="thumbnail" class="form-label">Carrosel - (jpeg, png, jpg)</label>
+                                                        <input type="file" name="images[]" multiple accept="image/*" id="thumb" class="form-control @error('thumbnail') is-invalid @enderror">
+                                                        @error('thumbnail')
+                                                            <span>
+                                                                <strong style='color:red;'>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
 
-                                                        <input type="hidden" name="name" value="{{ $p->name }}">
-                                                        <input type="hidden" name="code" value="{{ $p->code }}">
-                                                        <input type="hidden" name="id" value="{{ $p->id }}">
+                                                    <input type="hidden" name="name" value="{{ $p->name }}">
+                                                    <input type="hidden" name="code" value="{{ $p->code }}">
+                                                    <input type="hidden" name="id" value="{{ $p->id }}">
 
-                                                        <button type="submit" class="btn btn-success" style="margin:0px 0px 0px 10px"><i class="bi bi-floppy-fill"></i> <b>SALVAR</b></button>                                                                   
-                                                    </div>                              
-                                                </div>                               
+                                                                                                                  
+                                                </div>                              
+                                                                               
                                             </div>                                           
                                         </div>    
                                     </div>

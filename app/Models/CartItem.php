@@ -9,6 +9,7 @@ class CartItem extends Model
     protected $fillable = [
     'user_id',
     'product_id',
+    'size_id',
     'quantity',
     ];
 
@@ -19,5 +20,9 @@ class CartItem extends Model
 
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+
+    public function size(){
+        return $this->belongsTo(ProductVariant::class);
     }
 }
