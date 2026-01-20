@@ -70,7 +70,14 @@ Route::middleware('auth')->group(function () {
 
 //Checkout
 Route::middleware('auth')->group(function () {
-    Route::GET('/checkout', [OrderController::class, 'index'])->name('site.checkout');
+    Route::GET('/checkout', [OrderController::class, 'index'])->name('checkout');
+    Route::GET('/checkout/credit-card', [OrderController::class, 'credit_card_index'])->name('credito');
+    Route::GET('/checkout/pix', [OrderController::class, 'pix_index'])->name('pix');
+    Route::GET('/checkout/success', function(){
+        return view('checkout.success');
+    })->name('checkout.success');
+
+    Route::POST('finish', [OrderController::class, 'finish_buy'])->name('buy');
 });
 
 //dashboard ONLY ADMS

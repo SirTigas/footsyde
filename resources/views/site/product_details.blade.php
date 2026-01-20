@@ -48,12 +48,14 @@
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                        <input type="hidden" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;" id="quant">                
+                        <input type="hidden" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;">                
 
                         <div class="col-3">
                             <select name="size_id" class="form-select">
                                 @foreach ($product->sizes as $product_variant)
-                                    <option value="{{ $product_variant->id }}">({{ $product_variant->size }}) - {{ $product_variant->stock }} disponíveis</option>  
+                                    @if($product_variant->stock > 0)
+                                        <option value="{{ $product_variant->id }}">{{ $product_variant->size }} - ({{ $product_variant->stock }} disponíveis)</option>  
+                                    @endif
                                 @endforeach
                             </select><br>
                         </div>
@@ -88,21 +90,41 @@
                     </form>
 
                     {{--comprar--}}
-                    <form action="#"  style="margin: 10px 0px 10px 0px">
-                        @csrf
-                        <div class="d-grid gap-2 col-6">
-                            <a href="{{ route('site.checkout') }}" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></a>
+                    <form action="{{ route('carrinho.store') }}" method="POST"  style="margin: 0px 0px 10px 0px">
+                        @csrf                            
                         </div>
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                            <input type="hidden" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;">
+
+                            <input type="hidden" value="1" name="redirect_buy">                
+
+                            @foreach ($product->sizes as $product_variant)
+                                <input type="hidden" name="size_id" value="{{ $product_variant->id }}">  
+                            @endforeach
+
+                            @if ($isInCart)
+                                <div class="d-grid gap-2 col-6">
+                                    <a href="{{ route('carrinho.index') }}" class="btn btn-success btn-lg">
+                                        <i class="bi bi-currency-dollar"></i> <b>COMPRAR</b>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="d-grid gap-2 col-6">
+                                    <button class="btn btn-success btn-lg" type="submit"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></button>
+                                </div>
+                            @endif
+
                     </form>
 
                 </div>
             @else
                 <div class="d-grid gap-2 col-6">
-                    <a href="{{ route('login') }}" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i><b>COMPRAR</b></a>
-                
                     <a href="{{ route('login') }}" class="btn btn-primary"><i class="bi bi-cart-fill"></i> <b>CARRINHO</b></a>
 
                     <a href="{{ route('login') }}" class="btn btn-danger"><i class="bi bi-heart-fill"></i> <b>SALVAR</b></a>
+
+                    <a href="{{ route('login') }}" class="btn btn-success btn-lg"><i class="bi bi-currency-dollar"></i><b>COMPRAR</b></a>
                 </div>                              
             @endauth
                             

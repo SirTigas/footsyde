@@ -70,12 +70,12 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="d-flex justify-content-end">
-                                                <div class="mb-3">
+                                                <div class="mb-2">
                                                     <select name="size_id" class="form-select">
-                                                        <option value="{{ $cart->size->id }}">Tamanho {{ $cart->size->size }}</option>
+                                                        <option value="{{ $cart->size->id }}">Tamanho {{ $cart->size->size }} - ({{$cart->size->stock}} Unidades disponíveis)</option>
                                                         @foreach ($shoeSizes as $size )
-                                                            @if ($cart->size->product_id === $size->product_id && $size->size != $cart->size->size)
-                                                                <option value="{{ $size->id }}">{{ $size->size }}</option>  
+                                                            @if ($cart->size->product_id === $size->product_id && $size->size != $cart->size->size && $size->stock >= 1)
+                                                                <option value="{{ $size->id }}">Tamanho {{ $size->size }} - ({{$size->stock}} Unidades disponíveis)</option>  
                                                             @endif
                                                         @endforeach
                                                     </select><br>
@@ -86,7 +86,7 @@
                                                             <input type="number" class="form-control" value="{{ $cart->quantity }}" name="quantity">
                                                             <input name="id" type="hidden" value="">
                                                         </div>
-                                                        <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i></i></button>
+                                                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,8 +101,22 @@
         @endforeach
 
         @if ($total > 0)        
-            <div class="col d-flex justify-content-center">
-                <h1>TOTAL: <b>R$ {{ number_format($total, 2, ',', '.') }}</b></h1>
+            <div class="container px-4 text-center">
+            <div class="row gx-5">
+                <div class="col">
+                    <div class="p-3">
+                        <h1>TOTAL: <b>R$ {{ number_format($total, 2, ',', '.') }}</b></h1>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="p-3">
+                        <a href="{{ route('checkout') }}" class="btn btn-success btn-lg">
+                            <b>FINALIZAR COMPRA</b> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
             </div>
         @else
             <h5  style="text-align: center;">VAZIO!</h5>

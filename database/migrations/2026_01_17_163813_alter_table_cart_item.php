@@ -27,7 +27,7 @@ return new class extends Migration
     {
         //
         Schema::table('cart_items', function(Blueprint $table) {
-            // $table->dropForeign('cart_items_size_id_foreign');
+            $table->dropForeign('cart_items_size_id_foreign');
             $table->dropColumn('size_id');
         });
     }

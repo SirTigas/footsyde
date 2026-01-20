@@ -52,6 +52,8 @@ class CartController extends Controller
         $cart['user_id'] = Auth::id();
         $cart = CartItem::create($cart);
 
+        if($request->redirect_buy)
+            return redirect()->route('carrinho.index');
         return redirect()->back();
     }
 
@@ -76,13 +78,13 @@ class CartController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        // dd($request->size_id);
-        CartItem::where('id', $id)->update([
-            'quantity' => $request->quantity,
-            'size_id' => $request->size_id,
-        ]);
-
+        $product = ProductVariant::where('id', $request->size_id)->first();
+        if($product->stock >= $request->quantity){
+            CartItem::where('id', $id)->update([
+                'quantity' => $request->quantity,
+                'size_id' => $request->size_id,
+            ]);
+        }
         return redirect()->back();
     }
 

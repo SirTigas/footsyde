@@ -15,6 +15,82 @@
 </head>
 <body>
 
+    <!--navbar-->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('site.home') }}"><img src="{{ asset('images/logo.png') }}" alt="" width="200px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav highlight">
+                    
+                    @auth
+                        <li class="nav-item">
+                            <a href="{{ route('favoritos.index') }}"><img src="{{ asset('images/icons/heart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 20px 0px 0px"></i></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('carrinho.index') }}"><img src="{{ asset('images/icons/cart-fill.png') }}" alt="cart" style="width: 24px; margin: 03px 10px 0px 0px"></i></a>
+                        </li>
+
+                        <li class="nav-item highlight">
+                            <a class="nav-link active" aria-current="page" href="{{ route('site.home') }}">Home</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('site.home') }}">Home</a>
+                        </li>                      
+                    @endauth
+
+                    <li class="nav-item">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Produtos </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ '/produtos' }}"><b>Todos</b></a></li>                            
+                                <li><a class="dropdown-item" href="{{ route('products.man') }}">Masculino</a></li>
+                                <li><a class="dropdown-item" href="{{ route('products.woman') }}">Feminino</a></li>
+                                <li><a class="dropdown-item" href="{{ route('products.unissex') }}">Unissex</a></li>
+                            </ul>
+                        </li>
+                        <a class="nav-link" href="{{ route('site.sobre') }}">Sobre</a>
+                    </li>
+
+                    @auth
+                        <li class="nav-item">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Olá, <b>{{ auth()->user()->name }}</b> </a>
+                            <ul class="dropdown-menu">                            
+                                @if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                @endif
+
+                                <li><a href="{{ route('profile.edit') }}" class="dropdown-item">Editar Perfil</a></li>
+
+                                {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn dropdown-item">
+                                        <strong>Sair</strong>
+                                    </button>
+                                </form>     
+                            </ul>
+                    @else
+                        <li class="nav-item highlight">
+                            <a class="nav-link active" href="{{ route('login') }}">Login</a>
+                        </li>
+                    @endauth
+                </ul>
+                <form class="d-flex" role="search" action="{{ route('products.search') }}" methodo="GET">
+                    <input class="form-control me-2" type="search" placeholder="Nome do produto" aria-label="Search" name="name"/>
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+        </nav>
+    </header>
+
     @yield('conteudo')
 
     <footer>
