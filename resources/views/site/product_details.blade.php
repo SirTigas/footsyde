@@ -48,7 +48,9 @@
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                        <input type="hidden" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;">                
+                        <input type="hidden" name="quantity" value="01">
+
+                        <input type="hidden" name="price" value="{{ $product->price }}">               
 
                         <div class="col-3">
                             <select name="size_id" class="form-select">
@@ -95,9 +97,11 @@
                         </div>
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                            <input type="hidden" name="quantity" value="01" class="form-control form-control-sm" style="width: 30px;">
+                            <input type="hidden" name="quantity" value="01">
 
-                            <input type="hidden" value="1" name="redirect_buy">                
+                            <input type="hidden" value="1" name="redirect_buy">
+
+                            <input type="hidden" name="price" value="{{ $product->price }}">               
 
                             @foreach ($product->sizes as $product_variant)
                                 <input type="hidden" name="size_id" value="{{ $product_variant->id }}">  

@@ -9,11 +9,12 @@ class Order extends Model
     //defining atributtes
     protected $fillable = [
         'total_price', 
+        'pc_price', 
+        'quantity', 
         'status', 
-        'payment_status', 
-        'shipping_address', 
-        'shipping_status', 
-        'note',
+        'payment_method', 
+        'product_id', 
+        'size_id',  
         'user_id',
     ];
 

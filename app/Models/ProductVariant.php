@@ -26,4 +26,8 @@ class ProductVariant extends Model
     public function cart() {
         return $this->belongsTo(CartItem::class);
     }
+
+    public function order(){
+        return $this->belongsTo(OrderItem::class);
+    }
 }

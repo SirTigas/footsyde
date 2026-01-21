@@ -108,14 +108,23 @@
                         <h1>TOTAL: <b>R$ {{ number_format($total, 2, ',', '.') }}</b></h1>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="p-3">
-                        <a href="{{ route('checkout') }}" class="btn btn-success btn-lg">
-                            <b>FINALIZAR COMPRA</b> <i class="bi bi-arrow-right"></i>
-                        </a>
+                @if(Auth::user()->email_verified_at != NULL)
+                    <div class="col">
+                        <div class="p-3">
+                            <a href="{{ route('checkout') }}" class="btn btn-success btn-lg">
+                                <b>FINALIZAR COMPRA</b> <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="col">
+                        <div class="p-3">
+                            <a href="{{ route('profile.edit') }}" class="btn btn-warning btn-lg">
+                                <b>VERIFICAÇÃO DE EMAIL NECESSÁRIA!</b> <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
             </div>
         @else

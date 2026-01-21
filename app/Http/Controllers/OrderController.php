@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\ProductVariant;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -32,17 +33,30 @@ class OrderController extends Controller
     }
 
     //return view success if all good and update the stock or redirect back
-    public function finish_buy() {
+    public function finish_buy(Request $request) {
         $products = CartItem::where('user_id', Auth::id())->get();
         $cart = $products->toArray();
+        // dd($request->status);
 
         if($cart != NULL){
             foreach ($cart as $product) {
                 $stock = ProductVariant::where('id', $product['size_id'])->first();
                 if($stock){
+                    // dd($stock->id);
                     $total = $stock->stock - $product['quantity'];
                     $stock->update([
                         'stock' => $total,
+                    ]);
+
+                    $order = Order::create([
+                        'size_id' => $stock->id,
+                        'product_id' => $product['product_id'],
+                        'user_id' => Auth::id(),
+                        'quantity' => $product['quantity'],
+                        'total_price' => $product['quantity'] * $product['price'],
+                        'pc_price' => $product['price'],
+                        'status' => $request->payment_method === 'pix' ? 'success' : 'analyzing',
+                        'payment_method' => $request->payment_method,
                     ]);
                 }
             }

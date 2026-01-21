@@ -1,4 +1,4 @@
-@extends('checkout.layouts.layout')
+@extends('site.layouts.layout')
 
 @section('conteudo')
 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;); margin: 1%" aria-label="breadcrumb">
@@ -32,17 +32,21 @@
                             <input type="number" class="form-control" placeholder="Código de verificação*"><br>
                             <input type="date" class="form-control" placeholder="Data de nascimento*"><br>
 
-                            <input type="hidden" value="credit" name="sizer_id">
-                            <input type="hidden" value="credit" name="product_id">
-                            <input type="hidden" value="credit" name="total_price">
-                            <input type="hidden" value="success" name="status">
                             <input type="hidden" value="credit" name="payment_method">
-                            <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                         </div>
                     </div>
                 </div>
-
-                <div class="col-2"><button class="btn btn-success justify-content-right" type="submit"><b>FINALIZAR</b> <i class="bi bi-arrow-right"></i></button></div>
+                @if (Auth::user()->email_verified_at != NULL)
+                    <div class="col-2">
+                        <button class="btn btn-success justify-content-right" type="submit"><b>FINALIZAR</b> <i class="bi bi-arrow-right"></i></button>
+                    </div>
+                @else
+                    <div class="col-2">
+                        <a href="{{ route('profile.edit') }}" class="btn btn-warning justify-content-right">
+                            <b>VERIFICAÇÃO DE EMAIL NECESSÁRIA!</b> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </form>
