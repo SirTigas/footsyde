@@ -10,7 +10,9 @@
 
     {{--Sucess menssagem--}}
     @if ($mensagem = Session::get('msm'))
-        <p class="d-flex justify-content-center" style="color:yellow;">{{ $mensagem }}</p>
+        <div class="alert alert-success" role="alert" style="text-align:center;">
+            {{ $mensagem }}
+        </div>
     @endif
         <body>
             <br>

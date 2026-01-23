@@ -7,9 +7,9 @@
     <div class="container-fluid" style="margin:30px 0px 0px 0px">
         {{--Sucess menssagem--}}
         @if($mensagem = Session::get('success'))
-            <p style="text-align: center; color:green;">
-                {{$mensagem}}
-            </p>
+            <div class="alert alert-success" role="alert" style="text-align:center;">
+                {{ $mensagem }}
+            </div>
         @endif
 
         @if ($errors->any())

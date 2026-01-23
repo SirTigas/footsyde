@@ -5,7 +5,9 @@
     <div class="container-fluid" style="margin:30px 0px 0px 0px">
         {{--Sucess menssagem--}}
         @if ($mensagem = Session::get('msm'))
-            <p class="d-flex justify-content-center" style="color:yellow">{{ $mensagem }}</p>
+            <div class="alert alert-success" role="alert" style="text-align:center;">
+                {{ $mensagem }}
+            </div>
         @endif
 
         @if(count($products) == 0)

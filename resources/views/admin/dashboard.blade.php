@@ -5,7 +5,9 @@
     @section('conteudo')
     <div class="container-fluid" style="margin:30px 0px 0px 0px">
         @if ($mensagem = Session::get('success'))
-            <p class="d-flex justify-content-center" style="color:green">{{ $mensagem }}</p>
+            <div class="alert alert-success" role="alert" style="text-align:center;">
+                {{ $mensagem }}
+            </div>
         @endif
 
         @if(count($products) == 0)
@@ -88,7 +90,7 @@
                                                             <div class="input-group mb-3">
                                                                 <span class="input-group-text">R$</span>
                                                                 <span class="input-group-text">{{ $p->price }}</span>
-                                                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" name="price" value="">
+                                                                <input type="number" step="0.01" min="1" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $p->price }}">
                                                             </div>
                                                             @error('price')
                                                                 <span>

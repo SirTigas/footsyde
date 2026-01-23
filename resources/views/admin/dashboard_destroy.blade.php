@@ -12,11 +12,15 @@
     <div class="row">
         <div class="col d-flex justify-content-center justify-content-center">
             @if ($mensagem = Session::get('success'))
-                <p>{{ $mensagem }}</p>
+                <div class="alert alert-success" role="alert" style="text-align:center;">
+                    {{ $mensagem }}
+                </div>
             @endif
 
-            @if ($mensagem = Session::get('erro'))
-                <p>{{ $mensagem }}</p>
+            @if ($mensagem = Session::get('danger'))
+                <div class="alert alert-danger" role="alert" style="text-align:center;">
+                    {{ $mensagem }}
+                </div>
             @endif
         </div>
     </div>
