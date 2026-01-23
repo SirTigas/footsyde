@@ -37,6 +37,8 @@
 
                                     <li><a class="dropdown-item" href="{{ route('dashboard.stock') }}">Editar Estoque</a></li>
 
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.orders') }}">Editar Pedidos</a></li>
+
                                     <li><a class="dropdown-item" href="{{ route('dashboard.photos') }}">Galeria de fotos</a></li>
 
                                     <li><a class="dropdown-item" href="{{ route('dashboard.destroy') }}">Excluir produtos</a></li>
