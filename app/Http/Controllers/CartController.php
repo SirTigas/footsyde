@@ -54,7 +54,7 @@ class CartController extends Controller
 
         if($request->redirect_buy)
             return redirect()->route('carrinho.index');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'O produto foi adicionado ao carrinho!');
     }
 
     /**

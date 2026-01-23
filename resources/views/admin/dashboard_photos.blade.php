@@ -1,5 +1,5 @@
 @if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
-    @extends('admin.layouts.layout_photos')
+    @extends('admin.layouts.layout')
 
     @section('conteudo')
     <div class="container-fluid" style="margin:30px 0px 0px 0px">

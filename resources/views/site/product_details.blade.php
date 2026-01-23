@@ -134,6 +134,12 @@
                             
             </p>
         </div>
+
+        @if ($mensagem = Session::get('success'))
+            <div class="alert alert-success" role="alert">
+                {{ $mensagem }}
+            </div>
+        @endif
     </div>
 </div>
 

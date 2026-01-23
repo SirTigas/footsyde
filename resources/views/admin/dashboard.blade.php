@@ -100,7 +100,7 @@
 
                                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                                         <div class="mb-3">
-                                                            <small>Código: {{ $p->code }}</small>
+                                                            <small>Código: <b>{{ $p->code }}</b></small>
                                                         </div>
 
                                                         <div class="mb-3">

@@ -53,7 +53,6 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Olá, <b>{{ auth()->user()->name }}</b> </a>
                                     <ul class="dropdown-menu">
-                                        {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn dropdown-item">
@@ -69,8 +68,8 @@
                             </li>
                         @endauth
                     </ul>
-                    <form class="d-flex" role="search" action="{{ route('dashboard.search') }}" methodo="GET">
-                        <input class="form-control me-2" type="search" placeholder="Nome do produto" aria-label="Search" name="name"/>
+                    <form class="d-flex" role="search" methodo="GET">
+                        <input class="form-control me-2" type="search" placeholder="Nome do produto" aria-label="Search" name="search" value="{{ request('search') }}"/>
                         <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                     </form>
                 </div>

@@ -48,7 +48,7 @@ class WishlistController extends Controller
         $wishlist['user_id'] = Auth::id();
         $wishlist = Wishlist::create($wishlist);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'O produto foi adicionado aos favoritos!');
     }
 
     /**

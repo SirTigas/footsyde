@@ -13,79 +13,52 @@ use Closure;
 
 class DashboardController extends Controller
 {
+    private function searchProduct(Request $request)
+    {
+        //
+        
+        if($request->search){
+            // dd($request);
+            return Product::where('name', 'like', "%{$request->search}%")
+            ->Orwhere('code', 'like', "%{$request->search}%")
+            ->orderBy('name')
+            ->paginate(5);
+        }
+        return Product::orderBy('name')
+        ->paginate(12);
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function product_index(Request $request)
     {
-        $products = Product::orderBy('name')
-        ->paginate(12);
+        $products = $this->searchProduct($request);
 
         return view('admin.dashboard', compact('products'));
     }
 
+    //show all stock product
+    public function stock_index(Request $request)
+    {
+        $products = $this->searchProduct($request);;
+
+        return view('admin.dashboard_stock_edit', compact('products'));
+    }
+
     //edit all user orders
-    public function orders_index(){
+    public function orders_index(Request $request){
         $orders = Order::orderBy('created_at')
         ->paginate(12);
         return view('admin.dashboard_orders', compact('orders'));
     }
 
-    //show all stock product
-    public function stock_index()
-    {
-        $products = Product::orderBy('name')
-        ->with('sizes')
-        ->paginate(12);
-
-        return view('admin.dashboard_stock_edit', compact('products'));
-    }
-
     //show the view to edit photos
-    public function photo_index()
+    public function photo_index(Request $request)
     {
-        $products = Product::orderBy('name')
-        ->with(['images'])
-        ->paginate(12);
+        $products = $this->searchProduct($request);
 
         return view('admin.dashboard_photos', compact('products'));
-    }
-
-    
-    public function search_edit(Request $request)
-    {
-        //
-        $products = Product::where('name', 'like', "%{$request->name}%")
-        ->Orwhere('code', 'like', "%{$request->name}%")
-        ->orderBy('name')
-        ->paginate(5);
-
-        return view('admin.dashboard', compact('products'));
-        //return back()->with(compact('products'));
-    }
-
-    public function search_stock(Request $request)
-    {
-        //
-        $products = Product::where('name', 'like', "%{$request->name}%")
-        ->Orwhere('code', 'like', "%{$request->name}%")
-        ->orderBy('name')
-        ->paginate(5);
-
-        return view('admin.dashboard_stock_edit', compact('products'));
-        //return back()->with(compact('products'));
-    }
-
-    public function search_photos(Request $request)
-    {
-        //
-        $products = Product::where('name', 'like', "%{$request->name}%")
-        ->Orwhere('code', 'like', "%{$request->name}%")
-        ->orderBy('name')
-        ->paginate(5);
-
-        return view('admin.dashboard_photos', compact('products'));
-        //return back()->with(compact('products'));
     }
     
     //return specific order

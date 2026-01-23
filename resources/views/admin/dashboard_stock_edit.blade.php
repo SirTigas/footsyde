@@ -1,5 +1,5 @@
 @if(Auth::user()->role === 'admin' && Auth::user()->email_verified_at != NULL)
-    @extends('admin.layouts.layout_stock')
+    @extends('admin.layouts.layout')
 
 
     @section('conteudo')

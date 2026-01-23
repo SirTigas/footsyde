@@ -72,13 +72,14 @@ Route::middleware('auth')->group(function () {
 
 //dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
-    Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/admin/dashboard', [DashboardController::class, 'product_index'])->name('admin.dashboard');
     Route::GET('/admin/dashboard/orders', [DashboardController::class, 'orders_index'])->name('dashboard.orders');
     Route::GET('/admin/dashboard/stock', [DashboardController::class, 'stock_index'])->name('dashboard.stock');
     Route::GET('/admin/dashboard/photos', [DashboardController::class, 'photo_index'])->name('dashboard.photos');
-    Route::GET('/admin/dashboard/search', [DashboardController::class, 'search_edit'])->name('dashboard.search');
-    Route::GET('/admin/dashboard/search/stock', [DashboardController::class, 'search_stock'])->name('dashboard.search_stock');
-    Route::GET('/admin/dashboard/search/photos', [DashboardController::class, 'search_photos'])->name('dashboard.search_photos');
+
+    // Route::GET('/admin/dashboard/search', [DashboardController::class, 'search_edit'])->name('dashboard.search');
+    // Route::GET('/admin/dashboard/search/stock', [DashboardController::class, 'search_stock'])->name('dashboard.search_stock');
+    // Route::GET('/admin/dashboard/search/photos', [DashboardController::class, 'search_photos'])->name('dashboard.search_photos');
     Route::GET('/admin/dashboard/search/orders', [DashboardController::class, 'search_orders'])->name('dashboard.search_orders');
 
     Route::POST('/admin/dashboard/stock', [DashboardController::class, 'update_stock'])->name('admin.stock');

@@ -21,7 +21,6 @@ class Product extends Model
         'category_id',
         'code',
     ];
-
     //defining relationship
 
     //categories table

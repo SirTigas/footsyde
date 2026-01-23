@@ -34,8 +34,8 @@ class OrderController extends Controller
 
     //return view success if all good and update the stock or redirect back
     public function finish_buy(Request $request) {
-        $products = CartItem::where('user_id', Auth::id())->get();
-        $cart = $products->toArray();
+        $cartProducts = CartItem::where('user_id', Auth::id())->get();
+        $cart = $cartProducts->toArray();
         // dd($request->status);
 
         if($cart != NULL){
@@ -51,12 +51,11 @@ class OrderController extends Controller
                 $stock = ProductVariant::where('id', $product['size_id'])->first();
                 
                 if($stock){
-                    // dd($stock->id);
                     $total = $stock->stock - $product['quantity'];
                     $stock->update([
                         'stock' => $total,
                     ]);
-                    // dd($codeOrder);
+
                     $order = Order::create([
                         'size_id' => $stock->id,
                         'product_id' => $product['product_id'],
@@ -70,6 +69,8 @@ class OrderController extends Controller
                     ]);
                 }
             }
+            //clean all cart items
+            CartItem::destroy($cartProducts);
             return view('checkout.success', compact('codeOrder'));
         }return redirect()->route('carrinho.index');
     }
