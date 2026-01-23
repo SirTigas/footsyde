@@ -39,19 +39,29 @@ class OrderController extends Controller
         // dd($request->status);
 
         if($cart != NULL){
+            $i = true;
+            while ($i) {
+                $codeOrder = random_int(100000, 999999);
+                $codeExists = Order::where('code', $codeOrder)->first();
+                if($codeExists === null){
+                    $i = false;
+                }
+            }
             foreach ($cart as $product) {
                 $stock = ProductVariant::where('id', $product['size_id'])->first();
+                
                 if($stock){
                     // dd($stock->id);
                     $total = $stock->stock - $product['quantity'];
                     $stock->update([
                         'stock' => $total,
                     ]);
-
+                    // dd($codeOrder);
                     $order = Order::create([
                         'size_id' => $stock->id,
                         'product_id' => $product['product_id'],
                         'user_id' => Auth::id(),
+                        'code' => $codeOrder,
                         'quantity' => $product['quantity'],
                         'total_price' => $product['quantity'] * $product['price'],
                         'pc_price' => $product['price'],
@@ -60,7 +70,18 @@ class OrderController extends Controller
                     ]);
                 }
             }
-            return view('checkout.success');
+            return view('checkout.success', compact('codeOrder'));
         }return redirect()->route('carrinho.index');
-    } 
+    }
+    
+    //show all user orders
+    public function user_orders_show(){
+        //
+        $orders = Order::where('user_id', Auth::id())
+        ->with('size', 'product')
+        ->paginate(12);
+
+        return view('site.my_orders', compact('orders'));
+    }
+
 }

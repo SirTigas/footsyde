@@ -13,14 +13,6 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AuthAdminMiddleware;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -61,12 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::POST('/wish/clear', [WishlistController::class, 'clear'])->name('wishlist.clear');
 });
 
-// //login/register/logout
-// Route::resource('users', UserController::class);
-// Route::view('/login', 'login.form')->name('login');
-// Route::POST('/auth', [LoginController::class, 'auth'])->name('login.auth');
-// Route::GET('/logout', [LoginController::class, 'logout'])->name('login.logout');
-// Route::GET('/register', [UserController::class, 'create'])->name('register');
+//orders
+Route::middleware('auth')->group(function () {
+    Route::GET('/meus-pedidos', [OrderController::class, 'user_orders_show'])->name('orders');
+});
 
 //Checkout
 Route::middleware('auth')->group(function () {
@@ -83,15 +73,18 @@ Route::middleware('auth')->group(function () {
 //dashboard ONLY ADMS
 Route::middleware(['auth', AuthAdminMiddleware::class])->group(function (){
     Route::GET('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::GET('/admin/dashboard/orders', [DashboardController::class, 'orders_index'])->name('dashboard.orders');
     Route::GET('/admin/dashboard/stock', [DashboardController::class, 'stock_index'])->name('dashboard.stock');
     Route::GET('/admin/dashboard/photos', [DashboardController::class, 'photo_index'])->name('dashboard.photos');
     Route::GET('/admin/dashboard/search', [DashboardController::class, 'search_edit'])->name('dashboard.search');
     Route::GET('/admin/dashboard/search/stock', [DashboardController::class, 'search_stock'])->name('dashboard.search_stock');
     Route::GET('/admin/dashboard/search/photos', [DashboardController::class, 'search_photos'])->name('dashboard.search_photos');
+    Route::GET('/admin/dashboard/search/orders', [DashboardController::class, 'search_orders'])->name('dashboard.search_orders');
 
     Route::POST('/admin/dashboard/stock', [DashboardController::class, 'update_stock'])->name('admin.stock');
     Route::POST('/admin/dashboard/photos', [DashboardController::class, 'update_photo'])->name('admin.photo');
     Route::POST('/admin/dashboard/update', [DashboardController::class, 'update'])->name('admin.update');
+    Route::POST('/admin/dashboard/orders', [DashboardController::class, 'update_orders'])->name('admin.update.orders');
     Route::POST('/admin/dashboard/destroy', [DashboardController::class, 'destroy'])->name('admin.destroy');
     Route::POST('/admin/dashboard/clear', [DashboardController::class, 'clear'])->name('admin.clear');
     Route::POST('/admin/dashboard/store', [DashboardController::class, 'store'])->name('admin.store');

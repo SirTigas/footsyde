@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\ProductVariant;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\Storage;
@@ -21,6 +22,13 @@ class DashboardController extends Controller
         ->paginate(12);
 
         return view('admin.dashboard', compact('products'));
+    }
+
+    //edit all user orders
+    public function orders_index(){
+        $orders = Order::orderBy('created_at')
+        ->paginate(12);
+        return view('admin.dashboard_orders', compact('orders'));
     }
 
     //show all stock product
@@ -80,6 +88,22 @@ class DashboardController extends Controller
         //return back()->with(compact('products'));
     }
     
+    //return specific order
+    public function search_orders(Request $request)
+    {
+        //
+        $orders = Order::where('code', $request->code)
+        ->orderBy('created_at')
+        ->paginate(5);
+
+        if($orders->total() > 0)
+            return view('admin.dashboard_orders', compact('orders'));
+
+        $allOrders = Order::orderBy('created_at')
+        ->paginate(12);
+        return view('admin.dashboard_orders', ['orders' => $allOrders]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -296,6 +320,17 @@ class DashboardController extends Controller
             //   'stock' => $request->stock,   
               'fornecedor' => $request->fornecedor,          
               'category_id' => $request->category_id,          
+        ]);
+
+        return redirect()->back()->with('success', 'As modificações foram aplicadas!');
+    }
+
+    //update orders status
+    public function update_orders(Request $request)
+    {
+        Order::where('id', $request->id)
+        ->update([
+              'status' => $request->status,            
         ]);
 
         return redirect()->back()->with('success', 'As modificações foram aplicadas!');

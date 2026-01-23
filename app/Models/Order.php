@@ -16,10 +16,19 @@ class Order extends Model
         'product_id', 
         'size_id',  
         'user_id',
+        'code',
     ];
 
     //defining relationship
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
+
+    public function size(){
+        return $this->belongsTo(ProductVariant::class);
     }
 }

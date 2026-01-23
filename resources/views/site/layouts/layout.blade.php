@@ -68,9 +68,8 @@
 
                                 <li><a href="{{ route('profile.edit') }}" class="dropdown-item">Editar Perfil</a></li>
 
-                                <li><a href="{{ route('profile.edit') }}" class="dropdown-item">Meus Pedidos</a></li>
+                                <li><a href="{{ route('orders') }}" class="dropdown-item">Meus Pedidos</a></li>
 
-                                {{-- <li><a class="dropdown-item" href="{{ route('logout') }}">Sair</a></li> --}}
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn dropdown-item">

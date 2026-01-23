@@ -9,9 +9,8 @@
 
 <div style="margin: 5%; background-color: #FAF9F6; border-radius: 10px; text-align:center">
     <h1>Pedido concluido com sucesso!</h1><br>
-    <h2>Obrigado por comprar na Footsyde.</h2>
+    <h2>Obrigado por comprar na Footsyde. Código do pedido: {{ $codeOrder }}</h2>
     <a href="{{ route('site.home') }}">
         <p>Continue navegando.</p>
     </a>
-
 @endsection

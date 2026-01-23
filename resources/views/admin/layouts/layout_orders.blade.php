@@ -69,8 +69,8 @@
                             </li>
                         @endauth
                     </ul>
-                    <form class="d-flex" role="search" action="{{ route('dashboard.search') }}" methodo="GET">
-                        <input class="form-control me-2" type="search" placeholder="Nome do produto" aria-label="Search" name="name"/>
+                    <form class="d-flex" role="search" action="{{ route('dashboard.search_orders') }}" methodo="GET">
+                        <input class="form-control me-2" type="search" placeholder="Código do pedido" aria-label="Search" name="code"/>
                         <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                     </form>
                 </div>
