@@ -48,6 +48,8 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->size_id === 'esgotado' || $request->size_id === null)
+            return redirect()->back()->with('stock', 'Tamanho esgotado!');
         $cart = $request->all();
         $cart['user_id'] = Auth::id();
         $cart = CartItem::create($cart);

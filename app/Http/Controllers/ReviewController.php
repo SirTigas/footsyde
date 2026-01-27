@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -25,9 +27,14 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReviewRequest $request)
+    public function store(Request $request)
     {
         //
+        $review = $request->all();
+        $review['user_id'] = Auth::id();
+        Review::create($review);
+
+        return redirect()->back()->with('review_success', 'Sua avaliação foi registrada');
     }
 
     /**

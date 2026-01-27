@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\AuthAdminMiddleware;
 
 Route::middleware('auth')->group(function () {
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(function () {
 //orders
 Route::middleware('auth')->group(function () {
     Route::GET('/meus-pedidos', [OrderController::class, 'user_orders_show'])->name('orders');
+});
+
+//reviews
+Route::middleware('auth')->group(function () {
+    Route::resource('/review', ReviewController::class);
 });
 
 //Checkout

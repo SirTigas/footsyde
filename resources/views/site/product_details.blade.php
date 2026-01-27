@@ -32,11 +32,12 @@
         </div>
         
         <div class="col-8">
-            <h3>{{ strtoupper($product->name) }}</h3>
+            <h3>{{ strtoupper($product->name) }} </h3>
             <br>
-            <p>{{ $product->description }}</p>
+            <p>{{ $product->description }} </p>
             <p>Gênero: <b>{{ $product->category->name }}</b></p>
             <p>Vendido e entregue por: <b>{{ $product->fornecedor }}</b></p>
+            <p><i class="bi bi-star-fill"></i> {{ $avarageReview }}/5 - <small>{{ $reviews->total() }} Avaliações</small></p>
             <h1>R$ {{ number_format($product->price, 2, ',', '.') }}</h1>
             <p>
             {{-- Aqui ocorre a verificação se o usuário está logado para prosseguir com a compra, adicionar ao carrinho ou lista de favoritos, caso contrário é redirecionado para tela de login --}}
@@ -55,9 +56,7 @@
                         <div class="col-3">
                             <select name="size_id" class="form-select">
                                 @foreach ($product->sizes as $product_variant)
-                                    @if($product_variant->stock > 0)
-                                        <option value="{{ $product_variant->id }}">{{ $product_variant->size }} - ({{ $product_variant->stock }} disponíveis)</option>  
-                                    @endif
+                                    <option {{ $product_variant->stock > 0 ? 'selected' : '' }} value="{{ $product_variant->stock > 0 ? $product_variant->id : 'esgotado'}}">{{ $product_variant->stock > 0 ? $product_variant->size .' - (' .$product_variant->stock . ') ' . 'disponíveis' : 'ESGOTADO'}}</option>
                                 @endforeach
                             </select><br>
                         </div>
@@ -95,32 +94,34 @@
                     <form action="{{ route('carrinho.store') }}" method="POST"  style="margin: 0px 0px 10px 0px">
                         @csrf                            
                         </div>
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                            <input type="hidden" name="quantity" value="01">
+                        <input type="hidden" name="quantity" value="01">
 
-                            <input type="hidden" value="1" name="redirect_buy">
+                        <input type="hidden" value="1" name="redirect_buy">
 
-                            <input type="hidden" name="price" value="{{ $product->price }}">               
+                        <input type="hidden" name="price" value="{{ $product->price }}">
 
+                        @if ($isInCart)
+                            <div class="d-grid gap-2 col-6">
+                                <a href="{{ route('carrinho.index') }}" class="btn btn-success btn-lg">
+                                    <i class="bi bi-currency-dollar"></i> <b>COMPRAR</b>
+                                </a>
+                            </div>
+                        @else
                             @foreach ($product->sizes as $product_variant)
-                                <input type="hidden" name="size_id" value="{{ $product_variant->id }}">  
-                            @endforeach
-
-                            @if ($isInCart)
-                                <div class="d-grid gap-2 col-6">
-                                    <a href="{{ route('carrinho.index') }}" class="btn btn-success btn-lg">
-                                        <i class="bi bi-currency-dollar"></i> <b>COMPRAR</b>
-                                    </a>
-                                </div>
-                            @else
-                                <div class="d-grid gap-2 col-6">
-                                    <button class="btn btn-success btn-lg" type="submit"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></button>
-                                </div>
-                            @endif
-
+                                @if($product_variant->stock > 0)
+                                    <input type="hidden" name="size_id" value="{{ $product_variant->id }}">
+                                    <div class="d-grid gap-2 col-6">
+                                        <button class="btn btn-success btn-lg" type="submit"><i class="bi bi-currency-dollar"></i> <b>COMPRAR</b></button>
+                                    </div>
+                                    @php
+                                        break;
+                                    @endphp
+                                @endif
+                            @endforeach 
+                        @endif
                     </form>
-
                 </div>
             @else
                 <div class="d-grid gap-2 col-6">
@@ -136,11 +137,87 @@
         </div>
 
         @if ($mensagem = Session::get('success'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success" role="alert" style="text-align:center;">
                 {{ $mensagem }}
             </div>
         @endif
+
+        @if ($mensagem = Session::get('stock'))
+            <div class="alert alert-danger" role="alert" style="text-align:center;">
+                {{ $mensagem }}
+            </div>
+        @endif
+
+        <div>
+            <hr>
+            <div>
+                @if ($orders != null && $existsReview === null && $orders->status === 'success')
+                    <h3>• AVALIE ESTE PRODUTO</h3><br>
+                    <p>Você já comprou este produto, deixe a sua avaliação!</p>
+                    <div class="row">
+                        <div class="col-3">
+                            <form action="{{ route('review.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                                <output for="range4" id="rangeValue" aria-hidden="true" style="text-align:center"></output> <i class="bi bi-star-fill"></i>
+                                <input type="range" class="form-range" min="1" max="5" step="0.5" value="5" id="range4" name="rating">
+                                <br>
+
+                                <div class="input-group">
+                                    <textarea class="form-control" aria-label="With textarea" placeholder="Comentário(opcional)" name="comment"></textarea>
+                                </div><br>
+
+                                <button type="submit" class="btn btn-success"><b>POSTAR</b></button>
+                            </form>
+                        </div>
+                    </div><br><br>               
+                @endif
+
+                @if ($mensagem = Session::get('review_success'))
+                    <div class="alert alert-success" role="alert" style="text-align:center;">
+                        {{ $mensagem }}
+                    </div>
+                @endif
+                
+
+                <h3>Comentários • Avaliações</h3><br>
+                @if ($reviews->total() > 0)
+                    @foreach ($reviews as $rev )
+                        <div class="card">
+                            <div class="row"  style="margin: 1%">
+                                <div class="col">
+                                    <img src="{{ asset('storage/images/profile/default.jpg') }}" alt="profile-photo" style="border-radius:100%" width="40px">
+                                    {{ $rev->user->name }} • {{ $rev->rating }} <i class="bi bi-star-fill"></i> • {{ $rev->created_at->format('d/m/Y') }}
+                                </div><br><br>
+
+                                <div class="row">
+                                    <p>{{ $rev->comment }}</p><br>
+                                </div>
+                            </div>
+                        </div><br>   
+                    @endforeach
+                @else
+                    <h5 style="text-align:center;">Este produto ainda não tem avaliações.</h5>
+                @endif
+
+                {{ $reviews->links() }}              
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+  // rwview script
+  const rangeInput = document.getElementById('range4');
+  const rangeOutput = document.getElementById('rangeValue');
+
+  // Set initial value
+  rangeOutput.textContent = rangeInput.value;
+
+  rangeInput.addEventListener('input', function() {
+    rangeOutput.textContent = this.value;
+  });
+</script>
 
 @endsection

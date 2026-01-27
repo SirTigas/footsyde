@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Wishlist;
 use App\Models\CartItem;
+use App\Models\Review;
+use App\Models\Order;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,6 +73,19 @@ class ProductController extends Controller
         $product = Product::where('code', $code)
         ->with(['category', 'images', 'sizes'])
         ->first();
+
+        //recuperando dados da tabela "review"
+        $reviews = Review::where('product_id', $product->id)->paginate(5);
+        
+        //calculando a média das avaliações
+        $avarageReview = Review::where('product_id', $product->id)->sum('rating');
+        $avarageReview = $avarageReview / ($reviews->total() > 0 ? $reviews->total() : 1);
+        // dd($avarageReview);
+
+        $orders = Order::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+
+        $existsReview = Review::where('user_id', Auth::id())->where('product_id', $product->id)->first();
+        // dd($existsReview);
         
         //verificando se o produto existe na base de dados
         if ($product)
@@ -89,12 +104,10 @@ class ProductController extends Controller
                 else
                     $isInList = FALSE;
 
-                return view('site.product_details', compact('product', 'isInCart', 'isInList'));}
+                return view('site.product_details', compact('product', 'isInCart', 'isInList', 'reviews', 'existsReview', 'avarageReview' , 'orders'));}
             else
-                return view('site.product_details', compact('product'));
-        }else
-            return redirect()->route('products.index');
-
+                return view('site.product_details', compact('product', 'reviews', 'existsReview', 'avarageReview' , 'orders'));
+        }       
+        return redirect()->route('products.index');
     }
-
 }
