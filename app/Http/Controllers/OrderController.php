@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\ProductVariant;
 use App\Models\Order;
+use App\Mail\OrderConfirmed;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -71,7 +73,14 @@ class OrderController extends Controller
             }
             //clean all cart items
             CartItem::destroy($cartProducts);
+
+            //send email
+            $order = Order::where('code', $codeOrder)->with('user', 'product', 'size')->get();
+            Mail::to(Auth::user()->email)
+            ->send(new OrderConfirmed($order, $codeOrder));
+
             return view('checkout.success', compact('codeOrder'));
+
         }return redirect()->route('carrinho.index');
     }
     
@@ -84,5 +93,4 @@ class OrderController extends Controller
 
         return view('site.my_orders', compact('orders'));
     }
-
 }
