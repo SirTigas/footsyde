@@ -13,7 +13,7 @@
                     
                     <tr>
                         <td align="center">
-                            <img src="https://i.ibb.co/fdfSxTnB/logo.png" alt="logo-footsyde" border="0">
+                            <img src="https://i.ibb.co/HfPtFTDF/logo.png" alt="logo-footsyde" border="0">
                         </td>
                     </tr>
 

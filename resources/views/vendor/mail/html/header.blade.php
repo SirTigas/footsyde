@@ -6,7 +6,7 @@
 <img src="https://i.ibb.co/fdfSxTnB/logo.png" class="logo" alt="logo-footsyde">
 @else --}}
 {{-- {!! $slot !!} --}}
-<img src="https://i.ibb.co/fdfSxTnB/logo.png" alt="logo-footsyde" border="0">
+<img src="https://i.ibb.co/HfPtFTDF/logo.png" alt="logo-footsyde" border="0">
 {{-- @endif --}}
 </a>
 </td>
