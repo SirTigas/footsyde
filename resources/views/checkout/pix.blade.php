@@ -9,39 +9,39 @@
     </ol>
 </nav>
 
-<div style="margin: 5%; background-color: #FAF9F6; border-radius: 10px">
-    <h1 style="text-align:center">Agora só falta realizar o pagamento!</h1><br>
+<div class="container" style="background-color: #FAF9F6; border-radius: 10px">
+    <div>
+        <h1 style="text-align:center">Agora só falta realizar o pagamento!</h1><br>
+    </div>
 
-    <form action="{{ route('buy') }}" method="POST">
-        @csrf
-        <div class="container text-center">
+    <div class="container text-center">
+        <form action="{{ route('buy') }}" method="POST">
+            @csrf
             <div class="row">
-                <div class="col">
+                <div class="col mt-3">
                     <img src="{{ asset('images/checkout/pix.png') }}" alt="pix" width="150px">
                 </div>
 
-                <div class="col">
+                <div class="col mt-3">
                     <img src="{{ asset('images/checkout/qrcode.jpeg') }}" alt="pix" width="300px"><br><br>
-                    <p>Copia e cola: <a href="">00020126360014br.gov.bcb.pix0114+55619989362995204000053039865802BR5923Tiago Rodrigues Cardoso6009Sao Paulo62240520daqr128773272776639563042737</a></p>
                 </div>
 
-                <input type="hidden" value="pix" name="payment_method">
-
-                
-
-                @if (Auth::user()->email_verified_at != NULL)
-                    <div class="col">
-                        <button class="btn btn-success justify-content-right" type="submit"><b>FINALIZAR</b> <i class="bi bi-arrow-right"></i></button>
-                    </div>
-                @else
-                    <div class="col-2">
-                        <a href="{{ route('profile.edit') }}" class="btn btn-warning justify-content-right">
-                            <b>VERIFICAÇÃO DE EMAIL NECESSÁRIA!</b> <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                @endif
+                <div class="col mt-3">
+                    <input type="hidden" value="pix" name="payment_method">
+                    @if (Auth::user()->email_verified_at != NULL)
+                        <div class="col">
+                            <button class="btn btn-success justify-content-right btn-lg" type="submit"><b>FINALIZAR</b> <i class="bi bi-arrow-right"></i></button>
+                        </div>
+                    @else
+                        <div class="col">
+                            <a href="{{ route('profile.edit') }}" class="btn btn-warning justify-content-right">
+                                <b>VERIFICAÇÃO DE EMAIL NECESSÁRIA!</b> <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    @endif
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 @endsection

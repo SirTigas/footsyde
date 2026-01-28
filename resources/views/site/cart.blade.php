@@ -23,9 +23,9 @@
         @foreach ($cartItems as $cart)
             @if (($cart->user_id) == Auth::id())
                 <div class="col d-flex justify-content-center">
-                    <div class="card mb-3" style="max-width: 1200px;">
+                    <div class="card mb-3">
                         <div class="row g-0">
-                            <!-- Imagem -->
+                            <!-- IMAGEM -->
                             <div class="col-md-3">
                                 @php
                                     $pathImage = $cart->product->image_path;
@@ -42,10 +42,10 @@
                                 </a>   
                             </div>
 
-                            <!-- Conteúdo -->
+                            <!-- CONTEÚDO -->
                             <div class="col-md-9">
                                 <div class="card-body d-flex flex-column justify-content-between h-100">
-                                    <div>
+                                    <div class="row">
                                         <div class="d-flex justify-content-between align-items-center mt-2">
                                             <h5 class="card-title">
                                                 <a href="{{ route('products.show', $cart->product->code) }}" class="text-decoration-none text-dark">
@@ -60,16 +60,21 @@
                                             </form>                                                                                        
                                         </div><br>
                                         
-                                        <p class="card-text">{{ Str::limit($cart->product->description, 150) }}</p>
-                                        <p class="card-text">Fornecedor: <small class="text-muted">{{ $cart->product->fornecedor }}</small></p>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="card-text">{{ Str::limit($cart->product->description, 150) }}</p>
+
+                                                <p class="card-text">Fornecedor: <small class="text-muted">{{ $cart->product->fornecedor }}</small></p>
+                                            </div>
+                                        </div>
                                     </div>
-  
+                                    <h3>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</h3>
                                     <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <b>R$ {{ number_format($cart->product->price, 2, ',', '.') }}</b>                                    
+                                                                            
                                         <form action="{{ route('carrinho.update', $cart->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-end ">
                                                 <div class="mb-2">
                                                     <select name="size_id" class="form-select">
                                                         <option value="{{ $cart->size->id }}">Tamanho {{ $cart->size->size }} - ({{$cart->size->stock}} Unidades disponíveis)</option>
@@ -81,12 +86,10 @@
                                                     </select><br>
 
                                                     <div class="input-group col-auto">
-                                                        <span class="input-group-text" id="inputGroup-sizing-default">Quantidade</span>
                                                         <div class="col-auto">
-                                                            <input type="number" class="form-control" value="{{ $cart->quantity }}" name="quantity">
-                                                            <input name="id" type="hidden" value="">
+                                                            <input type="number" class="form-control" value="" placeholder="Quantidade: {{ $cart->quantity }}" name="quantity">
                                                         </div>
-                                                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></i></button>
+                                                        <button type="submit" class="btn btn-primary input-group-text"><i class="bi bi-floppy"></i></i></button>
                                                     </div>
                                                 </div>
                                             </div>

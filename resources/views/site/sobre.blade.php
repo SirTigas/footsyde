@@ -3,10 +3,10 @@
 
 @section('conteudo')
 
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col" style="margin: 100px 0px 50px 0px;">
-            <img src="{{ asset('images/logo.png') }}" alt="footsyde-logo">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <img src="{{ asset('images/logo.png') }}" alt="footsyde-logo" width="300px">
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <p>No <b>FOOTSYDE</b>, cada detalhe é pensado para você: desde a busca por produtos até o momento em que seu pedido chega à sua porta. Qualidade, confiança e inovação são a base da nossa loja.</p>
     </div>
 
-    <div class="row" style="margin: 30px 0px 50px 0px;">
+    <div class="row mt-5">
         <div class="col">
             <h4><b>Missão</b></h4>
             <p>Oferecer produtos de qualidade, com preços justos e entrega rápida, proporcionando ao cliente a melhor experiência de compra online.</p>

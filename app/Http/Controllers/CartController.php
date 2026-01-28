@@ -48,14 +48,31 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->size_id === 'esgotado' || $request->size_id === null)
-            return redirect()->back()->with('stock', 'Tamanho esgotado!');
+        //verificando se tem estoque
+        if($request->size_id === 'esgotado' || $request->size_id === null){
+            $msg = $request->size_id === 'esgotado' ? 'Tamanho esgotado!' : 'Escolha o tamanho do produto.';
+            return redirect()->back()->with('stock', $msg);
+        }
+
+        //verificando se o produto já está no carrinho
+        $exists = CartItem::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
+        if($exists){
+            //aqui é caso o usuário clique diretamente no botão de comprar
+            if($request->redirect_buy)
+                return redirect()->route('carrinho.index');
+
+            return redirect()->back()->with('success', 'O produto já está no carrinho!');
+        }
+
+        //Se não existe então é criado
         $cart = $request->all();
         $cart['user_id'] = Auth::id();
         $cart = CartItem::create($cart);
-
-        if($request->redirect_buy)
+        
+        //aqui é caso o usuário clique diretamente no botão de comprar
+        if($request->redirect_buy){
             return redirect()->route('carrinho.index');
+        }
         return redirect()->back()->with('success', 'O produto foi adicionado ao carrinho!');
     }
 

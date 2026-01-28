@@ -43,11 +43,16 @@ class WishlistController extends Controller
      */
     public function store(Request $request)
     {
-        //add new item to wishlist
+        //Verificando se já existe o produto na lista de desejos
+        $exists = Wishlist::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
+        if($exists){
+            return redirect()->back()->with('success', 'O produto já está salvo nos favoritos!');
+        }
+
+        //Se não existe então é criado
         $wishlist = $request->all();
         $wishlist['user_id'] = Auth::id();
         $wishlist = Wishlist::create($wishlist);
-
         return redirect()->back()->with('success', 'O produto foi adicionado aos favoritos!');
     }
 
