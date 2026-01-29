@@ -128,7 +128,7 @@ basta seguir os seguintes passos para vc poder acessar a aplicação admin.
 - Crie um usuário normalmente, acessando a rota "(http://localhost/register)" ou aperte em login no navbar do site
 
 - Se essa é a primeira vez que você registra no site provavelmente o seu id de usuário no banco de dados
-será 1, mas vc pode acessar o phpMyAdmin em "http://localhost:8081/", logo em seguida em "Servidor" digite "mysql",
+será 1, mas vc pode acessar o phpMyAdmin em "(http://localhost:8081/)", logo em seguida em "Servidor" digite "mysql",
 em "Usuário" por padrão é "root" e por fim em "Senha" por padrão é "root". Depois de acessar o banco de dados acesse
 a tabela "users" no banco de dados "footsyde" e lá vc poderá ver seu id na coluna "id".
 
