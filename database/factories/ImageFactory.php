@@ -21,13 +21,11 @@ class ImageFactory extends Factory
     
     public function definition(): array
     {
-        //default images when generating fake products
+        //IMAGENS PADRÃO QUANDO GERA PRODUTOS FAKES
         $images = [
-            'storage/app/public/images/1.png',
-            'storage/app/public/images/2.png',
-            'storage/app/public/images/3.png',
-            'storage/app/public/images/4.png',
-
+            'storage/app/public/images/default/1.png',
+            'storage/app/public/images/default/2.png',
+            'storage/app/public/images/default/3.png',
         ];
 
         return [

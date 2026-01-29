@@ -18,14 +18,14 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        //genarator fake products
+        //GERADOR DE PRODUTOS FAKES
         return [
             'name' => $this->faker->words(1, true),
             'price' => $this->faker->randomFloat(2, 50, 500),
             'description' => $this->faker->paragraph(),
             // 'stock' => $this->faker->numberBetween(1, 100),
             'fornecedor' => fake()->company(),
-            'image_path' => 'images/products/default/JD8-6364-058_zoom1.png',
+            'image_path' => 'images/products/default/thumbnail.png',
             'category_id' => Category::inRandomOrder()->first()->id,
             'code' => $this->faker->numberBetween(1000, 99999),
 
@@ -34,13 +34,12 @@ class ProductFactory extends Factory
 
     public function configure()
 {
-    //defining carousel images
+    //DEFININDO AS IMAGENS DO CARROSSEL
     return $this->afterCreating(function (Product $product) {
         $images = [
-            '/images/1.png',
-            '/images/2.png',
-            '/images/3.png',
-
+            'images/products/default/1.png',
+            'images/products/default/2.png',
+            'images/products/default/3.png',
         ];
 
         foreach ($images as $path) {
