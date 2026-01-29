@@ -13,13 +13,15 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 
 ## 🔧 Funcionalidades do Projeto
 
-- Página inicial (home)
 - Catálogo de calçados com filtros por gênero
-- Página "Sobre"
 - Sistema de autenticação (login)
 - Carrinho de compras
-- Checkout própio
-- Organização do código entre front-end e back-end
+- Lista de favoritos
+- Barra de pesquisa
+- Envio de emails após registro e compras
+- Comentários e avaliações
+- Checkout
+- Aplicação admin
 
 ## 🚧 Status
 
@@ -29,3 +31,85 @@ Projeto em desenvolvimento 🛠️
 
 Este projeto está licenciado sob a **MIT License**.  
 Sinta-se livre para estudar, adaptar e evoluir o código como desejar.
+
+# 🖥️ Como rodar
+
+Aqui estão os requisitos para rodar o projeto na sua máquina:
+- Git
+- Docker
+- Wsl (recomendado caso o seu SO seja o Windows)
+
+## 📥 Clonar o repositório e configurando o .env
+
+- Clone o repositório
+```bash
+git clone https://github.com/SirTigas/footsyde.git
+```
+- Entre na pasta
+```bash
+cd footsyde
+```
+- Copie o .env.example
+```bash
+cp .env.example .env
+```
+
+- Configure o banco de dados
+```bash
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=footsyde
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+## 🐋 Suba os containers
+
+```bash
+docker-compose up -d nginx mysql php-fpm workspace, nginx, phpmyadmin, mysql
+```
+- Entre no workspace
+```bash
+docker-compose exec -it [workspace-id] bash
+```
+
+## 📍 Instale as dependências PHP
+
+- Dentro do workspace rode
+```bash
+composer install
+```
+
+- Gere a chave da aplicação
+```bash
+php artisan key:generate
+```
+
+## 🎲 Migrations e seeders (ainda dentro do workspace)
+
+- Rode as migrations
+```bash
+php artisan migrate
+```
+
+- Rode a seeder
+```bash
+php artisan db:seed --class="CategorySeeder"
+```
+
+- Se quiser produtos fakes rode na sequencia
+```bash
+php artisan db:seed --class="ProductSeeder"
+php artisan db:seed --class="ProductVariantSeeder"
+```
+
+## 📧 Envio de Emails
+
+- Usa SMTP por padrão
+- Você pode configurar o seu email do google para ser o remetente dos emails
+- Por padrão vem um email que criei para este projeto exclusivamente
+
+# 🌐 Acessar o projeto
+
+- Acesse: http://localhost
