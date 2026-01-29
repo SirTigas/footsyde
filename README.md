@@ -67,7 +67,7 @@ DB_PASSWORD=root
 ## 🐋 Suba os containers
 
 ```bash
-docker-compose up -d nginx mysql php-fpm workspace
+docker-compose up -d nginx mysql php-fpm workspace, nginx, phpmyadmin, mysql
 ```
 - Entre no workspace
 ```bash
