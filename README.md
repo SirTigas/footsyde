@@ -125,7 +125,7 @@ php artisan db:seed --class="ProductVariantSeeder"
 Se voce tiver seguido o passo a passo vc já vai estar conseguindo visualizar o site, agora
 basta seguir os seguintes passos para vc poder acessar a aplicação admin.
 
-- Crie um usuário normalmente, acessando a rota "/register" ou aperte em login no navbar do site
+- Crie um usuário normalmente, acessando a rota "(http://localhost/register)" ou aperte em login no navbar do site
 
 - Se essa é a primeira vez que você registra no site provavelmente o seu id de usuário no banco de dados
 será 1, mas vc pode acessar o phpMyAdmin em "http://localhost:8081/", logo em seguida em "Servidor" digite "mysql",
