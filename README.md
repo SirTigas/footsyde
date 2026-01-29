@@ -37,6 +37,7 @@ Sinta-se livre para estudar, adaptar e evoluir o código como desejar.
 Aqui estão os requisitos para rodar o projeto na sua máquina:
 - Git
 - Docker
+- Composer
 - Wsl (recomendado caso o seu SO seja o Windows)
 
 ## 📥 Clonar o repositório e configurando o .env
@@ -45,7 +46,7 @@ Aqui estão os requisitos para rodar o projeto na sua máquina:
 ```bash
 git clone https://github.com/SirTigas/footsyde.git
 ```
-- Entre na pasta
+- Entre na pasta footsyde
 ```bash
 cd footsyde
 ```
@@ -64,14 +65,30 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
+## ⚙️ Instalando o laradock
+- É necessário a instalação do laradock, rode na sequência (deve estar dentro do diretório "footsyde"):
+```bash
+git clone https://github.com/laradock/laradock.git
+cd laradock
+cp .env.example .env
+```
+
 ## 🐋 Suba os containers
 
+- Subindo os containers (dentro do diretório "laradock")
 ```bash
-docker-compose up -d nginx mysql php-fpm workspace, nginx, phpmyadmin, mysql
+docker-compose up -d php-fpm workspace, nginx, phpmyadmin, mysql
 ```
-- Entre no workspace
+
+- Após subir os containers descubra o id do contianer workspace rodando o comando abaixo (saia do diretorio laradock)
 ```bash
-docker-compose exec -it [workspace-id] bash
+cd ../
+docker ps
+```
+
+- Entre no workspace (substitua {workspace-id} pelo id do container)
+```bash
+docker-compose exec -it {workspace-id} bash
 ```
 
 ## 📍 Instale as dependências PHP
