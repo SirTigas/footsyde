@@ -114,6 +114,11 @@ php artisan migrate
 php artisan db:seed --class="CategorySeeder"
 ```
 
+- Rode esse comando para as imagens ficarem acessiveis no navegador
+```bash
+php artisan storage:link
+```
+
 - Se quiser produtos fakes rode na sequencia
 ```bash
 php artisan db:seed --class="ProductSeeder"
