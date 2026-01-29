@@ -13,13 +13,15 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 
 ## 🔧 Funcionalidades do Projeto
 
-- Página inicial (home)
 - Catálogo de calçados com filtros por gênero
-- Página "Sobre"
 - Sistema de autenticação (login)
 - Carrinho de compras
-- Checkout própio
-- Organização do código entre front-end e back-end
+- Lista de favoritos
+- Barra de pesquisa
+- Envio de emails após registro e compras
+- Comentários e avaliações
+- Checkout
+- Aplicação admin
 
 ## 🚧 Status
 
