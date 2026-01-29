@@ -54,7 +54,7 @@ cd footsyde
 cp .env.example .env
 ```
 
-- Configure o banco de dados
+- Configure o banco de dados (por padrão essas são as configurações)
 ```bash
 DB_CONNECTION=mysql
 DB_HOST=mysql
