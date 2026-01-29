@@ -12,6 +12,24 @@
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
+        <style>
+            html {
+                height: 100%
+            }
+
+            body {
+                min-height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .footer {
+                background-color: rgb(248,249,250);
+                padding: 50px 0;
+                margin-top: auto;
+            }
+        </style>
+
     </head>
     <body>
         <!--navbar-->
@@ -79,9 +97,20 @@
         
         @Yield('conteudo')
 
-        <!--JS-->
-        <footer>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+        {{-- COMEÇO DO FOOTER    --}}
+        <footer class="footer">
+            <div class="text-center">
+                <a class="navbar-brand" href="{{ route('admin.dashboard') }}"><img src="{{ asset('images/logo.png') }}" alt="" width="200px">Dashboard</a>
+                <p>
+                    <small class="text-muted">
+                        <i class="bi bi-c-circle"></i>
+                        {{ now()->year }} {{config('app.name')}}. Todos os direitos reservados.
+                    </small>
+                </p>    
+            </div>
         </footer>
+
+        <!--JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     </body>
 </html>

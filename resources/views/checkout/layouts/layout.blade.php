@@ -10,49 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/stylesheet.css') }}">
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-
-    <style>
-        html {
-            height: 100%
-        }
-
-        body {
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .footer {
-            background-color: rgb(248,249,250);
-            padding: 50px 0;
-            margin-top: auto;
-        }
-
-        .footer h5 {
-            font-weight: bold;
-        }
-
-        .footer a{
-            display: flex;
-        }
-
-        .footer a i{
-            margin-right: 8px
-        }
-
-        .newsletter-input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .btn-footsyde {
-            margin-top: 10px; 
-        }
-    </style>
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">        
 </head>
 <body>
 
@@ -134,79 +92,6 @@
     </header>
 
     @yield('conteudo')
-
-    {{-- COMEÇO DO FOOTER --}}
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Links</h5>
-
-                    <hr>
-                    @if(!Auth::check())
-                        <a href="{{ route('login') }}">
-                            <i class="bi bi-arrow-right"></i>
-                            Login  
-                        </a>
-                    @endif
-
-                    <a href="{{ route('site.sobre') }}">
-                        <i class="bi bi-arrow-right"></i>
-                        Sobre  
-                    </a>
-
-                    <a href="{{ route("products.index") }}">
-                        <i class="bi bi-arrow-right"></i>
-                        Produtos  
-                    </a>
-
-                    <a href="{{ route('site.home') }}">
-                        <i class="bi bi-arrow-right"></i>
-                        Home  
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <h5>Contato</h5>
-
-                    <hr>
-                    <p>
-                        <i class="bi bi-telephone-forward-fill"></i>
-                        +55 61 1234-5678
-                    </p>
-
-                    <p>
-                        <i class="bi bi-envelope-fill"></i>
-                        contato@footsyde.com.br
-                    </p>
-                </div>
-
-                <div class="col-md-4">
-                    <h5>Newsletter</h5>
-
-                    <hr>
-                    <p>
-                        Inscreva-se na nossa Newsletter para ficar por dentro das novidades e promoções!
-                    </p>
-
-                    <form action="#">
-                        <input type="email" name="email" class="newsletter-input" placeholder="Seu Email">
-                        <button type="submit" class="btn btn-warning btn btn-footsyde"><i class="bi bi-envelope-fill"></i> Inscreva-se</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="row mt-5">
-                <div class="col">
-                    <a class="navbar-brand" href="{{ route('site.home') }}"><img src="{{ asset('images/logo.png') }}" alt="" width="200px"></a>
-                    <small class="text-muted">
-                        <i class="bi bi-c-circle"></i>
-                        {{ now()->year }} {{config('app.name')}}. Todos os direitos reservados.
-                    </small>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!--JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
