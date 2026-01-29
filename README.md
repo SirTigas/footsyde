@@ -106,7 +106,7 @@ php artisan db:seed --class="ProductVariantSeeder"
 
 ## 📧 Envio de Emails
 
-- Usa SMTP
+- Usa SMTP por padrão
 - Você pode configurar o seu email do google para ser o remetente dos emails
 - Por padrão vem um email que criei para este projeto exclusivamente
 
