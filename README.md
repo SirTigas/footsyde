@@ -86,7 +86,7 @@ composer install
 php artisan key:generate
 ```
 
-## 🎲 Migrations e seeders
+## 🎲 Migrations e seeders (ainda dentro do workspace)
 
 - Rode as migrations
 ```bash
