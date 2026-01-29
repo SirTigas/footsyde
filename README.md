@@ -32,12 +32,11 @@ Projeto em desenvolvimento 🛠️
 Este projeto está licenciado sob a **MIT License**.  
 Sinta-se livre para estudar, adaptar e evoluir o código como desejar.
 
-# 🖥️ Como rodar
+# 🖥️ Como rodar em sua máquina
 
 Aqui estão os requisitos para rodar o projeto na sua máquina:
 - Git
 - Docker
-- Composer
 - Wsl (recomendado caso o seu SO seja o Windows)
 
 ## 📥 Clonar o repositório e configurando o .env
@@ -77,7 +76,7 @@ cp .env.example .env
 
 - Subindo os containers (dentro do diretório "laradock")
 ```bash
-docker-compose up -d php-fpm workspace, nginx, phpmyadmin, mysql
+docker-compose up -d php-fpm workspace nginx phpmyadmin mysql
 ```
 
 - Após subir os containers descubra o id do contianer workspace rodando o comando abaixo (saia do diretorio laradock)
@@ -88,7 +87,7 @@ docker ps
 
 - Entre no workspace (substitua {workspace-id} pelo id do container)
 ```bash
-docker-compose exec -it {workspace-id} bash
+docker exec -it {workspace-id} bash
 ```
 
 ## 📍 Instale as dependências PHP
@@ -120,6 +119,34 @@ php artisan db:seed --class="CategorySeeder"
 php artisan db:seed --class="ProductSeeder"
 php artisan db:seed --class="ProductVariantSeeder"
 ```
+
+# ⭐ Como acessar a aplicação admin
+
+Se voce tiver seguido o passo a passo vc já vai estar conseguindo visualizar o site, agora
+basta seguir os seguintes passos para vc poder acessar a aplicação admin.
+
+- Crie um usuário normalmente, acessando a rota "/register" ou aperte em login no navbar do site
+
+- Se essa é a primeira vez que você registra no site provavelmente o seu id de usuário no banco de dados
+será 1, mas vc pode acessar o phpMyAdmin em "http://localhost:8081/", logo em seguida em "Servidor" digite "mysql",
+em "Usuário" por padrão é "root" e por fim em "Senha" por padrão é "root". Depois de acessar o banco de dados acesse
+a tabela "users" no banco de dados "footsyde" e lá vc poderá ver seu id na coluna "id".
+
+- Depois no workspace rode
+```bash
+php artisan tinker
+```
+- Agora dentro do tinker rode na sequência (substitua $i pelo o seu id de usuário do banco de dados que citei anteriormente)
+```bash
+use App\Models\User;
+$eu = User::find($i);
+$eu->role = "admin";
+$eu->save();
+exit
+```
+- OBS: É necessário ter o email verificado para acessar a aplicação admin, você pode usar um email temporário que também vai funcionar.
+  
+- Após isso, ao clicar no seu nome que fica localizado na navbar na aplicação irá exebir um dropdown com a opção "Dashboard" disponível.
 
 ## 📧 Envio de Emails
 
