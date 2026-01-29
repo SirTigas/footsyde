@@ -23,3 +23,12 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 laradock/.git
+/storage/app/public/*
+!/storage/app/public/images
+/storage/app/public/images/*
+!/storage/app/public/images/profile
+!/storage/app/public/images/profile/**
+!/storage/app/public/images/products
+/storage/app/public/images/products/*
+!/storage/app/public/images/products/default
+!/storage/app/public/images/products/default/**
