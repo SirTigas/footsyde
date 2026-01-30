@@ -8,6 +8,7 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 - 🧱 **Laravel 12**
 - 🐬 **MySQL**
 - 🐳 **Docker** + **Laradock**
+- 🟢 **Node.js v20+**
 - 🎨 **HTML & CSS**
 - 💻 **WSL (Ubuntu)** para ambiente de desenvolvimento
 
@@ -36,8 +37,11 @@ Sinta-se livre para estudar, adaptar e evoluir o código como desejar.
 
 Aqui estão os requisitos para rodar o projeto na sua máquina:
 - Git
-- Docker
-- Wsl (recomendado caso o seu SO seja o Windows)
+- Node.js v20+
+- PHP 8+
+- MySql
+- Composer
+- Wsl (recomendado caso o seu SO seja o Windows e for usar o docker)
 
 ## 📥 Clonar o repositório e configurando o .env
 
@@ -54,17 +58,17 @@ cd footsyde
 cp .env.example .env
 ```
 
-- Configure o banco de dados (por padrão essas são as configurações)
+- Configure o banco de dados
 ```bash
 DB_CONNECTION=mysql
-DB_HOST=mysql
+DB_HOST=localhost #altere para "mysql" se for usar o docker
 DB_PORT=3306
-DB_DATABASE=footsyde
+DB_DATABASE=footsyde 
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-## ⚙️ Instalando o laradock
+## ⚙️ Instalando o laradock (somente de for usar o docker)
 - É necessário a instalação do laradock, rode na sequência (deve estar dentro do diretório "footsyde"):
 ```bash
 git clone https://github.com/laradock/laradock.git
@@ -72,7 +76,7 @@ cd laradock
 cp .env.example .env
 ```
 
-## 🐋 Suba os containers
+## 🐋 Suba os containers (somente de for usar o docker)
 
 - Subindo os containers (dentro do diretório "laradock")
 ```bash
@@ -90,11 +94,13 @@ docker ps
 docker exec -it {workspace-id} bash
 ```
 
-## 📍 Instale as dependências PHP
+## 📍 Instale as dependências PHP (se estiver usando docker rode dentro do workspace)
 
-- Dentro do workspace rode
+- Rode
 ```bash
 composer install
+npm install
+npm run build
 ```
 
 - Gere a chave da aplicação
@@ -102,7 +108,7 @@ composer install
 php artisan key:generate
 ```
 
-## 🎲 Migrations e seeders (ainda dentro do workspace)
+## 🎲 Migrations e seeders (ainda dentro do workspace se estiver usando docker)
 
 - Rode as migrations
 ```bash
@@ -130,24 +136,25 @@ php artisan db:seed --class="ProductVariantSeeder"
 Se voce tiver seguido o passo a passo vc já vai estar conseguindo visualizar o site, agora
 basta seguir os seguintes passos para vc poder acessar a aplicação admin.
 
-- Crie um usuário normalmente, acessando a rota "(http://localhost/register)" ou aperte em login no navbar do site.
+- Crie um usuário normalmente, acessando a rota "/register" ou aperte em login no navbar do site.
 
 - OBS: É necessário ter o email verificado para acessar a aplicação admin, você pode usar um email temporário que também vai funcionar.
 
 - Você pode reenviar o link de verificação do email acessando as configurações do seu perfil em "Meu perfil".
 
-- Se essa é a primeira vez que você registra no site provavelmente o seu id de usuário no banco de dados
-será 1, mas vc pode acessar o phpMyAdmin em "(http://localhost:8081/)", logo em seguida em "Servidor" digite "mysql",
-em "Usuário" por padrão é "root" e por fim em "Senha" por padrão é "root". Depois de acessar o banco de dados acesse
-a tabela "users" no banco de dados "footsyde" e lá vc poderá ver seu id na coluna "id".
-
-- Depois no workspace rode
+- Depois acesse o tinker rodando (rode no workspace se estiver usando docker)
 ```bash
 php artisan tinker
 ```
-- Agora dentro do tinker rode na sequência (substitua $i pelo o seu id de usuário do banco de dados que citei anteriormente)
+
+-Descubra seu id de usuário rodando (isso vai retornar o registro de todos os usuários, procure pelo o seu id de usuário)
 ```bash
 use App\Models\User;
+$eu = User::all();
+```
+
+- na sequência rode (substitua $i pelo o seu id de usuário)
+```bash
 $eu = User::find($i);
 $eu->role = "admin";
 $eu->save();
@@ -164,4 +171,5 @@ exit
 
 # 🌐 Acessar o projeto
 
-- Acesse: http://localhost
+- Docker: http://localhost
+- php artisan serve: http://localhost:8000 
