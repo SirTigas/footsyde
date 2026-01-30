@@ -131,6 +131,12 @@ php artisan db:seed --class="ProductSeeder"
 php artisan db:seed --class="ProductVariantSeeder"
 ```
 
+## 🌐 Rodando a aplicação (somente para quem NÃO usa o docker)
+- Rode
+``` bash
+php artisan serve
+```
+
 # ⭐ Como acessar a aplicação admin
 
 Se voce tiver seguido o passo a passo vc já vai estar conseguindo visualizar o site, agora
