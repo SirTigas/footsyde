@@ -76,7 +76,7 @@ cd laradock
 cp .env.example .env
 ```
 
-## 🐋 Suba os containers (somente de for usar o docker)
+## 🐋 Suba os containers (somente se for usar o docker)
 
 - Subindo os containers (dentro do diretório "laradock")
 ```bash
