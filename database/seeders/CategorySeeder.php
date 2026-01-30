@@ -15,16 +15,9 @@ class CategorySeeder extends Seeder
     //defining default categories
     public function run(): void
     {
-        Category::create([
-            'name' => 'Homem',
-        ]);
-
-        Category::create([
-            'name' => 'Mulher',
-        ]);
-
-        Category::create([
-            'name' => 'Unissex',
-        ]);
+        $categorias = ['Homem', 'Mulher', 'Unissex'];
+        foreach($categorias as $nome){
+            Category::firstOrCreate(['name' => $nome]);
+        }
     }
 }
