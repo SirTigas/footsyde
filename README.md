@@ -58,7 +58,7 @@ cd footsyde
 cp .env.example .env
 ```
 
-- Configure o banco de dados
+- Configure o banco de dados no arquivo .env
 ```bash
 DB_CONNECTION=mysql
 DB_HOST=localhost #altere para "mysql" se for usar o docker
