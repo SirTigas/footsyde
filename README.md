@@ -147,13 +147,13 @@ basta seguir os seguintes passos para vc poder acessar a aplicação admin.
 php artisan tinker
 ```
 
--Descubra seu id de usuário rodando (isso vai retornar o registro de todos os usuários, procure pelo o seu id de usuário)
+- Descubra seu id de usuário rodando (isso vai retornar o registro de todos os usuários, procure pelo o seu id de usuário)
 ```bash
 use App\Models\User;
 $eu = User::all();
 ```
 
-- na sequência rode (substitua $i pelo o seu id de usuário)
+- Na sequência rode (substitua $i pelo o seu id de usuário)
 ```bash
 $eu = User::find($i);
 $eu->role = "admin";
