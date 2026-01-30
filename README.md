@@ -14,6 +14,7 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 
 ## 🔧 Funcionalidades do Projeto
 
+- Aplicação principal responsiva
 - Catálogo de calçados com filtros por gênero
 - Sistema de autenticação (login)
 - Carrinho de compras
@@ -23,6 +24,9 @@ Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis
 - Comentários e avaliações
 - Checkout
 - Aplicação admin
+- Edição e criação de produtos(admin)
+- Controle de estoque(admin)
+- Controle de pedidos(admin)
 
 ## 🚧 Status
 
