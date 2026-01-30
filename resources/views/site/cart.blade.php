@@ -87,7 +87,7 @@
 
                                                     <div class="input-group col-auto">
                                                         <div class="col-auto">
-                                                            <input type="number" class="form-control" value="" placeholder="Quantidade: {{ $cart->quantity }}" name="quantity">
+                                                            <input type="number" class="form-control" value="{{ $cart->quantity }}" placeholder="Quantidade: {{ $cart->quantity }}" name="quantity">
                                                         </div>
                                                         <button type="submit" class="btn btn-primary input-group-text"><i class="bi bi-floppy"></i></i></button>
                                                     </div>
