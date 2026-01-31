@@ -2,6 +2,8 @@
 
 Este é um projeto pessoal com o objetivo de desenvolver um e-commerce de tênis utilizando tecnologias modernas. A ideia é praticar e aprimorar minhas habilidades em desenvolvimento web, construindo um site completo com sistema de login, carrinho de compras 🛒 e filtro de produtos por categoria (masculino, feminino e unissex).
 
+- Veja minha postagem no Github: https://www.linkedin.com/posts/tiago-rodrigues-cardoso_e-commerce-footsyde-ol%C3%A1-pessoal-este-%C3%A9-um-activity-7422907692467302400-3Iat?utm_source=share&utm_medium=member_desktop&rcm=ACoAADvdUKgB1YVuyo7-OaQvILB--IruWScnFBI
+
 ## 🧰 Tecnologias Utilizadas
 
 - ⚙️ **PHP 8+**
