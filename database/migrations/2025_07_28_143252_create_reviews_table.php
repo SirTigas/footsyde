@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->decimal('rating', 2, 1);
-            $table->text('comment');
+            $table->text('comment')->nullable()->change();
             $table->timestamps();
 
             //defining foreign
