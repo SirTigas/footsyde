@@ -15,7 +15,7 @@
                 <div class='col-12'>
                     <h1 class="text-center fw-bold">ops! NÃO ACHAMOS O PRODUTO =(</h1>
                 </div>
-            </div> 
+            </div>
         @else
             <div class="row">
                 <div class="col-12">
@@ -29,12 +29,12 @@
                     <div class="card h-100 shadow-sm">
 
                         <a href="{{ route('products.show', $p->code) }}">
-                            <img src="{{ asset('storage/' . $p->image_path) }}" class="card-img-top img-fluid" alt="{{ $p->name }}">   
+                            <img src="{{ asset($p->image_path) }}" class="card-img-top img-fluid" alt="{{ $p->name }}">
                         </a>
-                        
+
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">{{ strtoupper($p->name) }} - <small class="text-muted">{{ $p->category->name }}</small></h5>
-                            
+
                             <p class="card-text">{{ Str::limit($p->description, 50) }}</p>
 
                             <div class="row">
@@ -43,7 +43,7 @@
                                         <i class="bi bi-currency-dollar"></i><b>COMPRAR</b>
                                     </a>
                                 </div>
-                                
+
                                 <div class="col d-flex flex-column">
                                     <form action="{{ route('favoritos.store') }}" method="POST">
                                         @csrf

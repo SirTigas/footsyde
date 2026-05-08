@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->paragraph(),
             // 'stock' => $this->faker->numberBetween(1, 100),
             'fornecedor' => fake()->company(),
-            'image_path' => 'images/products/default/thumbnail.png',
+            'image_path' => 'https://i.ibb.co/40QsXNm/thumb.png',
             'category_id' => Category::inRandomOrder()->first()->id,
             'code' => $this->faker->numberBetween(1000, 99999),
 
@@ -37,9 +37,9 @@ class ProductFactory extends Factory
     //DEFININDO AS IMAGENS DO CARROSSEL
     return $this->afterCreating(function (Product $product) {
         $images = [
-            'images/products/default/1.png',
-            'images/products/default/2.png',
-            'images/products/default/3.png',
+            'https://i.ibb.co/4Zs9FpRH/1.png',
+            'https://i.ibb.co/rRcWR6dy/2.png',
+            'https://i.ibb.co/QvyBL0Lv/3.png',
         ];
 
         foreach ($images as $path) {

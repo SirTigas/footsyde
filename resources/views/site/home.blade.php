@@ -148,7 +148,8 @@
             @foreach ($products as $p )
                 <div class="home-card">
                     <a href="{{ route('products.show', $p->code) }}">
-                        <img src="{{ asset($p->image_path) }}" class="img-fluid rounded" alt="{{ $p->name }}">
+                        <img src="{{ $p->image_path  }}" class="img-fluid rounded" alt="{{ $p->name }}">
+
                     </a>
                     <h3><b>{{ strtoupper($p->name) }}</b></h3>
                     <h6><small class="text-muted">{{ $p->category->name }}</small></h6>

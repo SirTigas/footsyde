@@ -18,14 +18,14 @@ class ImageFactory extends Factory
 
     protected $model = ProductImage::class;
 
-    
+
     public function definition(): array
     {
         //IMAGENS PADRÃO QUANDO GERA PRODUTOS FAKES
         $images = [
-            'storage/app/public/images/default/1.png',
-            'storage/app/public/images/default/2.png',
-            'storage/app/public/images/default/3.png',
+            'https://i.ibb.co/4Zs9FpRH/1.png',
+            'https://i.ibb.co/rRcWR6dy/2.png',
+            'https://i.ibb.co/QvyBL0Lv/3.png',
         ];
 
         return [

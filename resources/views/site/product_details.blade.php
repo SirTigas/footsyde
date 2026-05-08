@@ -21,12 +21,12 @@
                 <div class="carousel-inner rounded-4 overflow-hidden">
 
                     <div class="carousel-item active">
-                        <img src="{{ asset('storage/'.$product->image_path) }}" class="d-block w-100 img-fluid">
+                        <img src="{{ asset($product->image_path) }}" class="d-block w-100 img-fluid">
                     </div>
 
                     @foreach ($product->images as $path)
                         <div class="carousel-item">
-                            <img src="{{ asset('storage/'.$path->path) }}" class="d-block w-100 img-fluid">
+                            <img src="{{ asset($path->path) }}" class="d-block w-100 img-fluid">
                         </div>
                     @endforeach
 
@@ -141,7 +141,7 @@
                         <button type="submit" class="btn btn-success"><b>POSTAR</b></button>
                     </form>
                 </div>
-            </div><br><br>               
+            </div><br><br>
         @endif
         <h3>Comentários • Avaliações</h3>
 
