@@ -5,13 +5,13 @@
 
 <div class="container">
     <div style="margin: 30px 0px 0px 0px">
-        
-        
-        @if ($orders->total() > 0)                       
-            <h1 style="text-align: center;"><b>SEUS PEDIDOS</b></h1>                       
+
+
+        @if ($orders->total() > 0)
+            <h1 style="text-align: center;"><b>SEUS PEDIDOS</b></h1>
         @else
             <h1 style="text-align: center;"><b>NENHUM PEDIDO REGISTRADO</b></h1>
-            <a href="{{ route('products.index') }}" class="btn btn-success btn-lg d-flex justify-content-center"><b>COMPRAR AGORA</b></a>            
+            <a href="{{ route('products.index') }}" class="btn btn-success btn-lg d-flex justify-content-center"><b>COMPRAR AGORA</b></a>
         @endif
 
         @foreach ($orders as $od)
@@ -22,8 +22,8 @@
                             <!-- Imagem -->
                             <div class="col-md-5">
                                 <a href="{{ route('products.show', $od->product->code) }}">
-                                    <img src="{{ asset('storage/' . $od->product->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($od->product->name) }}">
-                                </a>   
+                                    <img src="{{ asset($od->product->image_path) }}" class="img-fluid rounded-start" alt="{{ strtoupper($od->product->name) }}">
+                                </a>
                             </div>
 
                             <!-- Conteúdo -->
@@ -35,7 +35,7 @@
                                                 <a href="{{ route('products.show', $od->product->code) }}" class="text-decoration-none text-dark">
                                                 {{ strtoupper($od->product->name) }} <small class="text-muted">{{ $od->product->fornecedor }}</small>
                                                 </a>
-                                            </h5>                                                                                       
+                                            </h5>
                                         </div>
                                         <div class="row mt-4">
                                             <div class="col">
@@ -55,10 +55,10 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
             @endif
         @endforeach
-        {{ $orders->links() }}      
+        {{ $orders->links() }}
     </div>
 </div>
 @endsection
