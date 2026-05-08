@@ -48,7 +48,7 @@
     @keyframes spin{
         from {translate: 0;}
         to {translate: -100%;}
-    } 
+    }
 </style>
 
 {{-- CARROSSEL --}}
@@ -56,7 +56,7 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <a href="{{ route('products.index') }}">
-                <img 
+                <img
                     src="https://i.ibb.co/Mx9TnGdS/banner-1-0-5x.png"
                     class="d-block w-100 img-fluid"
                     alt="Banner-1"
@@ -65,7 +65,7 @@
         </div>
         <div class="carousel-item">
             <a href="{{ route('products.index') }}">
-                <img 
+                <img
                     src="https://i.ibb.co/6cBBGKS3/banner-1.png"
                     class="d-block w-100 img-fluid"
                     alt="Banner-2"
@@ -95,7 +95,7 @@
     <div class="row g-4 mb-4">
         <div class="col-12 col-md-6">
             <a href="{{ route('products.man') }}" class="zoom-container">
-                <img 
+                <img
                     src="https://i.ibb.co/dJ6vwNs3/homem.png"
                     class="img-fluid rounded w-100"
                     alt="Masculino"
@@ -105,7 +105,7 @@
 
         <div class="col-12 col-md-6">
             <a href="{{ route('products.woman') }}" class="zoom-container">
-                <img 
+                <img
                     src="https://i.ibb.co/Wvr4WjPp/mulher-0-3x.png"
                     class="img-fluid rounded w-100"
                     alt="Feminino"
@@ -117,7 +117,7 @@
     <div class="row g-4">
         <div class="col-12 col-md-6">
             <a href="{{ route('products.unissex') }}" class="zoom-container">
-                <img 
+                <img
                     src="https://i.ibb.co/93cTPmyD/unissex-0-3x.png"
                     class="img-fluid rounded w-100"
                     alt="Unissex"
@@ -127,7 +127,7 @@
 
         <div class="col-12 col-md-6">
             <a href="{{ route('products.index') }}" class="zoom-container">
-                <img 
+                <img
                     src="https://i.ibb.co/4C0qJkQ/completa-0-3x.png"
                     class="img-fluid rounded w-100"
                     alt="Todos os produtos"
@@ -142,13 +142,13 @@
         </div>
     </div>
 
-    {{--CARROSEL DE EXIBIÇÃO DOS PRODUTOS--}}     
+    {{--CARROSEL DE EXIBIÇÃO DOS PRODUTOS--}}
     <div class="home-carousel">
         <div class="home-group">
             @foreach ($products as $p )
                 <div class="home-card">
                     <a href="{{ route('products.show', $p->code) }}">
-                        <img src="{{ asset('storage/' . $p->image_path) }}" class="img-fluid rounded" alt="{{ $p->name }}">
+                        <img src="{{ asset($p->image_path) }}" class="img-fluid rounded" alt="{{ $p->name }}">
                     </a>
                     <h3><b>{{ strtoupper($p->name) }}</b></h3>
                     <h6><small class="text-muted">{{ $p->category->name }}</small></h6>
@@ -156,6 +156,6 @@
             @endforeach
         </div>
     </div>
-  
+
 </div>
 @endsection
