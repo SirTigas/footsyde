@@ -150,7 +150,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="d-flex align-items-center gap-2 mb-2">
-                            <img src="{{ asset('storage/images/profile/default.jpg') }}" class="rounded-circle" width="40">
+                            <img src="https://i.ibb.co/SDCw4vmV/default-profile.jpg" class="rounded-circle" width="40">
                             <strong>{{ $rev->user->name }}</strong>
                             <span class="text-warning">{{ $rev->rating }} ★</span>
                             <small class="text-muted">{{ $rev->created_at->format('d/m/Y') }}</small>
